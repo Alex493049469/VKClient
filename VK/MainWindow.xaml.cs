@@ -62,8 +62,9 @@ namespace VK
             else
             {
                 VkMain.token = Settings.Default.token;
-                LoadSettings();
+                
             }
+            LoadSettings();
         }
 
         /// <summary>
