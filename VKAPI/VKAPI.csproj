@@ -44,10 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Audio.cs" />
+    <Compile Include="Model\AudioModel.cs" />
     <Compile Include="Model\LongPoll.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Updates.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Utils\Serializer.cs" />
     <Compile Include="VkAudio.cs" />
     <Compile Include="VkFriends.cs" />
     <Compile Include="VkMain.cs" />

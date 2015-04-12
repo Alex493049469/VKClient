@@ -32,7 +32,7 @@ namespace VK
         //музыкальный поток
         int stream;
         //источники данных
-        public List<Audio> ListAudios;
+        public AudioModel audioModel;
         public List<User> ListFriends;
         //прогресс загрузки трека 
         public double PosDownload { get; set; }
@@ -98,17 +98,18 @@ namespace VK
         //загрузка моих аудиозаписей
         public async void LoadMyMusic()
         {
-            ListAudios = await VkAudio.GetMyAudiosAsync(1000);
+            audioModel = await VkAudio.GetMyAudiosAsync(1000);
 
-            ListAudio.ItemsSource = ListAudios;
+            ListAudio.ItemsSource = audioModel.Items;
         }
 
         //загрузка моих аудиозаписей
         public async void FindMusic()
         {
-            ListAudios = await VkAudio.SearchAudiosAsync(TextAudio.Text);
+            
+            audioModel = await VkAudio.SearchAudiosAsync(TextAudio.Text);
 
-            ListAudio.ItemsSource = ListAudios;
+            ListAudio.ItemsSource = audioModel.Items;
         }
 
         private void ListAudio_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -216,7 +217,7 @@ namespace VK
             if (ListAudio.SelectedIndex < 0)
                 return;
            // _myDownloadProc = new DOWNLOADPROC(MyDownload);
-            stream = Bass.BASS_StreamCreateURL(ListAudios[index].Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
+            stream = Bass.BASS_StreamCreateURL(audioModel.Items[index].Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
 
             if (stream != 0 && Bass.BASS_ChannelPlay(stream, false))
             {

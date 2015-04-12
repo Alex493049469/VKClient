@@ -84,7 +84,7 @@
                                     <StackPanel>
                                         <TextBlock FontWeight="Bold" Text="{Binding Artist}" />
                                         <TextBlock Text="{Binding Title}" />
-                                        <TextBlock Text="{Binding Duration}" />
+                                        <TextBlock Text="{Binding DurationNorm}" />
                                     </StackPanel>
 
                                 </StackPanel>
