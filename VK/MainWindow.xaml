@@ -66,8 +66,8 @@
         </TabControl>
         <TabControl Margin="10,10,260,10" TabStripPlacement="Top">
 
-            <TabItem Header="Мои аудиозаписи">
-                <Grid>
+            <TabItem Header="Мои Аудиозаписи">
+                <Grid Background="#FFE5E5E5">
                     <ListBox x:Name="ListAudio"
                              Margin="10,122,247,10"
                              MouseDoubleClick="ListAudio_MouseDoubleClick"
@@ -82,9 +82,9 @@
                                            Source="/Images/audio_play.png" />
 
                                     <StackPanel>
-                                        <TextBlock FontWeight="Bold" Text="{Binding artist}" />
-                                        <TextBlock Text="{Binding title}" />
-                                        <TextBlock Text="{Binding duration}" />
+                                        <TextBlock FontWeight="Bold" Text="{Binding Artist}" />
+                                        <TextBlock Text="{Binding Title}" />
+                                        <TextBlock Text="{Binding Duration}" />
                                     </StackPanel>
 
                                 </StackPanel>
@@ -207,6 +207,25 @@
                                   Stroke="#FFFBF5F5" />
                         </Canvas>
                     </Button>
+                </Grid>
+            </TabItem>
+            <TabItem HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Header="Мои Сообщения">
+                <Grid Background="#FFE5E5E5">
+                    <ListBox Name="ListMessage"
+                             Width="626"
+                             Height="386"
+                             Margin="10,10,0,0"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Top" />
+                    <Button Width="77"
+                            Height="27"
+                            Margin="10,413,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Click="Button_Click_5"
+                            Content="Button" />
                 </Grid>
             </TabItem>
 

@@ -48,12 +48,12 @@ namespace VKAPI
 
                 Audio trek = new Audio();
 
-                trek.id = id.InnerText;
-                trek.owner_id = owner_id.InnerText;
-                trek.artist = artist.InnerText;
-                trek.title = title.InnerText;
-                trek.duration = new TimeSpan(0, 0, Convert.ToInt32(duration.InnerText)); ;
-                trek.url = url.InnerText;
+                trek.Id = id.InnerText;
+                trek.OwnerId = owner_id.InnerText;
+                trek.Artist = artist.InnerText;
+                trek.Title = title.InnerText;
+                trek.Duration = new TimeSpan(0, 0, Convert.ToInt32(duration.InnerText)); ;
+                trek.Url = url.InnerText;
                
                 ListAudios.Add(trek);
             }
@@ -106,12 +106,12 @@ namespace VKAPI
 
                 Audio trek = new Audio();
 
-                trek.id = id.InnerText;
-                trek.owner_id = owner_id.InnerText;
-                trek.artist = artist.InnerText;
-                trek.title = title.InnerText;
-                trek.duration = new TimeSpan(0, 0, Convert.ToInt32(duration.InnerText)); ;
-                trek.url = url.InnerText;
+                trek.Id = id.InnerText;
+                trek.OwnerId = owner_id.InnerText;
+                trek.Artist = artist.InnerText;
+                trek.Title = title.InnerText;
+                trek.Duration = new TimeSpan(0, 0, Convert.ToInt32(duration.InnerText)); ;
+                trek.Url = url.InnerText;
 
                 ListAudios.Add(trek);
             }

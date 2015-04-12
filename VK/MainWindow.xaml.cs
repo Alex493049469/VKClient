@@ -216,7 +216,7 @@ namespace VK
             if (ListAudio.SelectedIndex < 0)
                 return;
            // _myDownloadProc = new DOWNLOADPROC(MyDownload);
-            stream = Bass.BASS_StreamCreateURL(ListAudios[index].url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
+            stream = Bass.BASS_StreamCreateURL(ListAudios[index].Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
 
             if (stream != 0 && Bass.BASS_ChannelPlay(stream, false))
             {
@@ -310,6 +310,11 @@ namespace VK
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             FindMusic();
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            VkMessage.GetDialogs();
         }
 
         
