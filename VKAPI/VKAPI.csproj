@@ -49,6 +49,7 @@
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Updates.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserModel.cs" />
     <Compile Include="Utils\Serializer.cs" />
     <Compile Include="VkAudio.cs" />
     <Compile Include="VkFriends.cs" />

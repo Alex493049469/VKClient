@@ -33,7 +33,7 @@ namespace VK
         int stream;
         //источники данных
         public AudioModel audioModel;
-        public List<User> ListFriends;
+        public UserModel userModel;
         //прогресс загрузки трека 
         public double PosDownload { get; set; }
         //таймер для отображения позиции трека
@@ -91,8 +91,8 @@ namespace VK
         //загружаем список друзей
         public async void LoadFriends()
         {
-            ListFriends = await VkFriends.GetMyFriendsAsync();
-            ListFriend.ItemsSource = ListFriends;
+            userModel = await VkFriends.GetMyFriendsAsync();
+            ListFriend.ItemsSource = userModel.Items;
         }
 
         //загрузка моих аудиозаписей
@@ -296,16 +296,16 @@ namespace VK
 
         private async void CheckOnline_Checked(object sender, RoutedEventArgs e)
         {
-            ListFriends = await VkFriends.GetMyFriendsAsync();
-            ListFriends = ListFriends.FindAll(user => user.online == "Online");
-            ListFriend.ItemsSource = ListFriends;
+            userModel = await VkFriends.GetMyFriendsAsync();
+            userModel.Items = userModel.Items.FindAll(user => user.OnlineNorm == "Online");
+            ListFriend.ItemsSource = userModel.Items;
 
         }
 
         private async void CheckOnline_Unchecked(object sender, RoutedEventArgs e)
         {
-            ListFriends = await VkFriends.GetMyFriendsAsync();
-            ListFriend.ItemsSource = ListFriends;
+            userModel = await VkFriends.GetMyFriendsAsync();
+            ListFriend.ItemsSource = userModel.Items;
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)

@@ -42,11 +42,11 @@
                                            Width="100"
                                            Height="100"
                                            Margin="5"
-                                           Source="{Binding photo_100}" />
+                                           Source="{Binding Photo100}" />
                                     <StackPanel Grid.Column="1" Margin="2,6">
-                                        <TextBlock FontWeight="Bold" Text="{Binding first_name}" />
-                                        <TextBlock Text="{Binding last_name}" />
-                                        <TextBlock Text="{Binding online}" />
+                                        <TextBlock FontWeight="Bold" Text="{Binding FirstName}" />
+                                        <TextBlock Text="{Binding LastName}" />
+                                        <TextBlock Text="{Binding OnlineNorm}" />
                                     </StackPanel>
                                 </Grid>
                             </DataTemplate>
