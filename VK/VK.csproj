@@ -146,8 +146,12 @@
     <Resource Include="Images\audio_play.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bass.dll" />
-    <Content Include="Bass.Net.dll" />
+    <Content Include="bass.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Bass.Net.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Bass.Net.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

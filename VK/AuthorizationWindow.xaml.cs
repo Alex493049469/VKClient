@@ -53,7 +53,7 @@ namespace VK
                 VkMain.token = Settings.Default.token;
 
                 main.Visibility = Visibility.Visible;
-
+                main.LoadSettings();
                 this.Close();
             }
         }
