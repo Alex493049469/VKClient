@@ -218,7 +218,26 @@
                              Height="386"
                              Margin="10,10,0,0"
                              HorizontalAlignment="Left"
-                             VerticalAlignment="Top" />
+                             VerticalAlignment="Top">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <!--<Image Width="22"
+                                           Height="22"
+                                           Margin="5"
+                                           Source="/Images/audio_play.png" />-->
+
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                                        <TextBlock Text="{Binding Body}" />
+                                        <TextBlock Text="{Binding UsersCount}" />
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     <Button Width="77"
                             Height="27"
                             Margin="10,413,0,0"

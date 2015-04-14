@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VKAPI.Model;
+using VKAPI.Utils;
 
 namespace VKAPI
 {
@@ -63,100 +65,43 @@ namespace VKAPI
 
 
         }
-
-        public static void GetDialogs()
+        /// <summary>
+        /// Возвращает список диалогов текущего пользователя.
+        /// </summary>
+        /// <returns></returns>
+        public static MessageModel GetDialogs(int count)
         {
             List<Message> liatMessages = new List<Message>();
             WebRequest reqGET =
                 WebRequest.Create(
-                   @"https://api.vk.com/method/messages.getDialogs.xml?v=5.29&access_token=" + VkMain.token);
+                   @"https://api.vk.com/method/messages.getDialogs.xml?&v=5.29&access_token=" + VkMain.token);
             WebResponse resp = reqGET.GetResponse();
             Stream stream = resp.GetResponseStream();
             var sr = new StreamReader(stream);
             string s = sr.ReadToEnd();
 
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(s);
-            XmlNodeList bookNodes = doc.GetElementsByTagName("message");
+            //десериализуем
+            MessageModel messageModel = Serializer<MessageModel>.Deserialize(s);
 
-            foreach (XmlNode bookNode in bookNodes)
-            {
-                XmlNode id = bookNode["id"];
-                XmlNode date = bookNode["date"];
-                XmlNode Out = bookNode["out"];
-                XmlNode user_id = bookNode["user_id"];
-                XmlNode read_state = bookNode["read_state"];
-                XmlNode title = bookNode["title"];
-                XmlNode body = bookNode["body"];
-                XmlNode chat_id = bookNode["chat_id"];
-                XmlNode users_count = bookNode["users_count"];
-                XmlNode admin_id = bookNode["admin_id"];
-
-                Message trek = new Message();
-
-                trek.Id = id.InnerText;
-                trek.Date = ConvertUnixTimeToDateTime(Convert.ToDouble(date.InnerText));
-                trek.Out = Convert.ToDouble(Out.InnerText);
-                trek.UserId = Convert.ToInt32(user_id.InnerText);
-                trek.ReadState = Convert.ToInt32(read_state.InnerText);
-                trek.Title = title.InnerText;
-                trek.Body = body.InnerText;
-                if (chat_id != null)
-                trek.ChatId = Convert.ToInt32(chat_id.InnerText);
-                if (users_count != null)
-                trek.UsersCount = Convert.ToInt32(users_count.InnerText);
-                if (admin_id != null)
-                trek.AdminId = Convert.ToInt32(admin_id.InnerText);
-
-
-
-                //       <message>
-                // <id>42273</id>
-                // <date>1428815619</date>
-                // <out>0</out>
-                // <user_id>7954808</user_id>
-                // <read_state>1</read_state>
-                // <title>Миша, Алексей, Александр</title>
-                // <body>Ахахахха</body>
-                // <chat_id>114</chat_id>
-                // <chat_active list="true">
-                //  <item>89415824</item>
-                //  <item>7954808</item>
-                //  <item>159619107</item>
-                // </chat_active>
-                // <push_settings>
-                //  <sound>1</sound>
-                //  <disabled_until>18</disabled_until>
-                // </push_settings>
-                // <users_count>4</users_count>
-                // <admin_id>89415824</admin_id>
-                //</message>
-
-                liatMessages.Add(trek);
-            }
-
-            
+            return messageModel;
         }
 
-        public static DateTime ConvertUnixTimeToDateTime(double timestamp)
+        /// <summary>
+        ///     Асинхронно возвращает список диалогов текущего пользователя.
+        /// </summary>
+        /// <param name="countAudio"></param>
+        /// <returns></returns>
+        public static Task<MessageModel> GetDialogsAsync(int count =20)
         {
-            // This is an example of a UNIX timestamp for the date/time 11-04-2005 09:25.
-            //double timestamp = 1113211532;
-
-            // First make a System.DateTime equivalent to the UNIX Epoch.
-            System.DateTime dateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
-
-            // Add the number of seconds in UNIX timestamp to be converted.
-            dateTime = dateTime.AddSeconds(timestamp);
-
-            // The dateTime now contains the right date/time so to format the string,
-            // use the standard formatting methods of the DateTime object.
-            string printDate = dateTime.ToShortDateString() + " " + dateTime.ToShortTimeString();
-
-            // Print the date and time
-            System.Console.WriteLine(printDate);
-            return dateTime;
+            return Task.Run(() =>
+            {
+                MessageModel messageModel = GetDialogs(count);
+                return messageModel;
+            });
         }
+
+
+        
 
         
     }

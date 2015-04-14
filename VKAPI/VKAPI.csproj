@@ -49,6 +49,7 @@
     <Compile Include="Model\AudioModel.cs" />
     <Compile Include="Model\LongPoll.cs" />
     <Compile Include="Model\Message.cs" />
+    <Compile Include="Model\MessageModel.cs" />
     <Compile Include="Model\Updates.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserModel.cs" />

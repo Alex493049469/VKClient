@@ -34,6 +34,7 @@ namespace VK
         //источники данных
         public AudioModel audioModel;
         public UserModel userModel;
+        public MessageModel messageModel;
         //прогресс загрузки трека 
         public double PosDownload { get; set; }
         //таймер для отображения позиции трека
@@ -287,6 +288,7 @@ namespace VK
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveSettings();
+            Bass.FreeMe();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -313,9 +315,10 @@ namespace VK
             FindMusic();
         }
 
-        private void Button_Click_5(object sender, RoutedEventArgs e)
+        private async void Button_Click_5(object sender, RoutedEventArgs e)
         {
-            VkMessage.GetDialogs();
+            messageModel = await VkMessage.GetDialogsAsync();
+            //ListMessage.ItemsSource = messageModel.Items;
         }
 
         

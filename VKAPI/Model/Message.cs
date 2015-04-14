@@ -1,53 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace VKAPI.Model
 {
     public class Message
     {
         //идентификатор сообщения (не возвращается для пересланных сообщений).
+        [XmlElement("id")]
         public string Id { get; set; }
         //дата отправки сообщения в формате unixtime.
-        public DateTime Date { get; set; }
+        [XmlElement("date")]
+        public double Date
+        {
+            get { throw new NotImplementedException(); }
+            set { DateNorm = ConvertUnixTimeToDateTime(value); }
+        }
+
+        public DateTime DateNorm { get; set; }
+
         //тип сообщения (0 — полученное, 1 — отправленное, не возвращается для пересланных сообщений).
-        public double Out { get; set; }
+        [XmlElement("out")]
+        public int Out { get; set; }
         //идентификатор пользователя, в диалоге с которым находится сообщение.
+        [XmlElement("user_id")]
         public int UserId { get; set; }
         //статус сообщения (0 — не прочитано, 1 — прочитано, не возвращается для пересланных сообщений).
+        [XmlElement("read_state")]
         public int ReadState { get; set; }
         //заголовок сообщения или беседы.
+        [XmlElement("title")]
         public string Title { get; set; }
         //текст сообщения.
+        [XmlElement("body")]
         public string Body { get; set; }
         //идентификатор беседы
+        [XmlElement("chat_id")]
         public int ChatId { get; set; }
         //идентификаторы авторов последних сообщений беседы.
+        [XmlArray("chat_active")]
+        [XmlArrayItem("item")]
         public List<int> ChatActive { get; set; }
         //количество участников беседы.
+        [XmlElement("users_count")]
         public int UsersCount { get; set; }
         //идентификатор создателя беседы.
+        [XmlElement("admin_id")]
         public int AdminId { get; set; }
 
-          //     <message>
-                    // <id>42273</id>
-                    // <date>1428815619</date>
-                    // <out>0</out>
-                    // <user_id>7954808</user_id>
-                    // <read_state>1</read_state>
-                    // <title>Миша, Алексей, Александр</title>
-                    // <body>Ахахахха</body>
-                    // <chat_id>114</chat_id>
-                        // <chat_active list="true"> 
-                            //  <item>89415824</item>
-                            //  <item>7954808</item>
-                            //  <item>159619107</item>
-                        // </chat_active>
-                        // <push_settings>
-                            //  <sound>1</sound>
-                            //  <disabled_until>18</disabled_until>
-                        // </push_settings>
-                    // <users_count>4</users_count>
-                    // <admin_id>89415824</admin_id>
-                //</message>
+        /// <summary>
+        /// преобразование даты в человеческую
+        /// </summary>
+        /// <param name="timestamp"></param>
+        /// <returns></returns>
+        public static DateTime ConvertUnixTimeToDateTime(double timestamp)
+        {
+            
+            System.DateTime dateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+            dateTime = dateTime.AddSeconds(timestamp);
+
+            string printDate = dateTime.ToShortDateString() + " " + dateTime.ToShortTimeString();
+
+            System.Console.WriteLine(printDate);
+            return dateTime;
+        }
     }
 }
