@@ -4,7 +4,7 @@
         x:Name="MainWindow1"
         Title=""
         Width="944"
-        Height="666"
+        Height="624"
         AllowsTransparency="True"
         Closing="MainWindow1_Closing"
         Icon="/Images/Maly4.ico"
@@ -23,7 +23,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <TabControl Width="245"
-                    Margin="0,10,10,10"
+                    Margin="0,0,0,0"
                     HorizontalAlignment="Right">
             <TabItem Header="Друзья">
                 <Grid>
@@ -64,12 +64,12 @@
 
 
         </TabControl>
-        <TabControl Margin="10,10,260,10" TabStripPlacement="Top">
+        <TabControl Margin="211,0,260,0" TabStripPlacement="Top">
 
             <TabItem Header="Мои Аудиозаписи">
                 <Grid Background="#FFE5E5E5">
                     <ListBox x:Name="ListAudio"
-                             Margin="10,122,247,10"
+                             Margin="10,122,138,10"
                              MouseDoubleClick="ListAudio_MouseDoubleClick"
                              SelectionChanged="ListAudio_SelectionChanged">
                         <ListBox.ItemTemplate>
@@ -93,7 +93,7 @@
                     </ListBox>
                     <Button Width="123"
                             Height="26"
-                            Margin="0,122,119,0"
+                            Margin="0,122,10,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Click="Button_Click"
@@ -177,7 +177,7 @@
                         </Canvas>
                     </Button>
                     <TextBox Name="TextAudio"
-                             Width="389"
+                             Width="363"
                              Height="26"
                              Margin="10,81,0,0"
                              HorizontalAlignment="Left"
@@ -185,7 +185,7 @@
                              TextWrapping="Wrap" />
                     <Button Width="53"
                             Height="26"
-                            Margin="404,81,0,0"
+                            Margin="378,81,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Click="Button_Click_4"
@@ -214,10 +214,8 @@
                      Header="Мои Сообщения">
                 <Grid Background="#FFE5E5E5">
                     <ListBox Name="ListMessage"
-                             Width="626"
                              Height="386"
-                             Margin="10,10,0,0"
-                             HorizontalAlignment="Left"
+                             Margin="10,10,10,0"
                              VerticalAlignment="Top">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -229,9 +227,9 @@
                                            Source="/Images/audio_play.png" />-->
 
                                     <StackPanel>
-                                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                                        <TextBlock Text="{Binding Body}" />
-                                        <TextBlock Text="{Binding UsersCount}" />
+                                        <TextBlock FontWeight="Bold" Text="{Binding message.Title}" />
+                                        <TextBlock Text="{Binding message.Body}" />
+                                        <TextBlock Text="{Binding message.UsersCount}" />
                                     </StackPanel>
 
                                 </StackPanel>
@@ -255,6 +253,56 @@
 
         </TabControl>
 
+        <StackPanel Width="196"
+                    Height="576"
+                    Margin="10,10,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+            <Button Name="MyPageButton" Margin="3">
+                <StackPanel Width="174"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <Image Width="50"
+                           Height="50"
+                           Margin="5"
+                           Source="{Binding Photo50}" />
+                    <TextBlock Margin="5" VerticalAlignment="Center">Моя страница</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Height="37" Margin="3">
+                <StackPanel Width="174"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <Image Width="24"
+                           Height="21"
+                           Margin="5"
+                           Source="Images/111user.png" />
+                    <TextBlock Margin="5" VerticalAlignment="Center">Друзья</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Height="37" Margin="3">
+                <StackPanel Width="174"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <Image Width="24"
+                           Height="16"
+                           Margin="5"
+                           Source="Images/18envelope.png" />
+                    <TextBlock Margin="5" VerticalAlignment="Center">Сообщения</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Height="37" Margin="3">
+                <StackPanel Width="174"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <Image Width="24"
+                           Height="23"
+                           Margin="5"
+                           Source="Images/194note2.png" />
+                    <TextBlock Margin="5" VerticalAlignment="Center">Аудиозаписи</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
         <StatusBar Grid.Row="1"
                    Height="24"
                    VerticalAlignment="Bottom">

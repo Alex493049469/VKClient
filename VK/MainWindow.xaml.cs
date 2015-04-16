@@ -33,8 +33,9 @@ namespace VK
         int stream;
         //источники данных
         public AudioModel audioModel;
-        public UserModel userModel;
+        public FriendsModel friendsModel;
         public MessageModel messageModel;
+        public UserModel userModel;
         //прогресс загрузки трека 
         public double PosDownload { get; set; }
         //таймер для отображения позиции трека
@@ -92,8 +93,8 @@ namespace VK
         //загружаем список друзей
         public async void LoadFriends()
         {
-            userModel = await VkFriends.GetMyFriendsAsync();
-            ListFriend.ItemsSource = userModel.Items;
+            friendsModel = await VkFriends.GetMyFriendsAsync();
+            ListFriend.ItemsSource = friendsModel.Items;
         }
 
         //загрузка моих аудиозаписей
@@ -298,16 +299,16 @@ namespace VK
 
         private async void CheckOnline_Checked(object sender, RoutedEventArgs e)
         {
-            userModel = await VkFriends.GetMyFriendsAsync();
-            userModel.Items = userModel.Items.FindAll(user => user.OnlineNorm == "Online");
-            ListFriend.ItemsSource = userModel.Items;
+            friendsModel = await VkFriends.GetMyFriendsAsync();
+            friendsModel.Items = friendsModel.Items.FindAll(user => user.OnlineNorm == "Online");
+            ListFriend.ItemsSource = friendsModel.Items;
 
         }
 
         private async void CheckOnline_Unchecked(object sender, RoutedEventArgs e)
         {
-            userModel = await VkFriends.GetMyFriendsAsync();
-            ListFriend.ItemsSource = userModel.Items;
+            friendsModel = await VkFriends.GetMyFriendsAsync();
+            ListFriend.ItemsSource = friendsModel.Items;
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -317,7 +318,11 @@ namespace VK
 
         private async void Button_Click_5(object sender, RoutedEventArgs e)
         {
+            userModel = await VkUser.GetUserAsync();
             messageModel = await VkMessage.GetDialogsAsync();
+
+            ListMessage.ItemsSource = messageModel.Items;
+            MyPageButton.DataContext = userModel.user;
             //ListMessage.ItemsSource = messageModel.Items;
         }
 

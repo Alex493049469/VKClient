@@ -20,9 +20,5 @@ namespace VKAPI.Model
 
     }
 
-     public class Dialog
-     {
-         [XmlElement("message")]
-         public Message message { get; set; }
-     }
+    
 }

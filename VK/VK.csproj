@@ -152,6 +152,24 @@
     <Content Include="Bass.Net.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\01refresh.png" />
+    <Resource Include="Images\02redo.png" />
+    <Resource Include="Images\06magnify.png" />
+    <Resource Include="Images\08chat.png" />
+    <Resource Include="Images\09chat2.png" />
+    <Resource Include="Images\10medical.png" />
+    <Resource Include="Images\111user.png" />
+    <Resource Include="Images\112group.png" />
+    <Resource Include="Images\121landscape.png" />
+    <Resource Include="Images\18envelope.png" />
+    <Resource Include="Images\194note2.png" />
+    <Resource Include="Images\19gear.png" />
+    <Resource Include="Images\20gear2.png" />
+    <Resource Include="Images\29heart.png" />
+    <Resource Include="Images\40inbox.png" />
+    <Resource Include="Images\53house.png" />
+    <Resource Include="Images\65note.png" />
+    <Resource Include="Images\68paperclip.png" />
     <Resource Include="Bass.Net.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

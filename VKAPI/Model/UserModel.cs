@@ -8,15 +8,10 @@ using System.Xml.Serialization;
 namespace VKAPI.Model
 {
     [XmlRoot("response")]
-    public class UserModel
+   public class UserModel
     {
-
-        [XmlElement("count")]
-        public int Count { get; set; }
-
-        [XmlArray("items")]
-        [XmlArrayItem("user", typeof(User))]
-        public List<User> Items { get; set; }
+         [XmlElement("user")]
+        public User user { get; set; }
 
     }
 }
