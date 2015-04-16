@@ -28,6 +28,7 @@
                             <Setter TargetName="PART_border" Property="Background" Value="{StaticResource VS2012WindowBorderBrush}" />
                             <Setter TargetName="PART_border" Property="Opacity" Value="1" />
                             <Setter Property="Foreground" Value="#FF030303" />
+
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
