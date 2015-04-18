@@ -16,7 +16,7 @@ namespace VKAPI
         /// </summary>
         /// <param name="countAudio"></param>
         /// <returns></returns>
-        public static AudioModel GetMyAudios(int countAudio)
+        public static AudioModel Get(int countAudio)
         {
             WebRequest reqGET =
                 WebRequest.Create(@"https://api.vk.com/method/audio.get.xml?count=" + countAudio +
@@ -37,11 +37,11 @@ namespace VKAPI
         /// </summary>
         /// <param name="countAudio"></param>
         /// <returns></returns>
-        public static Task<AudioModel> GetMyAudiosAsync(int countAudio)
+        public static Task<AudioModel> GetAsync(int countAudio)
         {
             return Task.Run(() =>
             {
-                AudioModel audioModel = GetMyAudios(countAudio);
+                AudioModel audioModel = Get(countAudio);
                 return audioModel;
             });
         }
@@ -51,7 +51,7 @@ namespace VKAPI
         /// </summary>
         /// <param name="countAudio"></param>
         /// <returns></returns>
-        public static AudioModel SearchAudios(string text, int countAudio)
+        public static AudioModel Search(string text, int countAudio)
         {
             WebRequest reqGET =
                 WebRequest.Create(@"https://api.vk.com/method/audio.search.xml?q=" + text + "&count=" + countAudio +
@@ -72,11 +72,11 @@ namespace VKAPI
         /// </summary>
         /// <param name="countAudio"></param>
         /// <returns></returns>
-        public static Task<AudioModel> SearchAudiosAsync(string text, int countAudio = 300)
+        public static Task<AudioModel> SearchAsync(string text, int countAudio = 300)
         {
             return Task.Run(() =>
             {
-                AudioModel audioModel = SearchAudios(text, countAudio);
+                AudioModel audioModel = Search(text, countAudio);
                 return audioModel;
             });
         }

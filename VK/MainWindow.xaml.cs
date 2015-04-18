@@ -93,14 +93,14 @@ namespace VK
         //загружаем список друзей
         public async void LoadFriends()
         {
-            friendsModel = await VkFriends.GetMyFriendsAsync();
+            friendsModel = await VkFriends.GetAsync();
             ListFriend.ItemsSource = friendsModel.Items;
         }
 
         //загрузка моих аудиозаписей
         public async void LoadMyMusic()
         {
-            audioModel = await VkAudio.GetMyAudiosAsync(1000);
+            audioModel = await VkAudio.GetAsync(1000);
 
             ListAudio.ItemsSource = audioModel.Items;
         }
@@ -109,7 +109,7 @@ namespace VK
         public async void FindMusic()
         {
             
-            audioModel = await VkAudio.SearchAudiosAsync(TextAudio.Text);
+            audioModel = await VkAudio.SearchAsync(TextAudio.Text);
 
             ListAudio.ItemsSource = audioModel.Items;
         }
@@ -299,7 +299,7 @@ namespace VK
 
         private async void CheckOnline_Checked(object sender, RoutedEventArgs e)
         {
-            friendsModel = await VkFriends.GetMyFriendsAsync();
+            friendsModel = await VkFriends.GetAsync();
             friendsModel.Items = friendsModel.Items.FindAll(user => user.OnlineNorm == "Online");
             ListFriend.ItemsSource = friendsModel.Items;
 
@@ -307,7 +307,7 @@ namespace VK
 
         private async void CheckOnline_Unchecked(object sender, RoutedEventArgs e)
         {
-            friendsModel = await VkFriends.GetMyFriendsAsync();
+            friendsModel = await VkFriends.GetAsync();
             ListFriend.ItemsSource = friendsModel.Items;
         }
 
@@ -318,7 +318,7 @@ namespace VK
 
         private async void Button_Click_5(object sender, RoutedEventArgs e)
         {
-            userModel = await VkUser.GetUserAsync();
+            userModel = await VkUser.GetAsync();
             messageModel = await VkMessage.GetDialogsAsync();
 
             ListMessage.ItemsSource = messageModel.Items;

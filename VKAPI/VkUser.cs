@@ -19,7 +19,7 @@ namespace VKAPI
         /// </summary>
         /// <param name="CountAudio"></param>
         /// <returns></returns>
-       public static UserModel GetUser()
+       public static UserModel Get()
         {
             WebRequest reqGET =
                 WebRequest.Create(
@@ -41,11 +41,11 @@ namespace VKAPI
         /// </summary>
         /// <param name="CountAudio"></param>
         /// <returns></returns>
-       public static Task<UserModel> GetUserAsync()
+       public static Task<UserModel> GetAsync()
         {
             return Task.Run(() =>
             {
-                UserModel userModel = GetUser();
+                UserModel userModel = Get();
                 return userModel;
             });
         }

@@ -19,7 +19,7 @@ namespace VKAPI
         /// </summary>
         /// <param name="CountAudio"></param>
         /// <returns></returns>
-        public static FriendsModel GetMyFriends()
+        public static FriendsModel Get()
         {
             WebRequest reqGET =
                 WebRequest.Create(
@@ -41,11 +41,11 @@ namespace VKAPI
         /// </summary>
         /// <param name="CountAudio"></param>
         /// <returns></returns>
-        public static Task<FriendsModel> GetMyFriendsAsync()
+        public static Task<FriendsModel> GetAsync()
         {
             return Task.Run(() =>
             {
-                FriendsModel userModel = GetMyFriends();
+                FriendsModel userModel = Get();
                 return userModel;
             });
         }

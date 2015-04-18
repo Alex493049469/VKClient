@@ -245,6 +245,12 @@
                             Content="Button" />
                 </Grid>
             </TabItem>
+            <TabItem Height="38"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Header="Моя страница">
+                <Grid Background="#FFE5E5E5" />
+            </TabItem>
 
 
 
