@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="VK.Module.Message.MessageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid>
+        <ListBox x:Name="ListMessage" Margin="10,10,10,47">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+
+                        <!--<Image Width="22"
+                                           Height="22"
+                                           Margin="5"
+                                           Source="/Images/audio_play.png" />-->
+
+                        <StackPanel>
+                            <TextBlock FontWeight="Bold" Text="{Binding message.Title}" />
+                            <TextBlock Text="{Binding message.Body}" />
+                            <TextBlock Text="{Binding message.UsersCount}" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

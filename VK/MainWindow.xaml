@@ -66,63 +66,16 @@
         </TabControl>
         <TabControl Name="TabControler"
                     Margin="211,0,260,0"
-                    TabStripPlacement="Top">
-            <TabItem HorizontalAlignment="Left"
-                     VerticalAlignment="Top"
-                     Header="Мои Сообщения">
-                <Grid Background="#FFE5E5E5">
-                    <ListBox Name="ListMessage"
-                             Height="386"
-                             Margin="10,10,10,0"
-                             VerticalAlignment="Top">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-
-                                    <!--<Image Width="22"
-                                           Height="22"
-                                           Margin="5"
-                                           Source="/Images/audio_play.png" />-->
-
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold" Text="{Binding message.Title}" />
-                                        <TextBlock Text="{Binding message.Body}" />
-                                        <TextBlock Text="{Binding message.UsersCount}" />
-                                    </StackPanel>
-
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Button Width="77"
-                            Height="27"
-                            Margin="10,413,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Click="Button_Click_5"
-                            Content="Button" />
-                </Grid>
-            </TabItem>
-            <TabItem Height="38"
-                     HorizontalAlignment="Left"
-                     VerticalAlignment="Top"
-                     Header="Моя страница">
-                <Grid Background="#FFE5E5E5" />
-            </TabItem>
-
-
-
-
-
-
-        </TabControl>
+                    TabStripPlacement="Top"/>
 
         <StackPanel Width="196"
                     Height="576"
                     Margin="10,10,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top">
-            <Button Name="MyPageButton" Margin="3">
+            <Button Name="MyPageButton"
+                    Margin="3"
+                    Click="MyPageButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
@@ -144,7 +97,9 @@
                     <TextBlock Margin="5" VerticalAlignment="Center">Друзья</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Height="37" Margin="3">
+            <Button Name="MyMessageButton"
+                    Height="37"
+                    Margin="3,3,0,3" HorizontalAlignment="Left" Width="190" Click="MyMessageButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">

@@ -18,6 +18,8 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Un4seen.Bass;
 using VK.Module.Audio;
+using VK.Module.Message;
+using VK.Module.Page;
 using VK.Properties;
 using VKAPI;
 using VKAPI.Model;
@@ -202,12 +204,7 @@ namespace VK
 
         private async void Button_Click_5(object sender, RoutedEventArgs e)
         {
-            userModel = await VkUser.GetAsync();
-            messageModel = await VkMessage.GetDialogsAsync();
-
-            ListMessage.ItemsSource = messageModel.Items;
-            MyPageButton.DataContext = userModel.user;
-            //ListMessage.ItemsSource = messageModel.Items;
+          
         }
 
         private void AudioButton_Click(object sender, RoutedEventArgs e)
@@ -217,38 +214,83 @@ namespace VK
 
             TabItem ti = new TabItem();
             ti.Header = "Аудиозаписи";
-            ti.Name = "AudioItem";
+            ti.Name = "MyAudioItem";
             ti.Content = Ac;
 
             //если вкладки нет то добавляем если есть то делаем ее активной
-            
-            if (FindTab()==-1)
+
+            if (FindTab("MyAudioItem") == -1)
             {
                 TabControler.Items.Add(ti);
                 TabControler.SelectedIndex = TabControler.Items.Count - 1;
             }
             else
             {
-                TabControler.SelectedIndex = FindTab();
+                TabControler.SelectedIndex = FindTab("MyAudioItem");
             }
-
-           
 
 
         }
-
-        public int FindTab()
+        /// <summary>
+        /// находит вкладку с именем и весли найдена возвращает индекс
+        /// </summary>
+        /// <returns></returns>
+        public int FindTab(string name)
         {
             int finded = -1;
             for (int i = 0; i < TabControler.Items.Count; i++)
             {
                 TabItem asdf = (TabItem)TabControler.Items[i];
-                if (asdf.Name == "AudioItem")
+                if (asdf.Name == name )
                 {
                     finded = i;
                 }
             }
             return finded;
+        }
+
+        private void MyPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            PageControl Ac = new PageControl();
+
+            TabItem ti = new TabItem();
+            ti.Header = "Моя страница";
+            ti.Name = "MyPage";
+            ti.Content = Ac;
+
+            //если вкладки нет то добавляем если есть то делаем ее активной
+
+            if (FindTab("MyPage") == -1)
+            {
+                TabControler.Items.Add(ti);
+                TabControler.SelectedIndex = TabControler.Items.Count - 1;
+            }
+            else
+            {
+                TabControler.SelectedIndex = FindTab("MyPage");
+            }
+        }
+
+        private void MyMessageButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageControl Ac = new MessageControl();
+
+            TabItem ti = new TabItem();
+            ti.Header = "Сообщения";
+            ti.Name = "MyMessage";
+            ti.Content = Ac;
+
+            //если вкладки нет то добавляем если есть то делаем ее активной
+
+            if (FindTab("MyMessage") == -1)
+            {
+                TabControler.Items.Add(ti);
+                TabControler.SelectedIndex = TabControler.Items.Count - 1;
+            }
+            else
+            {
+                TabControler.SelectedIndex = FindTab("MyMessage");
+            }
         }
 
 
