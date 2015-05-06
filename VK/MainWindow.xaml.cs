@@ -92,92 +92,6 @@ namespace VK
         }
 
 
-
-
-
-        private void ListAudio_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-
-        }
-
-
-
-
-
-
-
-        private void ListAudio_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-
-
-
-
-        private void TrekState_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-
-
-
-        }
-
-
-
-        private void MyDownload(IntPtr buffer, int length, IntPtr user)
-        {
-            if (_fs == null)
-            {
-                // create the file
-                // _fs = File.OpenWrite("output.mp3");
-            }
-            if (buffer == IntPtr.Zero)
-            {
-                // finished downloading
-                _fs.Flush();
-                _fs.Close();
-            }
-            else
-            {
-                // increase the data buffer as needed 
-                if (_data == null || _data.Length < length)
-                    _data = new byte[length];
-                // copy from managed to unmanaged memory
-                Marshal.Copy(buffer, _data, 0, length);
-                // write to file
-                // _fs.Write(_data, 0, length);
-            }
-        }
-
-
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            if (Bass.BASS_ChannelIsActive(stream) == BASSActive.BASS_ACTIVE_PLAYING)
-            {
-                Bass.BASS_Pause();
-
-            }
-            else
-            {
-                Bass.BASS_Start();
-
-            }
-        }
-
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
-            Bass.BASS_StreamFree(stream);
-        }
-
-
-
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
@@ -200,12 +114,6 @@ namespace VK
             ListFriend.ItemsSource = friendsModel.Items;
         }
 
-
-
-        private async void Button_Click_5(object sender, RoutedEventArgs e)
-        {
-          
-        }
 
         private void AudioButton_Click(object sender, RoutedEventArgs e)
         {

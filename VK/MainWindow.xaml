@@ -27,10 +27,7 @@
                     HorizontalAlignment="Right">
             <TabItem Header="Друзья">
                 <Grid>
-                    <ListBox x:Name="ListFriend"
-                             Margin="10,10,10,31"
-                             MouseDoubleClick="ListAudio_MouseDoubleClick"
-                             SelectionChanged="ListAudio_SelectionChanged">
+                    <ListBox x:Name="ListFriend" Margin="10,10,10,31">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="3">
@@ -66,7 +63,7 @@
         </TabControl>
         <TabControl Name="TabControler"
                     Margin="211,0,260,0"
-                    TabStripPlacement="Top"/>
+                    TabStripPlacement="Top" />
 
         <StackPanel Width="196"
                     Height="576"
@@ -98,8 +95,11 @@
                 </StackPanel>
             </Button>
             <Button Name="MyMessageButton"
+                    Width="190"
                     Height="37"
-                    Margin="3,3,0,3" HorizontalAlignment="Left" Width="190" Click="MyMessageButton_Click">
+                    Margin="3,3,0,3"
+                    HorizontalAlignment="Left"
+                    Click="MyMessageButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
