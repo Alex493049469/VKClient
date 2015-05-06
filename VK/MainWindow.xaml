@@ -64,151 +64,9 @@
 
 
         </TabControl>
-        <TabControl Margin="211,0,260,0" TabStripPlacement="Top">
-
-            <TabItem Header="Мои Аудиозаписи">
-                <Grid Background="#FFE5E5E5">
-                    <ListBox x:Name="ListAudio"
-                             Margin="10,122,138,10"
-                             MouseDoubleClick="ListAudio_MouseDoubleClick"
-                             SelectionChanged="ListAudio_SelectionChanged">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-
-                                    <Image Width="22"
-                                           Height="22"
-                                           Margin="5"
-                                           Source="/Images/audio_play.png" />
-
-                                    <StackPanel>
-                                        <TextBlock FontWeight="Bold" Text="{Binding Artist}" />
-                                        <TextBlock Text="{Binding Title}" />
-                                        <TextBlock Text="{Binding DurationNorm}" />
-                                    </StackPanel>
-
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Button Width="123"
-                            Height="26"
-                            Margin="0,122,10,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Click="Button_Click"
-                            Content="Мои аудиозаписи" />
-
-                    <Slider Name="TrekState"
-                            Height="21"
-                            Margin="10,55,324,0"
-                            VerticalAlignment="Top"
-                            IsSelectionRangeEnabled="True"
-                            SelectionEnd="20"
-                            SelectionStart="0"
-                            ValueChanged="TrekState_ValueChanged" />
-                    <Slider x:Name="Volime"
-                            Width="60"
-                            Height="21"
-                            Margin="0,55,247,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Maximum="100"
-                            Minimum="0"
-                            Orientation="Horizontal"
-                            ValueChanged="Volime_ValueChanged" />
-
-                    <Button Name="PlayButton"
-                            Width="53"
-                            Height="36"
-                            Margin="10,10,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Click="Button_Click_1">
-                        <Canvas Width="16.5" Height="17.51">
-                            <Path Width="16.5"
-                                  Height="17.51"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Top"
-                                  Data="M462,157.04 L461.5,193.53999 491.5,174.53999 z"
-                                  Fill="#FFF4F4F5"
-                                  Stretch="Fill"
-                                  Stroke="#FFFBF5F5" />
-                        </Canvas>
-                    </Button>
-                    <Button Width="53"
-                            Height="36"
-                            Margin="68,10,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Click="Button_Click_2">
-                        <Canvas Width="12.5" Height="15">
-                            <Rectangle Width="5"
-                                       Height="15"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Top"
-                                       Fill="#FFF4F4F5"
-                                       Stroke="#FFFBF5F5" />
-                            <Rectangle Canvas.Left="7.5"
-                                       Width="5"
-                                       Height="15"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Top"
-                                       Fill="#FFF4F4F5"
-                                       Stroke="#FFFBF5F5" />
-                        </Canvas>
-                    </Button>
-                    <Button Width="53"
-                            Height="36"
-                            Margin="126,10,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Click="Button_Click_3">
-                        <Canvas Width="14" Height="14">
-                            <Rectangle Width="14"
-                                       Height="14"
-                                       Fill="#FFF4F4F5"
-                                       Stroke="#FFFBF5F5" />
-
-
-
-
-
-                        </Canvas>
-                    </Button>
-                    <TextBox Name="TextAudio"
-                             Width="363"
-                             Height="26"
-                             Margin="10,81,0,0"
-                             HorizontalAlignment="Left"
-                             VerticalAlignment="Top"
-                             TextWrapping="Wrap" />
-                    <Button Width="53"
-                            Height="26"
-                            Margin="378,81,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Click="Button_Click_4"
-                            Content="Поиск" />
-                    <Button Width="53"
-                            Height="36"
-                            Margin="184,10,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top">
-                        <Canvas Width="16.125" Height="18.829">
-                            <Path Canvas.Left="0.5"
-                                  Width="16.125"
-                                  Height="18.829"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Top"
-                                  Data="M443.5,144.66499 L453.74968,144.78999 453.5,159.66499 457.99957,159.66499 448.62481,167.16499 438.87506,159.53999 443.37495,159.53999 z"
-                                  Fill="#FFF4F4F5"
-                                  Stretch="Fill"
-                                  Stroke="#FFFBF5F5" />
-                        </Canvas>
-                    </Button>
-                </Grid>
-            </TabItem>
+        <TabControl Name="TabControler"
+                    Margin="211,0,260,0"
+                    TabStripPlacement="Top">
             <TabItem HorizontalAlignment="Left"
                      VerticalAlignment="Top"
                      Header="Мои Сообщения">
@@ -297,7 +155,10 @@
                     <TextBlock Margin="5" VerticalAlignment="Center">Сообщения</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Height="37" Margin="3">
+            <Button Name="AudioButton"
+                    Height="37"
+                    Margin="3"
+                    Click="AudioButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">

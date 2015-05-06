@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="VK.Module.Page.PageControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="355"
+             d:DesignWidth="644"
+             mc:Ignorable="d">
+    <Grid>
+        <Image Name="AvatarImage"
+               Width="160"
+               Height="201"
+               Margin="21,23,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top" />
+        <TextBox Width="400"
+                 Height="29"
+                 Margin="213,54,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Text="Статус"
+                 TextWrapping="Wrap" />
+        <Label Margin="213,23,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="Фамилия имя пользователя"
+               Foreground="White" />
+    </Grid>
+</UserControl>
