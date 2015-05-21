@@ -12,7 +12,8 @@
                Height="201"
                Margin="21,23,0,0"
                HorizontalAlignment="Left"
-               VerticalAlignment="Top" />
+               VerticalAlignment="Top"
+               Source="{Binding Photo_200_orig}" />
         <TextBox Width="400"
                  Height="29"
                  Margin="213,54,0,0"

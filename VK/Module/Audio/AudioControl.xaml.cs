@@ -31,7 +31,7 @@ namespace VK.Module.Audio
         public double PosDownload { get; set; }
         //таймер для отображения позиции трека
         private DispatcherTimer timer = null;
-        //источники данных
+        //источник данных
         public AudioModel audioModel;
 
         public AudioControl()
@@ -63,7 +63,7 @@ namespace VK.Module.Audio
             ListAudio.ItemsSource = audioModel.Items;
         }
 
-        //загрузка моих аудиозаписей
+        //поиск аудиозаписей
         public async void FindMusic()
         {
 
@@ -94,6 +94,9 @@ namespace VK.Module.Audio
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void timerStart()
         {
             timer = new DispatcherTimer(DispatcherPriority.Normal);  // если надо, то в скобках указываем приоритет, например DispatcherPriority.Render
@@ -183,6 +186,7 @@ namespace VK.Module.Audio
         private void Volime_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Bass.BASS_ChannelSetAttribute(stream, BASSAttribute.BASS_ATTRIB_VOL, (float)Volime.Value / 100);
+            SaveSettings();
         }
 
         private void ListAudio_MouseDoubleClick(object sender, MouseButtonEventArgs e)

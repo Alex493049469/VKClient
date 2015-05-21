@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VKAPI;
+using VKAPI.Model;
 
 namespace VK.Module.Page
 {
@@ -20,9 +22,24 @@ namespace VK.Module.Page
     /// </summary>
     public partial class PageControl : UserControl
     {
+        public UserModel userModel;
+
         public PageControl()
         {
             InitializeComponent();
+
+            LoadUserInfo();
         }
+
+        /// <summary>
+        /// грущит информацию о текущем пользователе
+        /// </summary>
+        public async void LoadUserInfo()
+        {
+            userModel = await VkUser.GetAsync();
+            AvatarImage.DataContext = userModel.user;
+
+        }
+
     }
 }

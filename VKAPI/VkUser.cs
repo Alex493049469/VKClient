@@ -23,7 +23,7 @@ namespace VKAPI
         {
             WebRequest reqGET =
                 WebRequest.Create(
-                    @"https://api.vk.com/method/users.get.xml?fields=sex,bdate,online,photo_100,photo_50&&v=5.29&access_token=" +
+                    @"https://api.vk.com/method/users.get.xml?fields=sex,bdate,online,photo_100,photo_50,photo_200_orig&v=5.29&access_token=" +
                     VkMain.token);
             WebResponse resp = reqGET.GetResponse();
             Stream stream = resp.GetResponseStream();

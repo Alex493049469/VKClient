@@ -63,5 +63,8 @@ namespace VKAPI.Model
 
         [XmlElement("photo_100")]
         public string Photo100 { get; set; }
+
+        [XmlElement("photo_200_orig")]
+        public string Photo_200_orig { get; set; }
     }
 }
