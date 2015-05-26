@@ -1,8 +1,10 @@
 ﻿using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using VKAPI.Model;
-using VKAPI.Utils;
+using VKAPI.Model.AudioModel;
+
 
 namespace VKAPI
 {
@@ -19,7 +21,7 @@ namespace VKAPI
         public static AudioModel Get(int countAudio)
         {
             WebRequest reqGET =
-                WebRequest.Create(@"https://api.vk.com/method/audio.get.xml?count=" + countAudio +
+                WebRequest.Create(@"https://api.vk.com/method/audio.get?count=" + countAudio +
                                   "&v=5.29&access_token=" + VkMain.token);
             WebResponse resp = reqGET.GetResponse();
             Stream stream = resp.GetResponseStream();
@@ -27,7 +29,7 @@ namespace VKAPI
             string s = sr.ReadToEnd();
 
             //десериализуем
-            AudioModel audioModel = Serializer<AudioModel>.Deserialize(s);
+            AudioModel audioModel = JsonConvert.DeserializeObject<AudioModel>(s);
 
             return audioModel;
         }
@@ -54,7 +56,7 @@ namespace VKAPI
         public static AudioModel Search(string text, int countAudio)
         {
             WebRequest reqGET =
-                WebRequest.Create(@"https://api.vk.com/method/audio.search.xml?q=" + text + "&count=" + countAudio +
+                WebRequest.Create(@"https://api.vk.com/method/audio.search?q=" + text + "&count=" + countAudio +
                                   "&v=5.29&access_token=" + VkMain.token);
             WebResponse resp = reqGET.GetResponse();
             Stream stream = resp.GetResponseStream();
@@ -62,7 +64,7 @@ namespace VKAPI
             string s = sr.ReadToEnd();
 
             //десериализуем
-            AudioModel audioModel = Serializer<AudioModel>.Deserialize(s);
+            AudioModel audioModel = JsonConvert.DeserializeObject<AudioModel>(s);
 
             return audioModel;
         }

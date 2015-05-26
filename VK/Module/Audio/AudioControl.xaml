@@ -20,9 +20,9 @@
                                Source="/Images/audio_play.png" />
 
                         <StackPanel>
-                            <TextBlock FontWeight="Bold" Text="{Binding Artist}" />
-                            <TextBlock Text="{Binding Title}" />
-                            <TextBlock Text="{Binding DurationNorm}" />
+                            <TextBlock FontWeight="Bold" Text="{Binding artist}" />
+                            <TextBlock Text="{Binding title}" />
+                            <TextBlock Text="{Binding durationNorm}" />
                         </StackPanel>
 
                     </StackPanel>

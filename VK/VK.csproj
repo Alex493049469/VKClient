@@ -64,8 +64,8 @@
     <Compile Include="Module\Audio\AudioControl.xaml.cs">
       <DependentUpon>AudioControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Module\Message\MessageControl.xaml.cs">
-      <DependentUpon>MessageControl.xaml</DependentUpon>
+    <Compile Include="Module\Dialogs\DialogControl.xaml.cs">
+      <DependentUpon>DialogControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\Page\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
@@ -95,7 +95,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Module\Message\MessageControl.xaml">
+    <Page Include="Module\Dialogs\DialogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

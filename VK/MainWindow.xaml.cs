@@ -23,6 +23,10 @@ using VK.Module.Page;
 using VK.Properties;
 using VKAPI;
 using VKAPI.Model;
+using VKAPI.Model.AudioModel;
+using VKAPI.Model.DialogsModel;
+using VKAPI.Model.FriendsModel;
+using VKAPI.Model.UsersModel;
 
 
 namespace VK
@@ -37,8 +41,8 @@ namespace VK
         //источники данных
         public AudioModel audioModel;
         public FriendsModel friendsModel;
-        public MessageModel messageModel;
-        public UserModel userModel;
+        public DialogsModel messageModel;
+        public UsersModel userModel;
 
 
         //заготовки для сохранения файлов
@@ -88,7 +92,7 @@ namespace VK
         public async void LoadFriends()
         {
             friendsModel = await VkFriends.GetAsync();
-            ListFriend.ItemsSource = friendsModel.Items;
+            ListFriend.ItemsSource = friendsModel.response.items;
         }
 
 
@@ -103,15 +107,15 @@ namespace VK
         private async void CheckOnline_Checked(object sender, RoutedEventArgs e)
         {
             friendsModel = await VkFriends.GetAsync();
-            friendsModel.Items = friendsModel.Items.FindAll(user => user.OnlineNorm == "Online");
-            ListFriend.ItemsSource = friendsModel.Items;
+            friendsModel.response.items = friendsModel.response.items.FindAll(user => user.OnlineString == "Online");
+            ListFriend.ItemsSource = friendsModel.response.items;
 
         }
 
         private async void CheckOnline_Unchecked(object sender, RoutedEventArgs e)
         {
             friendsModel = await VkFriends.GetAsync();
-            ListFriend.ItemsSource = friendsModel.Items;
+            ListFriend.ItemsSource = friendsModel.response.items;
         }
 
 
@@ -181,7 +185,7 @@ namespace VK
 
         private void MyMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageControl Ac = new MessageControl();
+            DialogControl Ac = new DialogControl();
 
             TabItem ti = new TabItem();
             ti.Header = "Сообщения";

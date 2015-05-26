@@ -14,17 +14,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VKAPI;
 using VKAPI.Model;
+using VKAPI.Model.DialogsModel;
+using VKAPI.Model.UsersModel;
 
 namespace VK.Module.Message
 {
     /// <summary>
     /// Логика взаимодействия для MessageControl.xaml
     /// </summary>
-    public partial class MessageControl : UserControl
+    public partial class DialogControl : UserControl
     {
-        public UserModel userModel;
-        public MessageModel messageModel;
-        public MessageControl()
+        public UsersModel userModel;
+        public DialogsModel messageModel;
+        public DialogControl()
         {
             InitializeComponent();
 
@@ -34,10 +36,10 @@ namespace VK.Module.Message
 
         public async void LoadMyMessage()
         {
-            userModel = await VkUser.GetAsync();
+            userModel = await VkUsers.GetAsync("", "sex", VkUsers.name_case.nom);
             messageModel = await VkMessage.GetDialogsAsync();
 
-            ListMessage.ItemsSource = messageModel.Items;
+            ListMessage.ItemsSource = messageModel.response.items;
            // MyPageButton.DataContext = userModel.user;
          
         }

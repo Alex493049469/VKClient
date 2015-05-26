@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VKAPI;
 using VKAPI.Model;
+using VKAPI.Model.UsersModel;
 
 namespace VK.Module.Page
 {
@@ -22,7 +23,7 @@ namespace VK.Module.Page
     /// </summary>
     public partial class PageControl : UserControl
     {
-        public UserModel userModel;
+        public UsersModel userModel;
 
         public PageControl()
         {
@@ -36,8 +37,8 @@ namespace VK.Module.Page
         /// </summary>
         public async void LoadUserInfo()
         {
-            userModel = await VkUser.GetAsync();
-            AvatarImage.DataContext = userModel.user;
+            userModel = await VkUsers.GetAsync("", "sex", VkUsers.name_case.nom);
+            AvatarImage.DataContext = userModel.response;
 
         }
 

@@ -2,8 +2,11 @@
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using VKAPI.Model;
-using VKAPI.Utils;
+using VKAPI.Model.FriendsModel;
+
+
 
 namespace VKAPI
 {
@@ -12,18 +15,21 @@ namespace VKAPI
     /// </summary>
     public static class VkFriends
     {
-        public static List<User> ListFriends;
+        //список всех полей
+        private static string FieldsAll = "nickname, domain, sex, bdate, city, country, timezone, photo_50, photo_100, photo_200_orig, has_mobile, contacts, education, online, relation, last_seen, status, can_write_private_message, can_see_all_posts, can_post, universities ";
+        private static string FieldsStandart = "nickname, photo_50, photo_100, online, status";
 
         /// <summary>
-        ///     Грузит данные о друзьях
+        /// 
         /// </summary>
-        /// <param name="CountAudio"></param>
         /// <returns></returns>
         public static FriendsModel Get()
         {
+            //формирование строки запроса
+            string param;
             WebRequest reqGET =
                 WebRequest.Create(
-                    @"https://api.vk.com/method/friends.get.xml?fields=online,photo_100&order=hints&v=5.29&access_token=" +
+                    @"https://api.vk.com/method/friends.get?fields="+FieldsAll+"&order=hints&v=5.29&access_token=" +
                     VkMain.token);
             WebResponse resp = reqGET.GetResponse();
             Stream stream = resp.GetResponseStream();
@@ -31,9 +37,9 @@ namespace VKAPI
             string s = sr.ReadToEnd();
 
             //десериализуем
-            FriendsModel userModel = Serializer<FriendsModel>.Deserialize(s);
+            FriendsModel friendsModel = JsonConvert.DeserializeObject<FriendsModel>(s);
 
-            return userModel;
+            return friendsModel;
         }
 
         /// <summary>

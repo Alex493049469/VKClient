@@ -17,6 +17,7 @@ using Un4seen.Bass;
 using VK.Properties;
 using VKAPI;
 using VKAPI.Model;
+using VKAPI.Model.AudioModel;
 
 namespace VK.Module.Audio
 {
@@ -60,7 +61,7 @@ namespace VK.Module.Audio
         {
             audioModel = await VkAudio.GetAsync(1000);
 
-            ListAudio.ItemsSource = audioModel.Items;
+            ListAudio.ItemsSource = audioModel.response.items;
         }
 
         //поиск аудиозаписей
@@ -69,7 +70,7 @@ namespace VK.Module.Audio
 
             audioModel = await VkAudio.SearchAsync(TextAudio.Text);
 
-            ListAudio.ItemsSource = audioModel.Items;
+            ListAudio.ItemsSource = audioModel.response.items;
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace VK.Module.Audio
             if (ListAudio.SelectedIndex < 0)
                 return;
             // _myDownloadProc = new DOWNLOADPROC(MyDownload);
-            stream = Bass.BASS_StreamCreateURL(audioModel.Items[index].Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
+            stream = Bass.BASS_StreamCreateURL(audioModel.response.items[index].url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
 
             if (stream != 0 && Bass.BASS_ChannelPlay(stream, false))
             {
