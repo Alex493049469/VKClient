@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="500"
-             Height="500"
+             Width="auto"
+             Height="auto"
              mc:Ignorable="d">
     <Grid>
         <ListBox x:Name="ListFriend">
@@ -12,18 +12,29 @@
                 <DataTemplate>
                     <Grid Margin="3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
+                            <ColumnDefinition Width="153*" />
+                            <ColumnDefinition Width="320*" />
+                            <ColumnDefinition Width="186*" />
                         </Grid.ColumnDefinitions>
-                        <Image Grid.RowSpan="2"
-                               Width="100"
-                               Height="100"
-                               Margin="5"
-                               Source="{Binding photo_100}" />
-                        <StackPanel Grid.Column="1" Margin="2,6">
+                        <StackPanel Margin="10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
+                            <Image Margin="5" Source="{Binding photo_100}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Margin="10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center">
                             <TextBlock FontWeight="Bold" Text="{Binding first_name}" />
                             <TextBlock Text="{Binding last_name}" />
                             <TextBlock Text="{Binding OnlineString}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2"
+                                    Margin="10"
+                                    VerticalAlignment="Center">
+                            <Button x:Name="SendMessageButton" Content="Отправить сообщение" />
+                            <Button x:Name="ViewFriendsButton" Content="Посмотреть друзей" />
+                            <Button x:Name="DeleteIsFriendsButton" Content="Удалить из друзей" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

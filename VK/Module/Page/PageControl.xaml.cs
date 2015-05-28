@@ -40,6 +40,36 @@ namespace VK.Module.Page
             userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
             this.DataContext = userModel.response;
 
+           FriendsButton.Content= "Друзья (" +userModel.response[0].counters.friends + ")";
+           GroupButton.Content = "Группы (" + userModel.response[0].counters.groups + ")";
+           PhotosButton.Content = "Фото (" + userModel.response[0].counters.photos + ")";
+           AudiosButton.Content = "Аудио (" + userModel.response[0].counters.audios + ")";
+           VideoButton.Content = "Видео (" + userModel.response[0].counters.videos + ")";
+        }
+
+        private void FriendsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GroupButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PhotosButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AudiosButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void VideoButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

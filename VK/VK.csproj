@@ -74,6 +74,9 @@
     <Compile Include="Module\Friends\FriendsControl.xaml.cs">
       <DependentUpon>FriendsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Module\Messages\MessagesControl.xaml.cs">
+      <DependentUpon>MessagesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Module\Page\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Module\Friends\FriendsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Module\Messages\MessagesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

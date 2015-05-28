@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="VK.Module.Messages.MessagesControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Width="1167"
+             Height="245"
+             mc:Ignorable="d">
+    <Grid Margin="3,3,191,26" />
+
+    <!--<Grid Margin="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="115" />
+            <ColumnDefinition Width="auto" MinWidth="445" />
+            <ColumnDefinition Width="auto" MinWidth="144"/>
+        </Grid.ColumnDefinitions>
+        <Image
+                               Margin="6,80,5,80"
+                               Source="{Binding photo_100}" />
+        <StackPanel Grid.Column="1" Margin="2,6,0,6">
+            <TextBlock FontWeight="Bold" Text="{Binding first_name}" />
+            <TextBlock Text="{Binding last_name}" />
+            <TextBlock Text="{Binding OnlineString}" />
+        </StackPanel>
+        <StackPanel Grid.Column="2"  VerticalAlignment="Center" Height="108" Margin="0,72,10,80" HorizontalAlignment="Right" Width="128" >
+            <Button   x:Name="SendMessageButton" Content="Отправить сообщение" />
+            <Button  x:Name="ViewFriendsButton" Content="Посмотреть друзей" />
+            <Button  x:Name="DeleteIsFriendsButton"  Content="Удалить из друзей" />
+        </StackPanel>
+    </Grid>-->
+
+</UserControl>

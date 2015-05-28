@@ -108,7 +108,7 @@ namespace VK
             }
             else
             {
-                TabControler.SelectedIndex = FindTab("MyAudioItem");
+                TabControler.SelectedIndex = FindTab("MyAudio");
             }
 
         }
