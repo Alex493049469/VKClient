@@ -18,6 +18,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Un4seen.Bass;
 using VK.Module.Audio;
+using VK.Module.Friends;
 using VK.Module.Message;
 using VK.Module.Page;
 using VK.Properties;
@@ -36,20 +37,6 @@ namespace VK
     /// </summary>
     public partial class MainWindow : Window
     {
-        //музыкальный поток
-        private int stream;
-        //источники данных
-        public AudioModel audioModel;
-        public FriendsModel friendsModel;
-        public DialogsModel messageModel;
-        public UsersModel userModel;
-
-
-        //заготовки для сохранения файлов
-        private FileStream _fs = null;
-        private DOWNLOADPROC _myDownloadProc;
-        private byte[] _data; // local data buffer
-
         public MainWindow()
         {
             InitializeComponent();
@@ -78,71 +65,16 @@ namespace VK
         /// </summary>
         public void LoadSettings()
         {
-
             //инициализация библиотеки bass для проигрывания аудио
             Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT,
                 new System.Windows.Interop.WindowInteropHelper(this).Handle);
-            LoadFriends();
-
         }
-
-
-
-        //загружаем список друзей
-        public async void LoadFriends()
-        {
-            friendsModel = await VkFriends.GetAsync();
-            ListFriend.ItemsSource = friendsModel.response.items;
-        }
-
 
         private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
             Bass.FreeMe();
         }
 
-
-
-        private async void CheckOnline_Checked(object sender, RoutedEventArgs e)
-        {
-            friendsModel = await VkFriends.GetAsync();
-            friendsModel.response.items = friendsModel.response.items.FindAll(user => user.OnlineString == "Online");
-            ListFriend.ItemsSource = friendsModel.response.items;
-
-        }
-
-        private async void CheckOnline_Unchecked(object sender, RoutedEventArgs e)
-        {
-            friendsModel = await VkFriends.GetAsync();
-            ListFriend.ItemsSource = friendsModel.response.items;
-        }
-
-
-        private void AudioButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            AudioControl Ac = new AudioControl();
-
-            TabItem ti = new TabItem();
-            ti.Header = "Аудиозаписи";
-            ti.Name = "MyAudioItem";
-            ti.Content = Ac;
-
-            //если вкладки нет то добавляем если есть то делаем ее активной
-
-            if (FindTab("MyAudioItem") == -1)
-            {
-                TabControler.Items.Add(ti);
-                TabControler.SelectedIndex = TabControler.Items.Count - 1;
-            }
-            else
-            {
-                TabControler.SelectedIndex = FindTab("MyAudioItem");
-            }
-
-
-        }
         /// <summary>
         /// находит вкладку с именем и весли найдена возвращает индекс
         /// </summary>
@@ -152,8 +84,8 @@ namespace VK
             int finded = -1;
             for (int i = 0; i < TabControler.Items.Count; i++)
             {
-                TabItem asdf = (TabItem)TabControler.Items[i];
-                if (asdf.Name == name )
+                ClosableTab asdf = (ClosableTab)TabControler.Items[i];
+                if (asdf.Name == name)
                 {
                     finded = i;
                 }
@@ -161,21 +93,37 @@ namespace VK
             return finded;
         }
 
+        private void AudioButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FindTab("MyAudio") == -1)
+            {
+                AudioControl Ac = new AudioControl();
+
+                ClosableTab theTabItem = new ClosableTab();
+                theTabItem.Name = "MyAudio";
+                theTabItem.Title = "Мои аудиозаписи";
+                theTabItem.Content = Ac;
+                TabControler.Items.Add(theTabItem);
+                theTabItem.Focus();
+            }
+            else
+            {
+                TabControler.SelectedIndex = FindTab("MyAudioItem");
+            }
+
+        }
+
         private void MyPageButton_Click(object sender, RoutedEventArgs e)
         {
-            PageControl Ac = new PageControl();
-
-            TabItem ti = new TabItem();
-            ti.Header = "Моя страница";
-            ti.Name = "MyPage";
-            ti.Content = Ac;
-
-            //если вкладки нет то добавляем если есть то делаем ее активной
-
             if (FindTab("MyPage") == -1)
             {
-                TabControler.Items.Add(ti);
-                TabControler.SelectedIndex = TabControler.Items.Count - 1;
+                PageControl Ac = new PageControl();
+                ClosableTab theTabItem = new ClosableTab();
+                theTabItem.Name = "MyPage";
+                theTabItem.Title = "Моя страница";
+                theTabItem.Content = Ac;
+                TabControler.Items.Add(theTabItem);
+                theTabItem.Focus();
             }
             else
             {
@@ -183,25 +131,42 @@ namespace VK
             }
         }
 
+
         private void MyMessageButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogControl Ac = new DialogControl();
-
-            TabItem ti = new TabItem();
-            ti.Header = "Сообщения";
-            ti.Name = "MyMessage";
-            ti.Content = Ac;
-
-            //если вкладки нет то добавляем если есть то делаем ее активной
-
             if (FindTab("MyMessage") == -1)
             {
-                TabControler.Items.Add(ti);
-                TabControler.SelectedIndex = TabControler.Items.Count - 1;
+                DialogControl Ac = new DialogControl();
+
+                ClosableTab theTabItem = new ClosableTab();
+                theTabItem.Name = "MyMessage";
+                theTabItem.Title = "Мои сообщения";
+                theTabItem.Content = Ac;
+                TabControler.Items.Add(theTabItem);
+                theTabItem.Focus();
             }
             else
             {
                 TabControler.SelectedIndex = FindTab("MyMessage");
+            }
+        }
+
+        private void MyFriendsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FindTab("MyFriends") == -1)
+            {
+                FriendsControl Ac = new FriendsControl();
+
+                ClosableTab theTabItem = new ClosableTab();
+                theTabItem.Name = "MyFriends";
+                theTabItem.Title = "Мои друзья";
+                theTabItem.Content = Ac;
+                TabControler.Items.Add(theTabItem);
+                theTabItem.Focus();
+            }
+            else
+            {
+                TabControler.SelectedIndex = FindTab("MyFriends");
             }
         }
 

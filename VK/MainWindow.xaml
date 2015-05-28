@@ -22,48 +22,7 @@
             <RowDefinition Height="25*" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TabControl Width="245"
-                    Margin="0,0,0,0"
-                    HorizontalAlignment="Right">
-            <TabItem Header="Друзья">
-                <Grid>
-                    <ListBox x:Name="ListFriend" Margin="10,10,10,31">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Grid.RowSpan="2"
-                                           Width="100"
-                                           Height="100"
-                                           Margin="5"
-                                           Source="{Binding photo_100}" />
-                                    <StackPanel Grid.Column="1" Margin="2,6">
-                                        <TextBlock FontWeight="Bold" Text="{Binding first_name}" />
-                                        <TextBlock Text="{Binding last_name}" />
-                                        <TextBlock Text="{Binding OnlineString}" />
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <CheckBox Name="CheckOnline"
-                              Height="16"
-                              Margin="10,0,109,10"
-                              VerticalAlignment="Bottom"
-                              Checked="CheckOnline_Checked"
-                              Content="Онлайн"
-                              Unchecked="CheckOnline_Unchecked" />
-                </Grid>
-            </TabItem>
-
-
-        </TabControl>
-        <TabControl Name="TabControler"
-                    Margin="211,0,260,0"
-                    TabStripPlacement="Top" />
+        <TabControl Name="TabControler" Margin="211,0,10,0" />
 
         <StackPanel Width="196"
                     Height="576"
@@ -76,14 +35,17 @@
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
-                    <Image Width="50"
-                           Height="50"
+                    <Image Width="24"
+                           Height="21"
                            Margin="5"
-                           Source="{Binding Photo50}" />
+                           Source="Images/53house.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center">Моя страница</TextBlock>
                 </StackPanel>
             </Button>
-            <Button Height="37" Margin="3">
+            <Button Name="MyFriendsButton"
+                Height="37"
+                    Margin="3"
+                    Click="MyFriendsButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
@@ -104,7 +66,7 @@
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
                     <Image Width="24"
-                           Height="16"
+                           Height="21"
                            Margin="5"
                            Source="Images/18envelope.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center">Сообщения</TextBlock>
@@ -118,7 +80,7 @@
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
                     <Image Width="24"
-                           Height="23"
+                           Height="21"
                            Margin="5"
                            Source="Images/194note2.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center">Аудиозаписи</TextBlock>

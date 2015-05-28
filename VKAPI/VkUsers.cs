@@ -53,6 +53,10 @@ namespace VKAPI
            {
                param.Add("fields=" + fields);
            }
+           else
+           {
+               param.Add("fields=" + FieldsAll);
+           }
            if (nameCase == name_case.nom)
            {
                param.Add(nameCase.ToString());

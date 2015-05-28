@@ -71,8 +71,8 @@
                                 <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                     <DockPanel.Background>
                                         <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                            <GradientStop Offset="0" Color="DarkSlateGray" />
-                                            <GradientStop Offset="1" Color="#597b9f" />
+                                            <GradientStop Offset="0" Color="#FF5cace8" />
+                                            <GradientStop Offset="1" Color="#FF3c95d7" />
                                         </LinearGradientBrush>
                                     </DockPanel.Background>
                                     <Border x:Name="TitleBar"
@@ -192,7 +192,7 @@
         <Style.Resources>
             <Style TargetType="{x:Type StatusBar}">
                 <Setter Property="Foreground" Value="{StaticResource VS2012WindowStatusForeground}" />
-                <Setter Property="Background" Value="#597b9f" />
+                <!--<Setter Property="Background" Value="#597b9f" />-->
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
                         <Setter Property="Foreground" Value="{StaticResource VS2012WindowStatusForegroundInactive}" />

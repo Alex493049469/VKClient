@@ -37,8 +37,8 @@ namespace VK.Module.Page
         /// </summary>
         public async void LoadUserInfo()
         {
-            userModel = await VkUsers.GetAsync("", "sex", VkUsers.name_case.nom);
-            AvatarImage.DataContext = userModel.response;
+            userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
+            this.DataContext = userModel.response;
 
         }
 

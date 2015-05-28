@@ -31,16 +31,16 @@
         </ListBox>
 
         <Slider Name="AudioPosition"
-                Height="21"
+                Height="26"
                 Margin="10,55,171,0"
                 VerticalAlignment="Top"
-                IsSelectionRangeEnabled="True"
+                IsSelectionRangeEnabled="false"
                 SelectionEnd="20"
                 SelectionStart="0"
                 ValueChanged="AudioPosition_ValueChanged" />
         <Slider x:Name="Volime"
                 Width="60"
-                Height="21"
+                Height="26"
                 Margin="0,55,81,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
@@ -55,7 +55,8 @@
                 Margin="10,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Click="PlayButton_Click">
+                Click="PlayButton_Click"
+                Style="{DynamicResource ButtonGreen}">
             <Canvas Width="12" Height="12">
                 <Path Width="12"
                       Height="12"
@@ -73,7 +74,8 @@
                 Margin="68,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Click="PauseButton_Click">
+                Click="PauseButton_Click"
+                Style="{DynamicResource ButtonGreen}">
             <Canvas Width="12" Height="12">
                 <Rectangle Width="3"
                            Height="12"
@@ -96,7 +98,8 @@
                 Margin="126,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Click="StopButton_Click">
+                Click="StopButton_Click"
+                Style="{DynamicResource ButtonGreen}">
             <Canvas Width="12" Height="12">
                 <Rectangle Width="12"
                            Height="12"
@@ -129,7 +132,8 @@
                 Height="36"
                 Margin="184,10,0,0"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top">
+                VerticalAlignment="Top"
+                Style="{DynamicResource ButtonGreen}">
             <Canvas Width="12" Height="14">
                 <Path Width="12"
                       Height="14"
