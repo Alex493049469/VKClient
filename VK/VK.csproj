@@ -199,6 +199,12 @@
     <Content Include="Bass.Net.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\videos2.png" />
+    <Resource Include="Images\videos.png" />
+    <Resource Include="Images\46_movie2.png" />
+    <Resource Include="Images\video.png" />
+    <Resource Include="Images\play.png" />
+    <Resource Include="Images\vkontakte.png" />
     <Resource Include="Images\01refresh.png" />
     <Resource Include="Images\02redo.png" />
     <Resource Include="Images\06magnify.png" />

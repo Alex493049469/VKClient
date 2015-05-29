@@ -29,7 +29,7 @@ namespace VKAPI
             string param;
             WebRequest reqGET =
                 WebRequest.Create(
-                    @"https://api.vk.com/method/friends.get?fields="+FieldsAll+"&order=hints&v=5.29&access_token=" +
+                    @"https://api.vk.com/method/friends.get?fields=" + FieldsStandart + "&order=hints&v=5.29&access_token=" +
                     VkMain.token);
             WebResponse resp = reqGET.GetResponse();
             Stream stream = resp.GetResponseStream();

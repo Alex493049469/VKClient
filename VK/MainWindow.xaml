@@ -9,7 +9,7 @@
         Height="624"
         AllowsTransparency="True"
         Closing="MainWindow1_Closing"
-        Icon="/Images/Maly4.ico"
+        Icon="/Images/vkontakte.png"
         Style="{StaticResource VS2012WindowStyle}"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -78,7 +78,8 @@
                             Orientation="Horizontal">
                     <Image Width="24"
                            Height="21"
-                           Margin="5" />
+                           Margin="5"
+                           Source="Images/121landscape.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Фотографии" />
                     </TextBlock>
                 </StackPanel>
@@ -90,9 +91,10 @@
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
-                    <Image Width="24"
-                           Height="21"
-                           Margin="5" />
+                    <Image Width="26"
+                           Height="23"
+                           Margin="5"
+                           Source="Images/videos2.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Видеозаписи" />
                     </TextBlock>
                 </StackPanel>
