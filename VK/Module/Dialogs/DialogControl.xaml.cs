@@ -24,24 +24,23 @@ namespace VK.Module.Message
     /// </summary>
     public partial class DialogControl : UserControl
     {
-        public UsersModel userModel;
-        public DialogsModel messageModel;
-        public DialogControl()
+        //модель данных
+        public DialogsModel dialogModel;
+        //ссылка на таб контролл
+        public TabControl tabControler;
+
+
+        public DialogControl(TabControl tc, DialogsModel dm)
         {
             InitializeComponent();
-
-            LoadMyMessage();
-           
+            dialogModel = dm;
+            tabControler = tc;
+            BindModel();
         }
 
-        public async void LoadMyMessage()
+        public void BindModel()
         {
-            userModel = await VkUsers.GetAsync("", "sex", VkUsers.name_case.nom);
-            messageModel = await VkMessage.GetDialogsAsync();
-
-            ListMessage.ItemsSource = messageModel.response.items;
-           // MyPageButton.DataContext = userModel.user;
-         
+            ListMessage.ItemsSource = dialogModel.response.items;
         }
     }
 }

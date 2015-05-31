@@ -6,7 +6,7 @@
              Width="auto"
              Height="auto"
              mc:Ignorable="d">
-    <Grid>
+    <Grid >
 
         <TextBox x:Name="StatusText"
                  Width="376"
@@ -62,7 +62,9 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="FriendsButton_Click"
-                Style="{DynamicResource ButtonBlue}" />
+                Style="{DynamicResource ButtonBlue}" 
+                Content="Друзья"
+                />
         <Button x:Name="GroupButton"
                 Width="100"
                 Height="35"
@@ -70,7 +72,8 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="GroupButton_Click"
-                Style="{DynamicResource ButtonBlue}" />
+                Style="{DynamicResource ButtonBlue}"
+                Content="Группы"/>
         <Button x:Name="PhotosButton"
                 Width="100"
                 Height="35"
@@ -78,7 +81,8 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="PhotosButton_Click"
-                Style="{DynamicResource ButtonBlue}" />
+                Style="{DynamicResource ButtonBlue}" 
+                Content="Фото"/>
         <Button x:Name="AudiosButton"
                 Width="100"
                 Height="35"
@@ -86,7 +90,9 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="AudiosButton_Click"
-                Style="{DynamicResource ButtonBlue}" />
+                Style="{DynamicResource ButtonBlue}"
+                Content="Аудио"
+                />
         <Button x:Name="VideoButton"
                 Width="100"
                 Height="35"
@@ -94,6 +100,14 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="VideoButton_Click"
-                Style="{DynamicResource ButtonBlue}" />
+                Style="{DynamicResource ButtonBlue}" 
+                Content="Видео"/>
+        <StackPanel HorizontalAlignment="Left" Height="178" Margin="227,79,0,0" VerticalAlignment="Top" Width="366" Orientation="Vertical">
+            <Label x:Name="BirthdayLabel" Content="День рождения:"  Foreground="#FF515151" />
+            <Label x:Name="TownLabel" Content="Город:" Foreground="#FF515151"  />
+            <Label x:Name="FamilyStatusLabel" Content="Семейное положение:" Foreground="#FF515151" />
+            <Label x:Name="EducationLabel" Content="Образование:" Foreground="#FF515151" />
+
+        </StackPanel>
     </Grid>
 </UserControl>

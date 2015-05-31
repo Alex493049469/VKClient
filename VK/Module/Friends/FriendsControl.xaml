@@ -19,7 +19,7 @@
                         <StackPanel Margin="10"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center">
-                            <Image Margin="5" Source="{Binding photo_100}" />
+                            <Image Margin="5" Source="{Binding photo_100}" Width="100" Height="100" />
                         </StackPanel>
                         <StackPanel Grid.Column="1"
                                     Margin="10"

@@ -93,18 +93,20 @@ namespace VK
             return finded;
         }
 
-        private void AudioButton_Click(object sender, RoutedEventArgs e)
+        private async void AudioButton_Click(object sender, RoutedEventArgs e)
         {
             if (FindTab("MyAudio") == -1)
             {
-                AudioControl Ac = new AudioControl();
-
-                ClosableTab theTabItem = new ClosableTab();
-                theTabItem.Name = "MyAudio";
-                theTabItem.Title = "Мои аудиозаписи";
-                theTabItem.Content = Ac;
-                TabControler.Items.Add(theTabItem);
-                theTabItem.Focus();
+                //грузим данные в модель
+                AudioModel am = await VkAudio.GetAsync(1000);
+                //передаем для ссылку на сам таб кантролл и модель данных
+                AudioControl Ac = new AudioControl(TabControler, am);
+                ClosableTab сt = new ClosableTab();
+                сt.Name = "MyAudio";
+                сt.Title = "Мои аудиозаписи";
+                сt.Content = Ac;
+                TabControler.Items.Add(сt);
+                сt.Focus();
             }
             else
             {
@@ -113,17 +115,20 @@ namespace VK
 
         }
 
-        private void MyPageButton_Click(object sender, RoutedEventArgs e)
+        private async void MyPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (FindTab("MyPage") == -1)
             {
-                PageControl Ac = new PageControl();
-                ClosableTab theTabItem = new ClosableTab();
-                theTabItem.Name = "MyPage";
-                theTabItem.Title = "Моя страница";
-                theTabItem.Content = Ac;
-                TabControler.Items.Add(theTabItem);
-                theTabItem.Focus();
+                //грузим данные в модель
+                UsersModel userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
+                //передаем для ссылку на сам таб кантролл и модель данных
+                PageControl Ac = new PageControl(TabControler, userModel);
+                ClosableTab ct = new ClosableTab();
+                ct.Name = "MyPage";
+                ct.Title = "Моя страница";
+                ct.Content = Ac;
+                TabControler.Items.Add(ct);
+                ct.Focus();
             }
             else
             {
@@ -132,18 +137,20 @@ namespace VK
         }
 
 
-        private void MyMessageButton_Click(object sender, RoutedEventArgs e)
+        private async void MyMessageButton_Click(object sender, RoutedEventArgs e)
         {
             if (FindTab("MyMessage") == -1)
             {
-                DialogControl Ac = new DialogControl();
-
-                ClosableTab theTabItem = new ClosableTab();
-                theTabItem.Name = "MyMessage";
-                theTabItem.Title = "Мои сообщения";
-                theTabItem.Content = Ac;
-                TabControler.Items.Add(theTabItem);
-                theTabItem.Focus();
+                //грузим данные в модель
+                DialogsModel dm= await VkMessage.GetDialogsAsync();
+                //передаем для ссылку на сам таб кантролл и модель данных
+                DialogControl Ac = new DialogControl(TabControler, dm);
+                ClosableTab ct = new ClosableTab();
+                ct.Name = "MyMessage";
+                ct.Title = "Мои сообщения";
+                ct.Content = Ac;
+                TabControler.Items.Add(ct);
+                ct.Focus();
             }
             else
             {
@@ -151,18 +158,20 @@ namespace VK
             }
         }
 
-        private void MyFriendsButton_Click(object sender, RoutedEventArgs e)
+        private async void MyFriendsButton_Click(object sender, RoutedEventArgs e)
         {
             if (FindTab("MyFriends") == -1)
             {
-                FriendsControl Ac = new FriendsControl();
-
-                ClosableTab theTabItem = new ClosableTab();
-                theTabItem.Name = "MyFriends";
-                theTabItem.Title = "Мои друзья";
-                theTabItem.Content = Ac;
-                TabControler.Items.Add(theTabItem);
-                theTabItem.Focus();
+                //грузим данные в модель
+                FriendsModel fm  = await VkFriends.GetAsync();
+                //передаем для ссылку на сам таб кантролл и модель данных
+                FriendsControl Ac = new FriendsControl(TabControler, fm);
+                ClosableTab ct = new ClosableTab();
+                ct.Name = "MyFriends";
+                ct.Title = "Мои друзья";
+                ct.Content = Ac;
+                TabControler.Items.Add(ct);
+                ct.Focus();
             }
             else
             {

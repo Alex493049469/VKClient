@@ -22,16 +22,25 @@ namespace VK.Module.Friends
     /// </summary>
     public partial class FriendsControl : UserControl
     {
+        //модель данных
         public FriendsModel friendsModel;
-        public FriendsControl()
+        //ссылка на таб контролл
+        public TabControl tabControler;
+
+
+        public FriendsControl(TabControl tc, FriendsModel fm)
         {
             InitializeComponent();
-            LoadFriends();
+            friendsModel = fm;
+            tabControler = tc;
+            BindModel();
         }
 
-        public async void LoadFriends()
+        /// <summary>
+        /// привязки данных
+        /// </summary>
+        public void BindModel()
         {
-            friendsModel = await VkFriends.GetAsync();
             ListFriend.ItemsSource = friendsModel.response.items;
         }
     }

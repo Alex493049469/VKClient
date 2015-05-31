@@ -34,19 +34,18 @@ namespace VK.Module.Audio
         private DispatcherTimer timer = null;
         //источник данных
         public AudioModel audioModel;
+        //ссылка на таб контролл
+        public TabControl tabControler;
 
-        public AudioControl()
+        public AudioControl(TabControl tc, AudioModel am)
         {
             InitializeComponent();
 
             //загрузка положения бегунка громкости
             Volime.Value = Settings.Default.volime;
-            LoadMyMusic();
-        }
-
-        ~AudioControl()
-        {
-         //   SaveSettings();
+            audioModel = am;
+            tabControler = tc;
+            BindModel();
         }
 
         //сохранение настроек
@@ -56,18 +55,17 @@ namespace VK.Module.Audio
             Settings.Default.Save();
         }
 
-        //загрузка моих аудиозаписей
-        public async void LoadMyMusic()
+        /// <summary>
+        /// привязки данных
+        /// </summary>
+        public void BindModel()
         {
-            audioModel = await VkAudio.GetAsync(1000);
-
             ListAudio.ItemsSource = audioModel.response.items;
         }
 
         //поиск аудиозаписей
         public async void FindMusic()
         {
-
             audioModel = await VkAudio.SearchAsync(TextAudio.Text);
 
             ListAudio.ItemsSource = audioModel.response.items;
