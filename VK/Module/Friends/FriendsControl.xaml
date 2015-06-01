@@ -7,7 +7,7 @@
              Height="auto"
              mc:Ignorable="d">
     <Grid>
-        <ListBox x:Name="ListFriend">
+        <ListBox x:Name="ListFriend" Margin="0,50,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="3">
@@ -19,7 +19,10 @@
                         <StackPanel Margin="10"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center">
-                            <Image Margin="5" Source="{Binding photo_100}" Width="100" Height="100" />
+                            <Image Width="100"
+                                   Height="100"
+                                   Margin="5"
+                                   Source="{Binding photo_100}" />
                         </StackPanel>
                         <StackPanel Grid.Column="1"
                                     Margin="10"
@@ -40,6 +43,17 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <TextBox Height="23"
+                 Margin="10,10,102,0"
+                 VerticalAlignment="Top"
+                 Text=""
+                 TextWrapping="Wrap" />
+        <Button Width="75"
+                Height="24"
+                Margin="0,9,10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Content="Поиск" />
 
     </Grid>
 </UserControl>

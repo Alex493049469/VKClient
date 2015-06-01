@@ -126,6 +126,25 @@ namespace VK
             //{
             //    TabControler.SelectedIndex = FindTab("MyAudio");
             //}
+            if (FindTab("MyAudio") == -1)
+            {
+                //грузим данные в модель
+                   AudioModel am = await VkAudio.GetAsync(1000);
+                //    //передаем для ссылку на сам таб кантролл и модель данных
+                   AudioControl Ac = new AudioControl(am);
+
+                LayoutDocument ld = new LayoutDocument();
+                ld.Title = "Мои аудиозаписи";
+                ld.ContentId = "MyAudio";
+                ld.Content = Ac;
+                LayoutDocumentP.Children.Add(ld);
+                LayoutDocumentP.Children[FindTab("MyAudio")].IsSelected = true;
+            }
+            else
+            {
+                LayoutDocumentP.Children[FindTab("MyAudio")].IsSelected = true;
+            }
+
 
         }
 
@@ -160,6 +179,7 @@ namespace VK
                 ld.ContentId = "MyPage";
                 ld.Content = Ac;
                 LayoutDocumentP.Children.Add(ld);
+                LayoutDocumentP.Children[FindTab("MyPage")].IsSelected = true;
             }
             else
             {
@@ -188,6 +208,25 @@ namespace VK
             //{
             //    TabControler.SelectedIndex = FindTab("MyMessage");
             //}
+
+            if (FindTab("MyMessage") == -1)
+            {
+                //грузим данные в модель
+                DialogsModel dm= await VkMessage.GetDialogsAsync();
+                //    //передаем для ссылку на сам таб кантролл и модель данных
+                DialogControl Ac = new DialogControl(dm);
+
+                LayoutDocument ld = new LayoutDocument();
+                ld.Title = "Мои сообщения";
+                ld.ContentId = "MyMessage";
+                ld.Content = Ac;
+                LayoutDocumentP.Children.Add(ld);
+                LayoutDocumentP.Children[FindTab("MyMessage")].IsSelected = true;
+            }
+            else
+            {
+                LayoutDocumentP.Children[FindTab("MyMessage")].IsSelected = true;
+            }
         }
 
         private async void MyFriendsButton_Click(object sender, RoutedEventArgs e)
@@ -210,16 +249,24 @@ namespace VK
             //    TabControler.SelectedIndex = FindTab("MyFriends");
             //}
 
-            //грузим данные в модель
-            FriendsModel fm  = await VkFriends.GetAsync();
-            //передаем для ссылку на сам таб кантролл и модель данных
-            FriendsControl Ac = new FriendsControl(fm);
+            if (FindTab("MyFriends") == -1)
+            {
+                //грузим данные в модель
+                FriendsModel fm  = await VkFriends.GetAsync();
+                //передаем для ссылку на сам таб кантролл и модель данных
+                FriendsControl Ac = new FriendsControl(fm);
 
-            LayoutDocument ld = new LayoutDocument();
-            ld.Title = "Мои друзья";
-            ld.ContentId = "MyFriends";
-            ld.Content = Ac;
-            LayoutDocumentP.Children.Add(ld);
+                LayoutDocument ld = new LayoutDocument();
+                ld.Title = "Мои друзья";
+                ld.ContentId = "MyFriends";
+                ld.Content = Ac;
+                LayoutDocumentP.Children.Add(ld);
+                LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
+            }
+            else
+            {
+                LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
+            }
         }
 
 

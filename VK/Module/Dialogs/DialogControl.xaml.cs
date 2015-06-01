@@ -30,11 +30,11 @@ namespace VK.Module.Message
         public TabControl tabControler;
 
 
-        public DialogControl(TabControl tc, DialogsModel dm)
+        public DialogControl(DialogsModel dm)
         {
             InitializeComponent();
             dialogModel = dm;
-            tabControler = tc;
+            //tabControler = tc;
             BindModel();
         }
 

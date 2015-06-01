@@ -37,14 +37,14 @@ namespace VK.Module.Audio
         //ссылка на таб контролл
         public TabControl tabControler;
 
-        public AudioControl(TabControl tc, AudioModel am)
+        public AudioControl(AudioModel am)
         {
             InitializeComponent();
 
             //загрузка положения бегунка громкости
             Volime.Value = Settings.Default.volime;
             audioModel = am;
-            tabControler = tc;
+           // tabControler = tc;
             BindModel();
         }
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         x:Name="MainWindow1"
-        Title=""
+        Title="VKClient Alpha 1"
         Width="944"
         Height="624"
         AllowsTransparency="True"
@@ -37,9 +37,11 @@
                 <ContextMenu>
                     <MenuItem Command="{Binding Path=FloatCommand}" Header="Плавающая" />
                     <MenuItem Command="{Binding Path=DockCommand}" Header="Присоединяемая" />
-                    --><!--<MenuItem Header="Dock as Tabbed Document" Command="{Binding Path=DockAsDocumentCommand}" Visibility="Hidden"/>-->
-                    <!--<MenuItem Header="Auto Hide" Command="{Binding Path=AutoHideCommand}"/>-->
-                    <!--  Feel free to remove this "Hide" entry if you want the exact same behavior as before  --><!--
+            -->
+            <!--<MenuItem Header="Dock as Tabbed Document" Command="{Binding Path=DockAsDocumentCommand}" Visibility="Hidden"/>-->
+            <!--<MenuItem Header="Auto Hide" Command="{Binding Path=AutoHideCommand}"/>-->
+            <!--  Feel free to remove this "Hide" entry if you want the exact same behavior as before  -->
+            <!--
                     <MenuItem Command="{Binding Path=HideCommand}" Header="Скрыть" />
                     <MenuItem Command="{Binding Path=CloseCommand}" Header="Закрыть" />
                 </ContextMenu>

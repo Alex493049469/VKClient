@@ -8,7 +8,7 @@
              mc:Ignorable="d">
     <Grid Background="#FFE5E5E5">
         <ListBox x:Name="ListAudio"
-                 Margin="10,122,81,10"
+                 Margin="10,122,10,10"
                  MouseDoubleClick="ListAudio_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
