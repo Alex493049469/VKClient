@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         x:Name="MainWindow1"
         Title=""
         Width="944"
@@ -14,9 +15,6 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         mc:Ignorable="d">
-
-
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -25,7 +23,46 @@
             <RowDefinition Height="25*" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TabControl x:Name="TabControler" Margin="210,0,0,0" />
+        <!--<TabControl x:Name="TabControler" Margin="210,0,0,0" />-->
+
+        <xcad:DockingManager Name="DockingManagers"
+                             Margin="211,0,0,0"
+                             AllowMixedOrientation="True"
+                             BorderBrush="Black"
+                             BorderThickness="1">
+            <xcad:DockingManager.Theme>
+                <xcad:MetroTheme />
+            </xcad:DockingManager.Theme>
+            <!--<xcad:DockingManager.DocumentContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding Path=FloatCommand}" Header="Плавающая" />
+                    <MenuItem Command="{Binding Path=DockCommand}" Header="Присоединяемая" />
+                    --><!--<MenuItem Header="Dock as Tabbed Document" Command="{Binding Path=DockAsDocumentCommand}" Visibility="Hidden"/>-->
+                    <!--<MenuItem Header="Auto Hide" Command="{Binding Path=AutoHideCommand}"/>-->
+                    <!--  Feel free to remove this "Hide" entry if you want the exact same behavior as before  --><!--
+                    <MenuItem Command="{Binding Path=HideCommand}" Header="Скрыть" />
+                    <MenuItem Command="{Binding Path=CloseCommand}" Header="Закрыть" />
+                </ContextMenu>
+            </xcad:DockingManager.DocumentContextMenu>-->
+            <xcad:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="0,0,4,0" Source="{Binding IconSource}" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </xcad:DockingManager.DocumentHeaderTemplate>
+            <xcad:LayoutRoot x:Name="_layoutRoot">
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutDocumentPaneGroup>
+                        <xcad:LayoutDocumentPane x:Name="LayoutDocumentP" />
+                    </xcad:LayoutDocumentPaneGroup>
+                    <xcad:LayoutAnchorablePaneGroup DockWidth="125" />
+                </xcad:LayoutPanel>
+
+
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
 
         <StackPanel Width="196"
                     Height="auto"

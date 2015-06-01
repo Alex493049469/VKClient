@@ -29,11 +29,11 @@ namespace VK.Module.Page
         //ссылка на таб контролл
         public TabControl tabControler;
 
-        public PageControl(TabControl tc, UsersModel um)
+        public PageControl(UsersModel um)
         {
             InitializeComponent();
 
-            tabControler = tc;
+           // tabControler = tc;
             userModel = um;
             BindModel();
         }

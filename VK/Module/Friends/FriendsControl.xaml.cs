@@ -28,11 +28,11 @@ namespace VK.Module.Friends
         public TabControl tabControler;
 
 
-        public FriendsControl(TabControl tc, FriendsModel fm)
+        public FriendsControl( FriendsModel fm)
         {
             InitializeComponent();
             friendsModel = fm;
-            tabControler = tc;
+            //tabControler = tc;
             BindModel();
         }
 
