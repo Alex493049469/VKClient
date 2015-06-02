@@ -10,7 +10,7 @@
         Height="624"
         AllowsTransparency="True"
         Closing="MainWindow1_Closing"
-        Icon="/Images/vkontakte.png"
+        Icon="/Images/VkIconBlack.png"
         Style="{StaticResource VS2012WindowStyle}"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"

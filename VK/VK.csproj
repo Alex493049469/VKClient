@@ -234,6 +234,8 @@
     <Content Include="Bass.Net.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\VkIconBlack.png" />
+    <Resource Include="Images\VKIcon.png" />
     <Resource Include="Images\videos2.png" />
     <Resource Include="Images\videos.png" />
     <Resource Include="Images\46_movie2.png" />

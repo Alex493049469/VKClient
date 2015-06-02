@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\FamilyStatusConverter.cs" />
     <Compile Include="Converters\OnlineConverter.cs" />
     <Compile Include="Converters\TimeConverter.cs" />
     <Compile Include="VkLongPool.cs" />
