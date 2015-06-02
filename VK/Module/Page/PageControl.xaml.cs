@@ -54,6 +54,7 @@ namespace VK.Module.Page
             BirthdayLabel.Content += " "+ userModel.response[0].bdate;
             TownLabel.Content += " " + userModel.response[0].city.title;
 
+            //тут тоже необходимо использовать конвертер
             if (userModel.response[0].relation == 7)
             {
                 FamilyStatusLabel.Content += " Влюблен в " + userModel.response[0].relation_partner.first_name +" "+ userModel.response[0].relation_partner.last_name;
@@ -65,7 +66,7 @@ namespace VK.Module.Page
 
         private void FriendsButton_Click(object sender, RoutedEventArgs e)
         {
-          
+            
         }
 
         private void GroupButton_Click(object sender, RoutedEventArgs e)
