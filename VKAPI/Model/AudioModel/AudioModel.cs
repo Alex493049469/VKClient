@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +15,7 @@ namespace VKAPI.Model.AudioModel
         public string artist { get; set; }
         public string title { get; set; }
 
-        public int duration
-        {
-            get { throw new NotImplementedException(); }
-            set { durationNorm = Converter.ConvertSecondsToTime(value); }
-        }
-        public TimeSpan durationNorm { get; set; }
+        public int duration { get; set; }
 
         public string url { get; set; }
         public int lyrics_id { get; set; }
@@ -30,7 +26,7 @@ namespace VKAPI.Model.AudioModel
     public class Response
     {
         public int count { get; set; }
-        public List<Item> items { get; set; }
+        public ObservableCollection<Item> items { get; set; }
     }
 
     public class AudioModel

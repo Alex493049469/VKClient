@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,7 +78,7 @@ namespace VKAPI.Model.DialogsModel
         public int date { get; set; }
         public string post_type { get; set; }
         public string text { get; set; }
-        public List<Attachment2> attachments { get; set; }
+        public ObservableCollection<Attachment2> attachments { get; set; }
         public PostSource post_source { get; set; }
         public Comments comments { get; set; }
         public Likes likes { get; set; }
@@ -106,9 +107,9 @@ namespace VKAPI.Model.DialogsModel
         public int read_state { get; set; }
         public string title { get; set; }
         public string body { get; set; }
-        public List<Attachment> attachments { get; set; }
+        public ObservableCollection<Attachment> attachments { get; set; }
         public int chat_id { get; set; }
-        public List<int> chat_active { get; set; }
+        public ObservableCollection<int> chat_active { get; set; }
         public PushSettings push_settings { get; set; }
         public int users_count { get; set; }
         public int admin_id { get; set; }
@@ -126,7 +127,7 @@ namespace VKAPI.Model.DialogsModel
     public class Response
     {
         public int count { get; set; }
-        public List<Item> items { get; set; }
+        public ObservableCollection<Item> items { get; set; }
     }
 
     public class DialogsModel

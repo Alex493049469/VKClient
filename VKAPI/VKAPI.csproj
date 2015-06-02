@@ -36,6 +36,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\Converter.cs" />
+    <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\OnlineConverter.cs" />
+    <Compile Include="Converters\TimeConverter.cs" />
     <Compile Include="VkLongPool.cs" />
     <Compile Include="Model\AudioModel\AudioModel.cs" />
     <Compile Include="Model\DialogsModel\DialogsModel.cs" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,13 +60,7 @@ namespace VKAPI.Model.FriendsModel
         public string photo_100 { get; set; }
         public string photo_200_orig { get; set; }
         public int has_mobile { get; set; }
-
-        public int online
-        {
-            get { throw new NotImplementedException(); }
-            set { if (value == 1) OnlineString = "Online"; }
-        }
-
+        public int online { get; set; }
         public string OnlineString { get; set; }
         public int can_post { get; set; }
         public int can_see_all_posts { get; set; }
@@ -82,7 +77,7 @@ namespace VKAPI.Model.FriendsModel
         public string education_status { get; set; }
         public int relation { get; set; }
         public RelationPartner relation_partner { get; set; }
-        public List<object> universities { get; set; }
+        public ObservableCollection<object> universities { get; set; }
         public string home_phone { get; set; }
         public string online_app { get; set; }
         public int? online_mobile { get; set; }
@@ -93,7 +88,7 @@ namespace VKAPI.Model.FriendsModel
     public class Response
     {
         public int count { get; set; }
-        public List<Item> items { get; set; }
+        public ObservableCollection<Item> items { get; set; }
     }
 
     public class FriendsModel

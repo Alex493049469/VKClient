@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -152,15 +153,15 @@ namespace VKAPI.Model.UsersModel
         public string tv { get; set; }
         public string books { get; set; }
         public string games { get; set; }
-        public List<University> universities { get; set; }
-        public List<School> schools { get; set; }
+        public ObservableCollection<University> universities { get; set; }
+        public ObservableCollection<School> schools { get; set; }
         public string about { get; set; }
-        public List<Relative> relatives { get; set; }
+        public ObservableCollection<Relative> relatives { get; set; }
         public string quotes { get; set; }
     }
 
     public class UsersModel
     {
-        public List<Response> response { get; set; }
+        public ObservableCollection<Response> response { get; set; }
     }
 }
