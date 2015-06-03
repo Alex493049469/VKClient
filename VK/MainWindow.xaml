@@ -26,9 +26,8 @@
         <!--<TabControl x:Name="TabControler" Margin="210,0,0,0" />-->
 
         <xcad:DockingManager Name="DockingManagers"
-                             Margin="211,0,0,0"
+                             Margin="201,0,0,0"
                              AllowMixedOrientation="True"
-                             BorderBrush="Black"
                              BorderThickness="1">
             <xcad:DockingManager.Theme>
                 <xcad:MetroTheme />
@@ -68,7 +67,7 @@
 
         <StackPanel Width="196"
                     Height="auto"
-                    Margin="10,10,0,0"
+                    Margin="5,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Background="White">

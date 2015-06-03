@@ -4,8 +4,10 @@
              xmlns:converters="clr-namespace:VKAPI.Converters;assembly=VKAPI"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="auto"
-             Height="auto"
+             Width="377"
+             Height="398"
+             MinWidth="425"
+             MinHeight="405"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -51,8 +53,10 @@
         </ListBox>
 
         <Slider Name="AudioPosition"
+                Width="336"
                 Height="26"
-                Margin="10,55,171,0"
+                Margin="10,50,0,0"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 IsSelectionRangeEnabled="false"
                 SelectionEnd="20"
@@ -61,8 +65,8 @@
         <Slider x:Name="Volime"
                 Width="60"
                 Height="26"
-                Margin="0,55,81,0"
-                HorizontalAlignment="Right"
+                Margin="355,50,0,0"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Maximum="100"
                 Minimum="0"
@@ -70,7 +74,7 @@
                 ValueChanged="Volime_ValueChanged" />
 
         <Button Name="PlayButton"
-                Width="53"
+                Width="43"
                 Height="36"
                 Margin="10,10,0,0"
                 HorizontalAlignment="Left"
@@ -89,9 +93,9 @@
             </Canvas>
         </Button>
         <Button Name="PauseButton"
-                Width="53"
+                Width="43"
                 Height="36"
-                Margin="68,10,0,0"
+                Margin="56,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="PauseButton_Click"
@@ -113,9 +117,9 @@
             </Canvas>
         </Button>
         <Button Name="StopButton"
-                Width="53"
+                Width="43"
                 Height="36"
-                Margin="126,10,0,0"
+                Margin="102,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="StopButton_Click"
@@ -133,24 +137,23 @@
             </Canvas>
         </Button>
         <TextBox Name="TextAudio"
-                 Width="363"
                  Height="26"
-                 Margin="10,81,0,0"
-                 HorizontalAlignment="Left"
+                 Margin="10,81,75,0"
                  VerticalAlignment="Top"
                  TextWrapping="Wrap" />
         <Button Name="FindAudioButton"
-                Width="53"
+                Width="50"
                 Height="26"
-                Margin="378,81,0,0"
-                HorizontalAlignment="Left"
+                MinWidth="50"
+                Margin="0,81,10,0"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Click="FindAudioButton_Click"
                 Content="Поиск" />
         <Button Name="DownloadButton"
-                Width="53"
+                Width="43"
                 Height="36"
-                Margin="184,10,0,0"
+                Margin="148,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Style="{DynamicResource ButtonGreen}">
