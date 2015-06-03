@@ -18,19 +18,34 @@
                  MouseDoubleClick="ListAudio_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-
+                    <Grid Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
                         <Image Width="22"
                                Height="22"
                                Margin="5"
                                Source="/Images/audio_play.png" />
-                        <StackPanel>
-                            <TextBlock FontWeight="Bold" Text="{Binding artist}" />
-                            <TextBlock Text="{Binding title}" />
-                            <TextBlock Text="{Binding duration, Converter={StaticResource timeConverter}}" />
-                        </StackPanel>
+                        <StackPanel Grid.Column="1"
+                                    Margin="5"
+                                    Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       Text="{Binding artist}" />
+                            <TextBlock VerticalAlignment="Center" Text=" - " />
+                            <TextBlock MaxWidth="200"
+                                       VerticalAlignment="Center"
+                                       Text="{Binding title}" />
 
-                    </StackPanel>
+                        </StackPanel>
+                        <TextBlock Grid.Column="2"
+                                   Margin="5"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding duration,
+                                                  Converter={StaticResource timeConverter}}" />
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
