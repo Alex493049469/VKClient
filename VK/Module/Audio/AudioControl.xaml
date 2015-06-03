@@ -4,8 +4,6 @@
              xmlns:converters="clr-namespace:VKAPI.Converters;assembly=VKAPI"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="377"
-             Height="398"
              MinWidth="425"
              MinHeight="405"
              mc:Ignorable="d">
