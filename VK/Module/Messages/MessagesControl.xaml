@@ -3,55 +3,53 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="797"
-             Height="239"
+             Width="471"
+             Height="132"
              mc:Ignorable="d">
 
 
-
-    <Grid Margin="0,0,-113,123">
+    <Grid Margin="0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Image Width="100"
-               Height="100"
-               Margin="5"
-               Source="{Binding photo_100}" />
+        <Button  Width="30" Height="30">
+            <Canvas Width="12" Height="12">
+                <Path Width="12"
+                      Height="12"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Data="M462,157.04 L461.5,193.53999 491.5,174.53999 z"
+                      Fill="#FFF4F4F5"
+                      Stretch="Fill"
+                      Stroke="#FFFBF5F5" />
+            </Canvas>
+        </Button>
         <StackPanel Grid.Column="1"
-                  
                     Margin="5"
                     Orientation="Horizontal">
-            <TextBlock Margin="5,0,5,0"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
+            <TextBlock VerticalAlignment="Center"
                        FontWeight="Bold"
-                       Text="first_name" />
-            <TextBlock VerticalAlignment="Center" Text="last_name" />
-
+                       Text="{Binding Artist}" />
+            <TextBlock VerticalAlignment="Center" Text=" - " />
+            <TextBlock MaxWidth="200"
+                       VerticalAlignment="Center"
+                       Text="{Binding Title}" />
 
         </StackPanel>
-        <TextBlock Grid.Column="1"
-                   Margin="10,25,0,0"
-                   VerticalAlignment="Center"
-                   Text="online" />
         <StackPanel Grid.Column="2"
-                    MinWidth="100"
-                    MaxWidth="500"
                     Margin="5"
-                    VerticalAlignment="Center"
-                    Orientation="Vertical">
-            <Button x:Name="SendMessageButton"
-                    MinWidth="140"
-                    Content="Отправить сообщение" />
-            <Button x:Name="ViewFriendsButton"
-                    MinWidth="140"
-                    Content="Посмотреть друзей" />
-            <Button x:Name="DeleteIsFriendsButton"
-                    MinWidth="140"
-                    Content="Удалить из друзей" />
+                    Orientation="Horizontal">
+            <TextBlock Grid.Column="2"
+                   Margin="5"
+                   VerticalAlignment="Center"
+                   Text="{Binding Duration,
+                                  Converter={StaticResource timeConverter}}" />
+            <Button Content="X" Width="30" Height="30"></Button>
         </StackPanel>
+
+
     </Grid>
 
 

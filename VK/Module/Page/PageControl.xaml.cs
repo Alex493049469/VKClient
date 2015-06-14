@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VK.Module.Friends;
 using VKAPI;
 using VKAPI.Model;
 using VKAPI.Model.UsersModel;

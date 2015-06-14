@@ -1,18 +1,22 @@
-﻿<UserControl x:Class="VK.Module.Friends.FriendsControl"
+﻿<UserControl x:Class="VK.View.FriendsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:VKAPI.Converters;assembly=VKAPI"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="auto"
-             Height="auto"
+             xmlns:viewModel="clr-namespace:VK.ViewModel"
+             xmlns:converters1="clr-namespace:VKAPI.Converters"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
              mc:Ignorable="d">
-
     <UserControl.Resources>
-        <converters:OnlineConverter x:Key="onlineConverter" x:Shared="false" />
+        <viewModel:FriendsListViewModel x:Key="ViewModel" />
+        <converters1:OnlineConverter x:Key="onlineConverter" x:Shared="false" />
     </UserControl.Resources>
-    <Grid>
-        <ListBox x:Name="ListFriend" Margin="0,50,0,0">
+
+    <Grid DataContext="{StaticResource ViewModel}">
+        <ListBox x:Name="ListFriend"
+                 Margin="0,50,0,0"
+                 ItemsSource="{Binding Friends.response.items}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0">
@@ -49,7 +53,8 @@
                                     Orientation="Vertical">
                             <Button x:Name="SendMessageButton"
                                     MinWidth="140"
-                                    Content="Отправить сообщение" />
+                                    Command="{Binding SendMessageButtonClick}"
+                                    Content="Написать сообщение" />
                             <Button x:Name="ViewFriendsButton"
                                     MinWidth="140"
                                     Content="Посмотреть друзей" />

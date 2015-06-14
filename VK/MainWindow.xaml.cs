@@ -1,40 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
+using System.Windows.Interop;
 using Un4seen.Bass;
-using VK.Module.Audio;
-using VK.Module.Friends;
 using VK.Module.Message;
 using VK.Module.Page;
 using VK.Properties;
+using VK.View;
+using VK.ViewModel.Audio;
 using VKAPI;
-using VKAPI.Model;
-using VKAPI.Model.AudioModel;
-using VKAPI.Model.DialogsModel;
-using VKAPI.Model.FriendsModel;
-using VKAPI.Model.UsersModel;
 using Xceed.Wpf.AvalonDock.Layout;
-
 
 namespace VK
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    ///     Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -45,14 +24,14 @@ namespace VK
             if (Settings.Default.token == "")
             {
                 //скрываем главную форму если нет токена 
-                this.Visibility = Visibility.Hidden;
+                Visibility = Visibility.Hidden;
                 //отображаем окно авторизации
-                AuthorizationWindow authorization = new AuthorizationWindow();
+                var authorization = new AuthorizationWindow();
                 //ссылка на главную форму
                 authorization.main = this;
                 authorization.Show();
             }
-                //если токен есть то все в порядке вызываем дальнейшую инициализацию приложения
+            //если токен есть то все в порядке вызываем дальнейшую инициализацию приложения
             else
             {
                 VkMain.token = Settings.Default.token;
@@ -62,22 +41,22 @@ namespace VK
         }
 
         /// <summary>
-        /// загрузка настроек
+        ///     загрузка настроек
         /// </summary>
         public void LoadSettings()
         {
             //инициализация библиотеки bass для проигрывания аудио
             Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT,
-                new System.Windows.Interop.WindowInteropHelper(this).Handle);
+                new WindowInteropHelper(this).Handle);
         }
 
-        private void MainWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MainWindow1_Closing(object sender, CancelEventArgs e)
         {
             Bass.FreeMe();
         }
 
         /// <summary>
-        /// находит вкладку с именем и весли найдена возвращает индекс
+        ///     находит вкладку с именем и весли найдена возвращает индекс
         /// </summary>
         /// <returns></returns>
         //public int FindTab(string name)
@@ -93,11 +72,10 @@ namespace VK
         //    }
         //    return finded;
         //}
-
         public int FindTab(string name)
         {
-            int finded = -1;
-            for (int i = 0; i < LayoutDocumentP.ChildrenCount; i++)
+            var finded = -1;
+            for (var i = 0; i < LayoutDocumentP.ChildrenCount; i++)
             {
                 if (LayoutDocumentP.Children[i].ContentId == name)
                 {
@@ -109,34 +87,18 @@ namespace VK
 
         private async void AudioButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (FindTab("MyAudio") == -1)
-            //{
-            //    //грузим данные в модель
-            //    AudioModel am = await VkAudio.GetAsync(1000);
-            //    //передаем для ссылку на сам таб кантролл и модель данных
-            //    AudioControl Ac = new AudioControl(TabControler, am);
-            //    ClosableTab сt = new ClosableTab();
-            //    сt.Name = "MyAudio";
-            //    сt.Title = "Мои аудиозаписи";
-            //    сt.Content = Ac;
-            //    TabControler.Items.Add(сt);
-            //    сt.Focus();
-            //}
-            //else
-            //{
-            //    TabControler.SelectedIndex = FindTab("MyAudio");
-            //}
             if (FindTab("MyAudio") == -1)
             {
-                //грузим данные в модель
-                   AudioModel am = await VkAudio.GetAsync(1000);
-                //    //передаем для ссылку на сам таб кантролл и модель данных
-                   AudioControl Ac = new AudioControl(am);
-
-                LayoutDocument ld = new LayoutDocument();
+                //создаем view
+                var fv = new AudioView();
+                //создаем viewmodel
+                var audiolist = new AudioListViewModel();
+                fv.DataContext = audiolist;
+                //помещаем view на вкладку
+                var ld = new LayoutDocument();
                 ld.Title = "Мои аудиозаписи";
                 ld.ContentId = "MyAudio";
-                ld.Content = Ac;
+                ld.Content = fv;
                 LayoutDocumentP.Children.Add(ld);
                 LayoutDocumentP.Children[FindTab("MyAudio")].IsSelected = true;
             }
@@ -144,8 +106,6 @@ namespace VK
             {
                 LayoutDocumentP.Children[FindTab("MyAudio")].IsSelected = true;
             }
-
-
         }
 
         private async void MyPageButton_Click(object sender, RoutedEventArgs e)
@@ -170,11 +130,11 @@ namespace VK
             if (FindTab("MyPage") == -1)
             {
                 //грузим данные в модель
-                UsersModel userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
+                var userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
                 //передаем для ссылку на сам таб кантролл и модель данных
-                PageControl Ac = new PageControl(userModel);
+                var Ac = new PageControl(userModel);
 
-                LayoutDocument ld = new LayoutDocument();
+                var ld = new LayoutDocument();
                 ld.Title = "Моя страница";
                 ld.ContentId = "MyPage";
                 ld.Content = Ac;
@@ -185,9 +145,7 @@ namespace VK
             {
                 LayoutDocumentP.Children[FindTab("MyPage")].IsSelected = true;
             }
-           
         }
-
 
         private async void MyMessageButton_Click(object sender, RoutedEventArgs e)
         {
@@ -212,11 +170,11 @@ namespace VK
             if (FindTab("MyMessage") == -1)
             {
                 //грузим данные в модель
-                DialogsModel dm= await VkMessage.GetDialogsAsync();
+                var dm = await VkMessage.GetDialogsAsync();
                 //    //передаем для ссылку на сам таб кантролл и модель данных
-                DialogControl Ac = new DialogControl(dm);
+                var Ac = new DialogControl(dm);
 
-                LayoutDocument ld = new LayoutDocument();
+                var ld = new LayoutDocument();
                 ld.Title = "Мои сообщения";
                 ld.ContentId = "MyMessage";
                 ld.Content = Ac;
@@ -249,44 +207,35 @@ namespace VK
             //    TabControler.SelectedIndex = FindTab("MyFriends");
             //}
 
-            if (FindTab("MyFriends") == -1)
-            {
-                //грузим данные в модель
-                FriendsModel fm  = await VkFriends.GetAsync();
-                //передаем для ссылку на сам таб кантролл и модель данных
-                FriendsControl Ac = new FriendsControl(fm);
+            //if (FindTab("MyFriends") == -1)
+            //{
+            //    //грузим данные в модель
+            //    FriendsModel fm  = await VkFriends.GetAsync();
+            //    //передаем для ссылку на сам таб кантролл и модель данных
+            //    FriendsControl Ac = new FriendsControl(fm);
 
-                LayoutDocument ld = new LayoutDocument();
-                ld.Title = "Мои друзья";
-                ld.ContentId = "MyFriends";
-                ld.Content = Ac;
-                LayoutDocumentP.Children.Add(ld);
-                LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
-            }
-            else
-            {
-                LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
-            }
+            //    LayoutDocument ld = new LayoutDocument();
+            //    ld.Title = "Мои друзья";
+            //    ld.ContentId = "MyFriends";
+            //    ld.Content = Ac;
+            //    LayoutDocumentP.Children.Add(ld);
+            //    LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
+            //}
+            //else
+            //{
+            //    LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
+            //}
+
+
+            //создаем view
+            var fv = new FriendsView();
+            //помещаем view на вкладку
+            var ld = new LayoutDocument();
+            ld.Title = "Мои друзья";
+            ld.ContentId = "MyFriends";
+            ld.Content = fv;
+            LayoutDocumentP.Children.Add(ld);
+            LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
         }
-
-
-
     }
-
 }
-
-        
-
-      
-
-      
-
-        
-
-       
-
-        
-
-    
-       
-

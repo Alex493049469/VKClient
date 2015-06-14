@@ -4,6 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Core;
+using VKAPI.Core;
+
 
 namespace VKAPI.Model.FriendsModel
 {
@@ -45,7 +49,7 @@ namespace VKAPI.Model.FriendsModel
         public int? genre_id { get; set; }
     }
 
-    public class Item
+    public class Item: BaseViewModel
     {
         public int id { get; set; }
         public string first_name { get; set; }
@@ -83,6 +87,26 @@ namespace VKAPI.Model.FriendsModel
         public int? online_mobile { get; set; }
         public StatusAudio status_audio { get; set; }
         public string deactivated { get; set; }
+
+
+
+        private AsyncDelegateCommand _SendMessage;
+        public ICommand SendMessageButtonClick
+        {
+            get
+            {
+                if (_SendMessage == null)
+                {
+                    _SendMessage = new AsyncDelegateCommand(SendMessage);
+                }
+                return _SendMessage;
+            }
+        }
+
+        private async Task SendMessage(object o)
+        {
+
+        }
     }
 
     public class Response
@@ -94,5 +118,6 @@ namespace VKAPI.Model.FriendsModel
     public class FriendsModel
     {
         public Response response { get; set; }
+
     }
 }

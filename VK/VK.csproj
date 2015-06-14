@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -95,18 +96,13 @@
     <Compile Include="AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Core\ClosableTab.cs" />
-    <Compile Include="Core\CloseableHeader.xaml.cs">
-      <DependentUpon>CloseableHeader.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\Audio\AudioControl.xaml.cs">
-      <DependentUpon>AudioControl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\FamilyStatusConverter.cs" />
+    <Compile Include="Converters\OnlineConverter.cs" />
+    <Compile Include="Converters\TimeConverter.cs" />
+    <Compile Include="ViewModel\Audio\AudioSingleton.cs" />
     <Compile Include="Module\Dialogs\DialogControl.xaml.cs">
       <DependentUpon>DialogControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\Friends\FriendsControl.xaml.cs">
-      <DependentUpon>FriendsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\Messages\MessagesControl.xaml.cs">
       <DependentUpon>MessagesControl.xaml</DependentUpon>
@@ -114,14 +110,20 @@
     <Compile Include="Module\Page\PageControl.xaml.cs">
       <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Styles\VS2012\VS2012WindowStyle.cs" />
+    <Compile Include="ViewModel\Audio\AudioItemViewModel.cs" />
+    <Compile Include="ViewModel\Audio\AudioListViewModel.cs" />
+    <Compile Include="ViewModel\FriendsListViewModel.cs" />
+    <Compile Include="View\AudioView.xaml.cs">
+      <DependentUpon>AudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FriendsView.xaml.cs">
+      <DependentUpon>FriendsView.xaml</DependentUpon>
+    </Compile>
     <Page Include="AuthorizationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Core\CloseableHeader.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="IconApp.xaml">
       <SubType>Designer</SubType>
@@ -139,15 +141,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Module\Audio\AudioControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Module\Dialogs\DialogControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Module\Friends\FriendsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +173,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\AudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FriendsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -209,6 +211,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{77e3e7e1-3665-4947-b370-85156522f4bb}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VKAPI\VKAPI.csproj">
       <Project>{32b173b5-23ce-492f-936c-ec03bda63ea0}</Project>
       <Name>VKAPI</Name>
