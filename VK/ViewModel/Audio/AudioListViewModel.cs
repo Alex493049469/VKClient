@@ -232,9 +232,21 @@ namespace VK.ViewModel.Audio
                 if (AudioItemsViewModel[i].IsPlay == true)
                 {
                     AudioItemsViewModel[i].IsPlay = false;
-                    AudioItemsViewModel[i + 1].IsPlay = true;
-                    AudioSingleton.Play(AudioItemsViewModel[i + 1]);
-                    break;
+                    //проверяем не достигли ли конца списка
+                    if (i + 1 < AudioItemsViewModel.Count)
+                    {
+                        AudioItemsViewModel[i + 1].IsPlay = true;
+                        AudioSingleton.Play(AudioItemsViewModel[i + 1]);
+                        break;
+                    }
+                    else
+                    {
+                        i = -1;
+                        AudioItemsViewModel[i + 1].IsPlay = true;
+                        AudioSingleton.Play(AudioItemsViewModel[i + 1]);
+                        break;
+                    }
+                  
                 }
             }
         }

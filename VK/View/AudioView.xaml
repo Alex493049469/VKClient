@@ -39,18 +39,24 @@
                 <StackPanel Grid.Column="1"
                             Margin="5"
                             Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center"
+                    <TextBlock Name="ArtistText"
+                               MaxWidth="100"
+                               VerticalAlignment="Center"
                                FontWeight="Bold"
                                Text="{Binding Artist}" />
-                    <TextBlock VerticalAlignment="Center" Text=" - " />
-                    <TextBlock MaxWidth="200"
+                    <TextBlock Name="DashText"
+                               VerticalAlignment="Center"
+                               Text=" - " />
+                    <TextBlock Name="TitleText"
+                               MaxWidth="200"
                                VerticalAlignment="Center"
                                Text="{Binding Title}" />
                 </StackPanel>
                 <StackPanel Grid.Column="2"
                             Margin="5"
                             Orientation="Horizontal">
-                    <TextBlock Grid.Column="2"
+                    <TextBlock Name="DurationText"
+                               Grid.Column="2"
                                Margin="5"
                                VerticalAlignment="Center"
                                FontWeight="Bold"
@@ -66,7 +72,11 @@
             </Grid>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsPlay}" Value="true">
-                    <Setter TargetName="GridItems" Property="Background" Value="CornflowerBlue" />
+                    <Setter TargetName="GridItems" Property="Background" Value="#FFbababa" />
+                    <Setter TargetName="ArtistText" Property="Foreground" Value="#FFF9F9F9" />
+                    <Setter TargetName="TitleText" Property="Foreground" Value="#FFF9F9F9" />
+                    <Setter TargetName="DurationText" Property="Foreground" Value="#FFF9F9F9" />
+                    <Setter TargetName="DashText" Property="Foreground" Value="#FFF9F9F9" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsMyItem}" Value="false">
                     <Setter TargetName="AddandDeleteButton" Property="Content" Value="+" />
@@ -128,7 +138,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Command="{Binding PlayAudioButtonClick}"
-                Style="{DynamicResource ButtonGreen}">
+                Style="{DynamicResource ButtonBlue}">
             <Canvas Width="12" Height="12">
                 <Path Width="12"
                       Height="12"
@@ -147,7 +157,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Command="{Binding PauseAudioButtonClick}"
-                Style="{DynamicResource ButtonGreen}">
+                Style="{DynamicResource ButtonBlue}">
             <Canvas Width="12" Height="12">
                 <Rectangle Width="3"
                            Height="12"
@@ -171,7 +181,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Command="{Binding StopAudioButtonClick}"
-                Style="{DynamicResource ButtonGreen}">
+                Style="{DynamicResource ButtonBlue}">
             <Canvas Width="12" Height="12">
                 <Rectangle Width="12"
                            Height="12"
@@ -188,7 +198,7 @@
                  TextWrapping="Wrap" />
         <Button Name="FindAudioButton"
                 Width="50"
-                Height="26"
+                Height="30"
                 MinWidth="50"
                 Margin="0,87,10,0"
                 HorizontalAlignment="Right"
@@ -201,7 +211,7 @@
                 Margin="148,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Style="{DynamicResource ButtonGreen}">
+                Style="{DynamicResource ButtonBlue}">
             <Canvas Width="12" Height="14">
                 <Path Width="12"
                       Height="14"
@@ -215,14 +225,14 @@
         </Button>
         <Button Name="MyAudioButton"
                 Width="108"
-                Height="26"
+                Height="30"
                 Margin="0,10,128,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding MyAudioButtonClick}"
                 Content="Мои аудиозаписи" />
         <Button Width="108"
-                Height="26"
+                Height="30"
                 Margin="0,10,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
