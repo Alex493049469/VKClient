@@ -2445,11 +2445,14 @@
                         <Trigger Property="IsGrouping" Value="true">
                             <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
                         </Trigger>
+                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
+    
 
     <Style x:Key="RadioButtonLarge" TargetType="{x:Type RadioButton}">
         <Setter Property="Foreground" Value="#FF313131" />

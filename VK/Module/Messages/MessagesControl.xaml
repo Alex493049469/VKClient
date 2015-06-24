@@ -8,48 +8,63 @@
              mc:Ignorable="d">
 
 
-    <Grid Margin="0">
+    <Grid Name="GridItems"
+                  Margin="0"
+                  UseLayoutRounding="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Button  Width="30" Height="30">
+        <Button Width="30"
+                        Height="30"
+                        Margin="5"
+                        Command="{Binding PlayAudioButtonClick}"
+                        Style="{DynamicResource ButtonBlue}">
             <Canvas Width="12" Height="12">
                 <Path Width="12"
-                      Height="12"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      Data="M462,157.04 L461.5,193.53999 491.5,174.53999 z"
-                      Fill="#FFF4F4F5"
-                      Stretch="Fill"
-                      Stroke="#FFFBF5F5" />
+                              Height="12"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              Data="M462,157.04 L461.5,193.53999 491.5,174.53999 z"
+                              Fill="#FFF4F4F5"
+                              Stretch="Fill"
+                              Stroke="#FFFBF5F5" />
             </Canvas>
         </Button>
         <StackPanel Grid.Column="1"
-                    Margin="5"
-                    Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Center"
-                       FontWeight="Bold"
-                       Text="{Binding Artist}" />
-            <TextBlock VerticalAlignment="Center" Text=" - " />
-            <TextBlock MaxWidth="200"
-                       VerticalAlignment="Center"
-                       Text="{Binding Title}" />
-
+                            Margin="5"
+                            Orientation="Horizontal">
+            <TextBlock Name="ArtistText"
+                               MaxWidth="100"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               Text="{Binding Artist}" />
+            <TextBlock Name="DashText"
+                               VerticalAlignment="Center"
+                               Text=" - " />
+            <TextBlock Name="TitleText"
+                               MaxWidth="200"
+                               VerticalAlignment="Center"
+                               Text="{Binding Title}" />
         </StackPanel>
         <StackPanel Grid.Column="2"
-                    Margin="5"
-                    Orientation="Horizontal">
-            <TextBlock Grid.Column="2"
-                   Margin="5"
-                   VerticalAlignment="Center"
-                   Text="{Binding Duration,
-                                  Converter={StaticResource timeConverter}}" />
-            <Button Content="X" Width="30" Height="30"></Button>
+                            Margin="5"
+                            Orientation="Horizontal">
+            <TextBlock Name="DurationText"
+                               Grid.Column="2"
+                               Margin="5"
+                               VerticalAlignment="Center"
+                               FontWeight="Bold"
+                               Text="{Binding Duration,
+                                              Converter={StaticResource timeConverter}}" />
+            <Button Name="AddandDeleteButton"
+                            Width="30"
+                            Height="30"
+                            Command="{Binding AddandDeleteItemButtonClick}"
+                            Content="X"
+                            Style="{DynamicResource ButtonBlue}" />
         </StackPanel>
-
-
     </Grid>
 
 

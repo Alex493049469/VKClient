@@ -13,8 +13,10 @@ namespace VK.ViewModel.Audio
     {
         //Модель данных аудиозаписей
         private AudioModel _audioViewModel;
+        //для доступа к данным песен
+        VkAudio vkaudio = new VkAudio();
         //ViewModel Аудиозапсей
-        private ObservableCollection<AudioItemViewModel> _audioItemsViewModel = new ObservableCollection<AudioItemViewModel>();
+        private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
         //одиночка - для проигрывания аудио в фоне
         private AudioSingleton _audioSingleton = AudioSingleton.Instance;
 
@@ -34,15 +36,42 @@ namespace VK.ViewModel.Audio
         /// </summary>
         public async void LoadAudio()
         {
-            AudioItemsViewModel.Clear();
-            _audioViewModel = await VkAudio.GetAsync(1000);
+            AudioItemsViewModel = null;
+            ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
+            _audioViewModel = await vkaudio.GetAsync();
             foreach (var item in _audioViewModel.response.items)
             {
                 AudioItemViewModel itemAudio = new AudioItemViewModel() {Item = item};
                 itemAudio.IsMyItem = true;
-                AudioItemsViewModel.Add(itemAudio);
+                _item.Add(itemAudio);
                 ConnectItemViewModel(itemAudio);
             }
+            AudioItemsViewModel = _item;
+
+            //есле загрузки данных если у нас играла до песня то ищем ее в списке и помечаем как проигрываемую
+            if (AudioSingleton.ItemPlaying != null)
+            {
+                FingPlayingAudio();
+            }
+        }
+
+        //ищет проигрываемую аудиозапись и помечает ее как проигрываемую
+        private void FingPlayingAudio()
+        {
+            for (int i = 0; i < AudioItemsViewModel.Count; i++)
+            {
+                if (AudioItemsViewModel[i].Url == AudioSingleton.ItemPlaying.Url)
+                {
+                     AudioSingleton.ItemPlaying = null;
+                     AudioItemsViewModel[i].IsPlay = true;
+                     AudioSingleton.ItemPlaying = AudioItemsViewModel[i];
+                     
+                   
+                    break;
+                }
+            }
+            
+
         }
 
         private string _searchString;
@@ -64,23 +93,7 @@ namespace VK.ViewModel.Audio
                 if (_audioItemsViewModel == value)
                     return;
 
-                if (_audioItemsViewModel != null)
-                {
-                    foreach (var itemsViewModel in _audioItemsViewModel)
-                    {
-                        DisconnectItemViewModel(itemsViewModel);
-                    }
-                }
-
                 _audioItemsViewModel = value;
-
-                if (_audioItemsViewModel != null)
-                {
-                    foreach (var itemsViewModel in _audioItemsViewModel)
-                    {
-                        ConnectItemViewModel(itemsViewModel);
-                    }
-                }
 
                 OnPropertyChanged();
             }
@@ -93,12 +106,12 @@ namespace VK.ViewModel.Audio
             {
                 DisconnectItemViewModel(itemAudioViewModel);
                 AudioItemsViewModel.Remove(itemAudioViewModel);
-                await VkAudio.DeleteAsync(itemAudioViewModel.Item.id, itemAudioViewModel.Item.owner_id);
+                await vkaudio.DeleteAsync(itemAudioViewModel.Item.id, itemAudioViewModel.Item.owner_id);
             }
             //если не моя то добавляем ее
             else
             {
-                await VkAudio.AddAsync(itemAudioViewModel.Item.id, itemAudioViewModel.Item.owner_id);
+                await vkaudio.AddAsync(itemAudioViewModel.Item.id, itemAudioViewModel.Item.owner_id);
             }
         }
 
@@ -154,6 +167,12 @@ namespace VK.ViewModel.Audio
         {
             if (ItemSelected != null)
             {
+                if (AudioSingleton.ItemPlaying != null)
+                {
+                    AudioSingleton.ItemPlaying.IsPlay = false; 
+                }
+                
+                ItemSelected.IsPlay = true;
                 AudioSingleton.Play(ItemSelected);
 
                //Для переключения стилей в плейлисте (Только для небольших списков)
@@ -266,15 +285,17 @@ namespace VK.ViewModel.Audio
 
         private async Task SearchAudio(object o)
         {
-            AudioItemsViewModel.Clear();
-            _audioViewModel = await VkAudio.SearchAsync(SearchString);
+            AudioItemsViewModel = null;
+            ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
+            _audioViewModel = await vkaudio.SearchAsync(SearchString);
             foreach (var item in _audioViewModel.response.items)
             {
                 AudioItemViewModel itemAudio = new AudioItemViewModel() { Item = item };
                 itemAudio.IsMyItem = false;
-                AudioItemsViewModel.Add(itemAudio);
+                _item.Add(itemAudio);
                 ConnectItemViewModel(itemAudio);
             }
+            AudioItemsViewModel = _item;
         }
 
         private AsyncDelegateCommand _myAudioAudio;

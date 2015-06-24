@@ -114,12 +114,17 @@
     <Compile Include="Styles\VS2012\VS2012WindowStyle.cs" />
     <Compile Include="ViewModel\Audio\AudioItemViewModel.cs" />
     <Compile Include="ViewModel\Audio\AudioListViewModel.cs" />
-    <Compile Include="ViewModel\FriendsListViewModel.cs" />
+    <Compile Include="ViewModel\Friends\FriendItemViewModel.cs" />
+    <Compile Include="ViewModel\Friends\FriendsListViewModel.cs" />
+    <Compile Include="ViewModel\Page\PageViewModel.cs" />
     <Compile Include="View\AudioView.xaml.cs">
       <DependentUpon>AudioView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FriendsView.xaml.cs">
       <DependentUpon>FriendsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PageView.xaml.cs">
+      <DependentUpon>PageView.xaml</DependentUpon>
     </Compile>
     <Page Include="AuthorizationWindow.xaml">
       <SubType>Designer</SubType>
@@ -157,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\VS2012\VS2012WindowStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -178,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\FriendsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,6 +253,7 @@
     <Content Include="Bass.Net.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\loading_16.png" />
     <Resource Include="Images\VkIconBlack.png" />
     <Resource Include="Images\VKIcon.png" />
     <Resource Include="Images\videos2.png" />

@@ -193,12 +193,12 @@
             <Style TargetType="{x:Type StatusBar}">
                 <Setter Property="Foreground" Value="{StaticResource VS2012WindowStatusForeground}" />
                 <!--<Setter Property="Background" Value="#597b9f" />-->
-                <Style.Triggers>
+                <!--<Style.Triggers>
                     <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
                         <Setter Property="Foreground" Value="{StaticResource VS2012WindowStatusForegroundInactive}" />
                         <Setter Property="Background" Value="{StaticResource VS2012WindowBorderBrushInactive}" />
                     </DataTrigger>
-                </Style.Triggers>
+                </Style.Triggers>-->
             </Style>
             <Style TargetType="{x:Type ResizeGrip}">
                 <Setter Property="WindowChrome.ResizeGripDirection" Value="BottomRight" />

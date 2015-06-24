@@ -14,7 +14,9 @@
         <converters:TimeConverter x:Key="timeConverter" x:Shared="false" />
 
         <DataTemplate x:Key="AudioTemplate">
-            <Grid Name="GridItems" Margin="0">
+            <Grid Name="GridItems"
+                  Margin="0"
+                  UseLayoutRounding="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -86,11 +88,12 @@
 
     </UserControl.Resources>
 
-    <Grid Background="#FFE5E5E5">
+    <Grid UseLayoutRounding="True">
         <ListBox x:Name="ListAudio"
                  Margin="10,122,10,26"
                  ItemTemplate="{StaticResource AudioTemplate}"
-                 ItemsSource="{Binding AudioItemsViewModel}"
+                 ItemsSource="{Binding AudioItemsViewModel,
+                                       IsAsync=True}"
                  SelectedItem="{Binding ItemSelected}">
             <ListBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding PlayAudioButtonClick}" />
@@ -101,6 +104,29 @@
                     <i:InvokeCommandAction Command="{Binding PlayAudioButtonClick}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+
+            <ListBox.Style>
+                <Style TargetType="{x:Type ListBox}">
+                    <Setter Property="Background" Value="{DynamicResource TextBox_fill_}" />
+                    <Setter Property="BorderBrush" Value="{StaticResource CheckBox_stroke_color_}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="Foreground" Value="{DynamicResource Text_dark_}" />
+                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+                    <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+                    <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+                    <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+                    <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Style.Triggers>
+                        <Trigger Property="ItemsSource" Value="{x:Null}">
+                            <Setter Property="Template" Value="{StaticResource WaitControlTemplate}" />
+
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Style>
         </ListBox>
 
         <Slider Name="AudioPosition"

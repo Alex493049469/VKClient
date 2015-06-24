@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Windows.Threading;
 using Core;
 using Un4seen.Bass;
@@ -85,14 +87,18 @@ namespace VK.ViewModel.Audio
         /// </summary>
         public void Play(AudioItemViewModel itemPlaying)
         {
-            if (ItemPlaying != null) ItemPlaying.IsPlay = false;
+            //if (ItemPlaying != null)
+            //{ 
+            //    ItemPlaying.IsPlay = false;
+
+            //} 
             ItemPlaying = itemPlaying;
-            ItemPlaying.IsPlay = true;
+            
 
             Bass.BASS_StreamFree(stream);
             Bass.BASS_Start();
 
-            stream = Bass.BASS_StreamCreateURL(itemPlaying.Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
+            stream = Bass.BASS_StreamCreateURL(ItemPlaying.Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
 
             if (stream != 0 && Bass.BASS_ChannelPlay(stream, false))
             {
@@ -152,6 +158,7 @@ namespace VK.ViewModel.Audio
         public void Fast()
         {
             double TrackCurrPos = Math.Round(Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetPosition(stream, 0)));
+            
             if (AudioPosition != TrackCurrPos && AudioPosition != TrackCurrPos - 1)
             {
                 if (!onFast)

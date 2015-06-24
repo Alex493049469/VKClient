@@ -49,7 +49,7 @@ namespace VKAPI.Model.FriendsModel
         public int? genre_id { get; set; }
     }
 
-    public class Item: BaseViewModel
+    public class Item
     {
         public int id { get; set; }
         public string first_name { get; set; }
@@ -65,7 +65,7 @@ namespace VKAPI.Model.FriendsModel
         public string photo_200_orig { get; set; }
         public int has_mobile { get; set; }
         public int online { get; set; }
-        public string OnlineString { get; set; }
+        //public string OnlineString { get; set; }
         public int can_post { get; set; }
         public int can_see_all_posts { get; set; }
         public int can_write_private_message { get; set; }
@@ -87,26 +87,6 @@ namespace VKAPI.Model.FriendsModel
         public int? online_mobile { get; set; }
         public StatusAudio status_audio { get; set; }
         public string deactivated { get; set; }
-
-
-
-        private AsyncDelegateCommand _SendMessage;
-        public ICommand SendMessageButtonClick
-        {
-            get
-            {
-                if (_SendMessage == null)
-                {
-                    _SendMessage = new AsyncDelegateCommand(SendMessage);
-                }
-                return _SendMessage;
-            }
-        }
-
-        private async Task SendMessage(object o)
-        {
-
-        }
     }
 
     public class Response

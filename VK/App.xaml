@@ -9,6 +9,7 @@
 
                 <ResourceDictionary Source="Styles/VS2012/VS2012WindowStyle.xaml" />
                 <ResourceDictionary Source="Styles/MoonUICore.xaml" />
+                <ResourceDictionary Source="Styles/Templates.xaml" />
                 <!--<ResourceDictionary Source="Themes/Core.xaml" />
                 <ResourceDictionary Source="Themes/Brushes.xaml" />
                 <ResourceDictionary Source="Themes/Icons.xaml" />

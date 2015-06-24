@@ -7,6 +7,8 @@ using VK.Module.Page;
 using VK.Properties;
 using VK.View;
 using VK.ViewModel.Audio;
+using VK.ViewModel.Friends;
+using VK.ViewModel.Page;
 using VKAPI;
 using Xceed.Wpf.AvalonDock.Layout;
 
@@ -127,17 +129,37 @@ namespace VK
             //{
             //    TabControler.SelectedIndex = FindTab("MyPage");
             //}
+            //if (FindTab("MyPage") == -1)
+            //{
+            //    //грузим данные в модель
+            //    var userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
+            //    //передаем для ссылку на сам таб кантролл и модель данных
+            //    var Ac = new PageControl(userModel);
+
+            //    var ld = new LayoutDocument();
+            //    ld.Title = "Моя страница";
+            //    ld.ContentId = "MyPage";
+            //    ld.Content = Ac;
+            //    LayoutDocumentP.Children.Add(ld);
+            //    LayoutDocumentP.Children[FindTab("MyPage")].IsSelected = true;
+            //}
+            //else
+            //{
+            //    LayoutDocumentP.Children[FindTab("MyPage")].IsSelected = true;
+            //}
+
             if (FindTab("MyPage") == -1)
             {
-                //грузим данные в модель
-                var userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
-                //передаем для ссылку на сам таб кантролл и модель данных
-                var Ac = new PageControl(userModel);
-
+                //создаем view
+                var pv = new PageView();
+                //создаем viewmodel
+                var page = new PageViewModel();
+                pv.DataContext = page;
+                //помещаем view на вкладку
                 var ld = new LayoutDocument();
                 ld.Title = "Моя страница";
                 ld.ContentId = "MyPage";
-                ld.Content = Ac;
+                ld.Content = pv;
                 LayoutDocumentP.Children.Add(ld);
                 LayoutDocumentP.Children[FindTab("MyPage")].IsSelected = true;
             }
@@ -229,6 +251,8 @@ namespace VK
 
             //создаем view
             var fv = new FriendsView();
+            var friendlist = new FriendsListViewModel();
+            fv.DataContext = friendlist;
             //помещаем view на вкладку
             var ld = new LayoutDocument();
             ld.Title = "Мои друзья";
