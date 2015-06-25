@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VkBase.cs" />
     <Compile Include="VkLongPool.cs" />
     <Compile Include="Model\AudioModel\AudioModel.cs" />
     <Compile Include="Model\DialogsModel\DialogsModel.cs" />
