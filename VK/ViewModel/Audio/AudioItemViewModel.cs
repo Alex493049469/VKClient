@@ -31,8 +31,6 @@ namespace VK.ViewModel.Audio
         }
         #endregion
 
-     
-
         private Item _item;
         public Item Item
         {
@@ -82,6 +80,12 @@ namespace VK.ViewModel.Audio
                 _item.url = value;
                 OnPropertyChanged();
             }
+        }
+
+        public string FullNameAudio
+        {
+            get { return _item.artist + " - " + _item.title; }
+           
         }
 
         //проигрывается ли в данный момент

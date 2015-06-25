@@ -8,10 +8,12 @@
              xmlns:viewModel="clr-namespace:VK.ViewModel"
              MinWidth="450"
              MinHeight="500"
+             d:DesignHeight="600"
+             d:DesignWidth="600"
              mc:Ignorable="d">
     <UserControl.Resources>
 
-        <converters:TimeConverter x:Key="timeConverter" x:Shared="false" />
+        <converters:TimeConverter x:Key="TimeConverter" x:Shared="false" />
 
         <DataTemplate x:Key="AudioTemplate">
             <Grid Name="GridItems"
@@ -63,7 +65,7 @@
                                VerticalAlignment="Center"
                                FontWeight="Bold"
                                Text="{Binding Duration,
-                                              Converter={StaticResource timeConverter}}" />
+                                              Converter={StaticResource TimeConverter}}" />
                     <Button Name="AddandDeleteButton"
                             Width="30"
                             Height="30"
@@ -90,7 +92,7 @@
 
     <Grid UseLayoutRounding="True">
         <ListBox x:Name="ListAudio"
-                 Margin="10,122,10,26"
+                 Margin="10,159,10,26"
                  ItemTemplate="{StaticResource AudioTemplate}"
                  ItemsSource="{Binding AudioItemsViewModel,
                                        IsAsync=True}"
@@ -132,7 +134,7 @@
         <Slider Name="AudioPosition"
                 Width="336"
                 Height="26"
-                Margin="10,50,0,0"
+                Margin="10,90,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 IsSelectionRangeEnabled="false"
@@ -149,7 +151,7 @@
         <Slider x:Name="Volime"
                 Width="60"
                 Height="26"
-                Margin="355,50,0,0"
+                Margin="355,90,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Maximum="100"
@@ -218,7 +220,7 @@
         </Button>
         <TextBox Name="TextAudio"
                  Height="26"
-                 Margin="10,87,75,0"
+                 Margin="10,121,75,0"
                  VerticalAlignment="Top"
                  Text="{Binding SearchString}"
                  TextWrapping="Wrap" />
@@ -226,7 +228,7 @@
                 Width="50"
                 Height="30"
                 MinWidth="50"
-                Margin="0,87,10,0"
+                Margin="0,121,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding SearchAudioButtonClick}"
@@ -271,5 +273,10 @@
                HorizontalAlignment="Left"
                VerticalAlignment="Bottom"
                Content="{Binding AudioItemsViewModel.Count}" />
+        <Label Margin="10,59,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="{Binding AudioSingleton.ItemPlaying.FullNameAudio}" 
+               />
     </Grid>
 </UserControl>
