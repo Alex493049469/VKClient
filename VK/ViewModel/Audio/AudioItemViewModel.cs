@@ -9,27 +9,27 @@ namespace VK.ViewModel.Audio
 {
     class AudioItemViewModel : BaseViewModel
     {
-        #region для удаления аудиозаписей
-        public event Action<AudioItemViewModel> ItemEvent = null;
+        //#region для удаления аудиозаписей
+        //public event Action<AudioItemViewModel> ItemEvent = null;
 
-        private AsyncDelegateCommand _itemAction;
-        public ICommand AddandDeleteItemButtonClick
-        {
-            get
-            {
-                if (_itemAction == null)
-                {
-                    _itemAction = new AsyncDelegateCommand(AddandDeleteItem);
-                }
-                return _itemAction;
-            }
-        }
-        private async Task AddandDeleteItem(object o)
-        {
-            if (ItemEvent != null)
-                ItemEvent(this);
-        }
-        #endregion
+        //private AsyncDelegateCommand _itemAction;
+        //public ICommand AddandDeleteItemButtonClick
+        //{
+        //    get
+        //    {
+        //        if (_itemAction == null)
+        //        {
+        //            _itemAction = new AsyncDelegateCommand(AddandDeleteItem);
+        //        }
+        //        return _itemAction;
+        //    }
+        //}
+        //private async Task AddandDeleteItem(object o)
+        //{
+        //    if (ItemEvent != null)
+        //        ItemEvent(this);
+        //}
+        //#endregion
 
         private Item _item;
         public Item Item

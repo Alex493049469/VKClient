@@ -66,11 +66,21 @@
                                FontWeight="Bold"
                                Text="{Binding Duration,
                                               Converter={StaticResource TimeConverter}}" />
-                    <Button Name="AddandDeleteButton"
+                    <Button Name="DeleteButton"
                             Width="30"
                             Height="30"
-                            Command="{Binding AddandDeleteItemButtonClick}"
-                            Content="X"
+                            Command="{Binding ElementName=root,
+                                              Path=DataContext.DeleteAudioButtonClick}"
+                            CommandParameter="{Binding FullNameAudio}"
+                            Content="-"
+                            Style="{DynamicResource ButtonBlue}" />
+                    <Button Name="AddButton"
+                            Width="30"
+                            Height="30"
+                            Command="{Binding ElementName=root,
+                                              Path=DataContext.AddAudioButtonClick}"
+                            CommandParameter="{Binding FullNameAudio}"
+                            Content="+"
                             Style="{DynamicResource ButtonBlue}" />
                 </StackPanel>
             </Grid>
@@ -83,14 +93,23 @@
                     <Setter TargetName="DashText" Property="Foreground" Value="#FFF9F9F9" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsMyItem}" Value="false">
-                    <Setter TargetName="AddandDeleteButton" Property="Content" Value="+" />
+                    <Setter TargetName="AddButton" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="AddButton" Property="Width" Value="30" />
+                    <Setter TargetName="DeleteButton" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="DeleteButton" Property="Width" Value="0" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsMyItem}" Value="true">
+                    <Setter TargetName="AddButton" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="AddButton" Property="Width" Value="0" />
+                    <Setter TargetName="DeleteButton" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="DeleteButton" Property="Width" Value="30" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
 
     </UserControl.Resources>
 
-    <Grid UseLayoutRounding="True">
+    <Grid x:Name="root" UseLayoutRounding="True">
         <ListBox x:Name="ListAudio"
                  Margin="10,159,10,26"
                  ItemTemplate="{StaticResource AudioTemplate}"
@@ -276,7 +295,6 @@
         <Label Margin="10,59,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Content="{Binding AudioSingleton.ItemPlaying.FullNameAudio}" 
-               />
+               Content="{Binding AudioSingleton.ItemPlaying.FullNameAudio}" />
     </Grid>
 </UserControl>

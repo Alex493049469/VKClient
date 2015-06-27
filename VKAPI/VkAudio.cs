@@ -13,7 +13,6 @@ namespace VKAPI
     /// </summary>
     public class VkAudio : VkBase
     {
- 
         /// <summary>
         ///    Возвращает список аудиозаписей пользователя или сообщества
         /// </summary>
@@ -80,7 +79,6 @@ namespace VKAPI
             //десериализуем
             var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
             return audioModel;
-          
         }
 
         public Task<AudioModel> SearchAsync(string q, short autoComplete=1, short lyrics = 0, short performerOnly =0, short sort =0, short searchOwn = 1, int offset =0, int count=300)
@@ -102,7 +100,6 @@ namespace VKAPI
             //добавляем параметры
             AddParameter("audio_id=", audioId);
             AddParameter("owner_id=", ownerId);
-
             //получаем данные в json
             GetData();
         }
@@ -125,7 +122,6 @@ namespace VKAPI
             //добавляем параметры
             AddParameter("audio_id=", audioId);
             AddParameter("owner_id=", ownerId);
-
             //получаем данные в json
             GetData();
         }

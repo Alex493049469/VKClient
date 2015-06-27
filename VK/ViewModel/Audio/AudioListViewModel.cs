@@ -25,12 +25,6 @@ namespace VK.ViewModel.Audio
             LoadAudio();
         }
 
-        //для загрузки аудиозаписей друзей и др
-        //public AudioListViewModel(int owner_id)
-        //{
-        //    LoadAudio();
-        //}
-
         /// <summary>
         /// Загрузка моих аудиозаписей
         /// </summary>
@@ -44,7 +38,7 @@ namespace VK.ViewModel.Audio
                 AudioItemViewModel itemAudio = new AudioItemViewModel() {Item = item};
                 itemAudio.IsMyItem = true;
                 _item.Add(itemAudio);
-                ConnectItemViewModel(itemAudio);
+               // ConnectItemViewModel(itemAudio);
             }
             AudioItemsViewModel = _item;
 
@@ -65,13 +59,10 @@ namespace VK.ViewModel.Audio
                      AudioSingleton.ItemPlaying = null;
                      AudioItemsViewModel[i].IsPlay = true;
                      AudioSingleton.ItemPlaying = AudioItemsViewModel[i];
-                     
-                   
+                          
                     break;
                 }
             }
-            
-
         }
 
         private string _searchString;
@@ -97,34 +88,6 @@ namespace VK.ViewModel.Audio
 
                 OnPropertyChanged();
             }
-        }
-
-        async void Audio_AddandDeleteItemEvent(AudioItemViewModel itemAudioViewModel)
-        {
-            //если моя аудиозапись то удаляем ее
-            if (itemAudioViewModel.IsMyItem == true)
-            {
-                DisconnectItemViewModel(itemAudioViewModel);
-                AudioItemsViewModel.Remove(itemAudioViewModel);
-                await vkaudio.DeleteAsync(itemAudioViewModel.Item.id, itemAudioViewModel.Item.owner_id);
-            }
-            //если не моя то добавляем ее
-            else
-            {
-                await vkaudio.AddAsync(itemAudioViewModel.Item.id, itemAudioViewModel.Item.owner_id);
-            }
-        }
-
-        //подписываемся на событие об удалении или добавлении
-        void ConnectItemViewModel(AudioItemViewModel itemAudioViewModel)
-        {
-            itemAudioViewModel.ItemEvent += Audio_AddandDeleteItemEvent;
-        }
-
-        //отписываемся
-        void DisconnectItemViewModel(AudioItemViewModel itemAudioViewModel)
-        {
-            itemAudioViewModel.ItemEvent -= Audio_AddandDeleteItemEvent;
         }
 
         //синглтон класс для проигравания аудио
@@ -180,8 +143,6 @@ namespace VK.ViewModel.Audio
                // AudioItemsTemplateSelector = new AudioItemsTemplateSelector();
             }
         }
-
-        
 
         private AsyncDelegateCommand _pauseAudio;
         public ICommand PauseAudioButtonClick
@@ -293,7 +254,7 @@ namespace VK.ViewModel.Audio
                 AudioItemViewModel itemAudio = new AudioItemViewModel() { Item = item };
                 itemAudio.IsMyItem = false;
                 _item.Add(itemAudio);
-                ConnectItemViewModel(itemAudio);
+                //ConnectItemViewModel(itemAudio);
             }
             AudioItemsViewModel = _item;
         }
@@ -314,6 +275,58 @@ namespace VK.ViewModel.Audio
         private async Task MyAudio(object o)
         {
             LoadAudio();
+        }
+
+        private AsyncDelegateCommand _addAudio;
+        public ICommand AddAudioButtonClick
+        {
+            get
+            {
+                if (_addAudio == null)
+                {
+                    _addAudio = new AsyncDelegateCommand(AddAudio);
+                }
+                return _addAudio;
+            }
+        }
+
+        private async Task AddAudio(object o)
+        {
+            for (int i = 0; i < AudioItemsViewModel.Count; i++)
+            {
+                if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
+                {
+                    await vkaudio.AddAsync(AudioItemsViewModel[i].Item.id, AudioItemsViewModel[i].Item.owner_id);
+                    break;
+                }
+            }
+        }
+
+        private AsyncDelegateCommand _deleteAudio;
+        public ICommand DeleteAudioButtonClick
+        {
+            get
+            {
+                if (_deleteAudio == null)
+                {
+                    _deleteAudio = new AsyncDelegateCommand(DeleteAudio);
+                }
+                return _deleteAudio;
+            }
+        }
+
+        private async Task DeleteAudio(object o)
+        {
+            for (int i = 0; i < AudioItemsViewModel.Count; i++)
+            {
+                if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
+                {
+                    await vkaudio.DeleteAsync(AudioItemsViewModel[i].Item.id, AudioItemsViewModel[i].Item.owner_id);
+                    AudioItemsViewModel.Remove(AudioItemsViewModel[i]);
+                    break;
+                }
+            }
+            
         }
     }
 }
