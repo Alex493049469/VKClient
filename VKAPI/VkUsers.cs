@@ -39,15 +39,15 @@ namespace VKAPI
        /// <summary>
         /// Возвращает расширенную информацию о пользователях.
        /// </summary>
-        /// <param name="user_ids">идентификатор(ы) пользователя(ей), По умолчанию — идентификатор текущего пользователя. </param>
+        /// <param name="userIds">идентификатор(ы) пользователя(ей), По умолчанию — идентификатор текущего пользователя. </param>
        /// <param name="fields">поля которые необходимо получить</param>
         /// <param name="nameCase">падеж в котором вернуть имя и фамилию пользователя(ей), По умолчанию nom. </param>
        /// <returns></returns>
-       public static UsersModel Get(string user_ids, string fields, name_case nameCase)
+       public static UsersModel Get(string userIds, string fields, name_case nameCase)
         {
-           if (user_ids != "")
+           if (userIds != "")
            {
-               param.Add("user_ids=" + user_ids);
+               param.Add("user_ids=" + userIds);
            }
            if (fields != "")
            {
@@ -88,6 +88,21 @@ namespace VKAPI
            UsersModel usersModel = JsonConvert.DeserializeObject<UsersModel>(s);
 
            return usersModel;
+
+           //используемый метод
+           //Method = "audio.get";
+           //ClearParameters();
+           ////добавляем параметры
+           //AddParameter("owner_id=", ownerId);
+           //AddParameter("album_id=", albumId);
+           //AddParameter("audio_ids=", audioIds);
+           //AddParameter("offset=", offset);
+           //AddParameter("count=", count);
+           ////получаем данные в json
+           //string str = GetData();
+           ////десериализуем
+           //var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
+           //return audioModel;
         }
 
 

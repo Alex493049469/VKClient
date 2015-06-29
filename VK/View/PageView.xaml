@@ -107,16 +107,16 @@
                     VerticalAlignment="Top"
                     Orientation="Vertical">
             <Label x:Name="BirthdayLabel"
-                   Content="День рождения:"
+                   Content="{Binding Birthday}"
                    Foreground="#FF515151" />
             <Label x:Name="TownLabel"
-                   Content="Город:"
+                   Content="{Binding Town}"
                    Foreground="#FF515151" />
             <Label x:Name="FamilyStatusLabel"
-                   Content="Семейное положение:"
+                   Content="{Binding FamilyStatus}"
                    Foreground="#FF515151" />
             <Label x:Name="EducationLabel"
-                   Content="Образование:"
+                   Content="{Binding Education}"
                    Foreground="#FF515151" />
 
         </StackPanel>

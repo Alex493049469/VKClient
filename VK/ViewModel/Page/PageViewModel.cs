@@ -26,9 +26,6 @@ namespace VK.ViewModel.Page
             //грузим данные в модель
              UserModel =  VkUsers.Get("", "", VkUsers.name_case.nom);
 
-           
-
-
             //this.DataContext = userModel.response;
 
             //FriendsButton.Content = "Друзья (" + userModel.response[0].counters.friends + ")";
@@ -116,9 +113,40 @@ namespace VK.ViewModel.Page
         {
             get
             {
-               
-                    return UserModel.response[0].photo_200_orig;
-                
+                return UserModel.response[0].photo_200_orig; 
+            }
+        }
+
+        public string Birthday
+        {
+            get
+            {
+                return "День рождения: " + UserModel.response[0].bdate;
+            }
+        }
+
+        public string Town
+        {
+            get
+            {
+                return "Город: " + UserModel.response[0].city.title;
+            }
+        }
+
+
+        public string FamilyStatus
+        {
+            get
+            {
+                return "Семейное положение: Влюблен в " + UserModel.response[0].relation_partner.first_name + " " + UserModel.response[0].relation_partner.last_name;
+            }
+        }
+
+        public string Education
+        {
+            get
+            {
+                return "Образование: " + UserModel.response[0].university_name;
             }
         }
     }

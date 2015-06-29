@@ -19,6 +19,10 @@ namespace VK.ViewModel.Audio
         private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
         //одиночка - для проигрывания аудио в фоне
         private AudioSingleton _audioSingleton = AudioSingleton.Instance;
+        //выделенная в данный момент позиция
+        private AudioItemViewModel _item;
+        //строка для поиска
+        private string _searchString;
 
         public AudioListViewModel()
         {
@@ -49,7 +53,9 @@ namespace VK.ViewModel.Audio
             }
         }
 
-        //ищет проигрываемую аудиозапись и помечает ее как проигрываемую
+        /// <summary>
+        /// ищет проигрываемую аудиозапись и помечает ее как проигрываемую
+        /// </summary>
         private void FingPlayingAudio()
         {
             for (int i = 0; i < AudioItemsViewModel.Count; i++)
@@ -65,7 +71,8 @@ namespace VK.ViewModel.Audio
             }
         }
 
-        private string _searchString;
+        #region Свойства
+       
         public string SearchString
         {
             get { return _searchString; }
@@ -90,7 +97,6 @@ namespace VK.ViewModel.Audio
             }
         }
 
-        //синглтон класс для проигравания аудио
         public AudioSingleton AudioSingleton
         {
             get { return _audioSingleton; }
@@ -101,8 +107,6 @@ namespace VK.ViewModel.Audio
             }
         }
 
-        //выделенная в данный момент позиция
-        private AudioItemViewModel _item;
         public AudioItemViewModel ItemSelected
         {
             get { return _item; }
@@ -112,7 +116,9 @@ namespace VK.ViewModel.Audio
                 OnPropertyChanged();
             }
         }
+        #endregion;
 
+        #region Плей
         private AsyncDelegateCommand _playAudio;
         public ICommand PlayAudioButtonClick
         {
@@ -137,13 +143,11 @@ namespace VK.ViewModel.Audio
                 
                 ItemSelected.IsPlay = true;
                 AudioSingleton.Play(ItemSelected);
-
-               //Для переключения стилей в плейлисте (Только для небольших списков)
-               // AudioItemsTemplateSelector = null;
-               // AudioItemsTemplateSelector = new AudioItemsTemplateSelector();
             }
         }
+        #endregion;
 
+        #region Пауза
         private AsyncDelegateCommand _pauseAudio;
         public ICommand PauseAudioButtonClick
         {
@@ -161,7 +165,9 @@ namespace VK.ViewModel.Audio
         {
             _audioSingleton.Pause();
         }
+        #endregion;
 
+        #region Стоп
         private AsyncDelegateCommand _stopAudio;
         public ICommand StopAudioButtonClick
         {
@@ -179,7 +185,9 @@ namespace VK.ViewModel.Audio
         {
             AudioSingleton.Stop();
         }
+        #endregion;
 
+        #region Отвечает за получение позиции проигрываемой песни и переключение песен
         private AsyncDelegateCommand _audioPositionChainge;
         public ICommand AudioPositionChainged
         {
@@ -203,8 +211,6 @@ namespace VK.ViewModel.Audio
             AudioSingleton.Fast();
         }
 
-        //находим играющий трек делаем его IsPlay = false
-        //запускаем следующий по порядку
         public void NextAudioPlay()
         {
             for (int i = 0; i < AudioItemsViewModel.Count; i++)
@@ -230,7 +236,9 @@ namespace VK.ViewModel.Audio
                 }
             }
         }
+        #endregion;
 
+        #region Клик по кнопке поиск аудиозаписей
         private AsyncDelegateCommand _searchAudio;
         public ICommand SearchAudioButtonClick
         {
@@ -258,7 +266,9 @@ namespace VK.ViewModel.Audio
             }
             AudioItemsViewModel = _item;
         }
+        #endregion;
 
+        #region Клик по кнопке мои аудиозаписи
         private AsyncDelegateCommand _myAudioAudio;
         public ICommand MyAudioButtonClick
         {
@@ -276,7 +286,9 @@ namespace VK.ViewModel.Audio
         {
             LoadAudio();
         }
+        #endregion;
 
+        #region Добавление аудиозаписи
         private AsyncDelegateCommand _addAudio;
         public ICommand AddAudioButtonClick
         {
@@ -301,7 +313,9 @@ namespace VK.ViewModel.Audio
                 }
             }
         }
+        #endregion;
 
+        #region Удаление аудиозаписи
         private AsyncDelegateCommand _deleteAudio;
         public ICommand DeleteAudioButtonClick
         {
@@ -314,7 +328,6 @@ namespace VK.ViewModel.Audio
                 return _deleteAudio;
             }
         }
-
         private async Task DeleteAudio(object o)
         {
             for (int i = 0; i < AudioItemsViewModel.Count; i++)
@@ -326,7 +339,8 @@ namespace VK.ViewModel.Audio
                     break;
                 }
             }
-            
+
         }
+        #endregion
     }
 }
