@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Core;
-using VKAPI.Core;
+﻿using Core;
 using VKAPI.Model.AudioModel;
 
-namespace VK.ViewModel.Audio
+namespace VK.ViewModel.Audios
 {
     class AudioItemViewModel : BaseViewModel
     {

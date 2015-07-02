@@ -14,8 +14,8 @@ namespace VKAPI
         private string _baseUrl = @"https://api.vk.com/method/";
         ///вызываемый метод
         protected string Method;
-        //список необходимых полей
-        protected string Fields;
+        ////список необходимых полей
+        //protected string Fields;
         //список необходимых параметров параметр = значение
         protected Dictionary<string, string> Parameters = new Dictionary<string, string>();
         //версия Api
@@ -54,10 +54,10 @@ namespace VKAPI
                 url += ConvertToStringParameters();
             }
 
-            if (!string.IsNullOrEmpty(Fields))
-            {
-                url += "&" + Fields;
-            }
+            //if (!string.IsNullOrEmpty(Fields))
+            //{
+            //    url += "&" + Fields;
+            //}
 
             url += "&" + ApiVersion + "&access_token=" + VkMain.token;
 

@@ -7,12 +7,12 @@ using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
 
-namespace VK.ViewModel.Audio
+namespace VK.ViewModel.Audios
 {
     class AudioListViewModel : BaseViewModel
     {
         //Модель данных аудиозаписей
-        private AudioModel _audioViewModel;
+        private AudioModel _audioModel;
         //для доступа к данным песен
         VkAudio vkaudio = new VkAudio();
         //ViewModel Аудиозапсей
@@ -36,13 +36,12 @@ namespace VK.ViewModel.Audio
         {
             AudioItemsViewModel = null;
             ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
-            _audioViewModel = await vkaudio.GetAsync();
-            foreach (var item in _audioViewModel.response.items)
+            _audioModel = await vkaudio.GetAsync();
+            foreach (var item in _audioModel.response.items)
             {
                 AudioItemViewModel itemAudio = new AudioItemViewModel() {Item = item};
                 itemAudio.IsMyItem = true;
                 _item.Add(itemAudio);
-               // ConnectItemViewModel(itemAudio);
             }
             AudioItemsViewModel = _item;
 
@@ -218,17 +217,19 @@ namespace VK.ViewModel.Audio
                 if (AudioItemsViewModel[i].IsPlay == true)
                 {
                     AudioItemsViewModel[i].IsPlay = false;
+                    AudioItemsViewModel[i + 1].IsPlay = true;
+                    
                     //проверяем не достигли ли конца списка
                     if (i + 1 < AudioItemsViewModel.Count)
                     {
-                        AudioItemsViewModel[i + 1].IsPlay = true;
+                        //AudioItemsViewModel[i + 1].IsPlay = true;
                         AudioSingleton.Play(AudioItemsViewModel[i + 1]);
                         break;
                     }
                     else
                     {
                         i = -1;
-                        AudioItemsViewModel[i + 1].IsPlay = true;
+                        //AudioItemsViewModel[i + 1].IsPlay = true;
                         AudioSingleton.Play(AudioItemsViewModel[i + 1]);
                         break;
                     }
@@ -256,8 +257,8 @@ namespace VK.ViewModel.Audio
         {
             AudioItemsViewModel = null;
             ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
-            _audioViewModel = await vkaudio.SearchAsync(SearchString);
-            foreach (var item in _audioViewModel.response.items)
+            _audioModel = await vkaudio.SearchAsync(SearchString);
+            foreach (var item in _audioModel.response.items)
             {
                 AudioItemViewModel itemAudio = new AudioItemViewModel() { Item = item };
                 itemAudio.IsMyItem = false;

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VK.Module.Messages
+namespace VK.View
 {
     /// <summary>
-    /// Логика взаимодействия для MessagesControl.xaml
+    /// Логика взаимодействия для DialogsView.xaml
     /// </summary>
-    public partial class MessagesControl : UserControl
+    public partial class DialogsView : UserControl
     {
-        public MessagesControl()
+        public DialogsView()
         {
             InitializeComponent();
         }

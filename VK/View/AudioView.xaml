@@ -139,6 +139,12 @@
                     <Setter Property="ScrollViewer.PanningMode" Value="Both" />
                     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="VirtualizingPanel.IsContainerVirtualizable" Value="True" />
+                    <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+                    <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
+                    <Setter Property="VirtualizingPanel.CacheLength" Value="2.2" />
+
+
                     <Style.Triggers>
                         <Trigger Property="ItemsSource" Value="{x:Null}">
                             <Setter Property="Template" Value="{StaticResource WaitControlTemplate}" />

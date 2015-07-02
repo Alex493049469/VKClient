@@ -100,25 +100,21 @@
     <Compile Include="Converters\FamilyStatusConverter.cs" />
     <Compile Include="Converters\OnlineConverter.cs" />
     <Compile Include="Converters\TimeConverter.cs" />
-    <Compile Include="ViewModel\Audio\AudioSingleton.cs" />
-    <Compile Include="Module\Dialogs\DialogControl.xaml.cs">
-      <DependentUpon>DialogControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\Messages\MessagesControl.xaml.cs">
-      <DependentUpon>MessagesControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\Page\PageControl.xaml.cs">
-      <DependentUpon>PageControl.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModel\Audios\AudioSingleton.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Styles\VS2012\VS2012WindowStyle.cs" />
-    <Compile Include="ViewModel\Audio\AudioItemViewModel.cs" />
-    <Compile Include="ViewModel\Audio\AudioListViewModel.cs" />
+    <Compile Include="ViewModel\Audios\AudioItemViewModel.cs" />
+    <Compile Include="ViewModel\Audios\AudioListViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\DialogListViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\DialogItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendsListViewModel.cs" />
     <Compile Include="ViewModel\Page\PageViewModel.cs" />
     <Compile Include="View\AudioView.xaml.cs">
       <DependentUpon>AudioView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DialogsView.xaml.cs">
+      <DependentUpon>DialogsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FriendsView.xaml.cs">
       <DependentUpon>FriendsView.xaml</DependentUpon>
@@ -146,18 +142,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Module\Dialogs\DialogControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Module\Messages\MessagesControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Module\Page\PageControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\MoonUICore.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -183,6 +167,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AudioView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DialogsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

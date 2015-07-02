@@ -14,7 +14,7 @@
                  Margin="227,45,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Text="{Binding status}"
+                 Text="{Binding Status}"
                  TextWrapping="Wrap" />
 
         <StackPanel Width="376"
@@ -26,13 +26,9 @@
             <Label x:Name="NameLabel"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top"
-                   Content="{Binding first_name}"
+                   Content="{Binding FullName}"
                    Foreground="#FF515151" />
-            <Label x:Name="LastNameLabel"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   Content="{Binding last_name}"
-                   Foreground="#FF515151" />
+
         </StackPanel>
 
 

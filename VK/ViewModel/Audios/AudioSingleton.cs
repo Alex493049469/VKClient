@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Threading;
 using Core;
 using Un4seen.Bass;
 using VK.Properties;
 
-namespace VK.ViewModel.Audio
+namespace VK.ViewModel.Audios
 {
     class AudioSingleton : Singleton<AudioSingleton>,  INotifyPropertyChanged
     {
@@ -20,6 +18,7 @@ namespace VK.ViewModel.Audio
         private DispatcherTimer timer = null;
         //проигрываемая модель
         private AudioItemViewModel _itemPlaying;
+
         public AudioItemViewModel ItemPlaying
         {
             get { return _itemPlaying; }
@@ -87,14 +86,9 @@ namespace VK.ViewModel.Audio
         /// </summary>
         public void Play(AudioItemViewModel itemPlaying)
         {
-            //if (ItemPlaying != null)
-            //{ 
-            //    ItemPlaying.IsPlay = false;
-
-            //} 
+           
             ItemPlaying = itemPlaying;
             
-
             Bass.BASS_StreamFree(stream);
             Bass.BASS_Start();
 

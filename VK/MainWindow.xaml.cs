@@ -2,11 +2,10 @@
 using System.Windows;
 using System.Windows.Interop;
 using Un4seen.Bass;
-using VK.Module.Message;
-using VK.Module.Page;
 using VK.Properties;
 using VK.View;
-using VK.ViewModel.Audio;
+using VK.ViewModel.Audios;
+using VK.ViewModel.Dialogs;
 using VK.ViewModel.Friends;
 using VK.ViewModel.Page;
 using VKAPI;
@@ -39,8 +38,7 @@ namespace VK
                 VkMain.token = Settings.Default.token;
                 LoadSettings();
             }
-            //
-        }
+         }
 
         /// <summary>
         ///     загрузка настроек
@@ -48,8 +46,7 @@ namespace VK
         public void LoadSettings()
         {
             //инициализация библиотеки bass для проигрывания аудио
-            Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT,
-                new WindowInteropHelper(this).Handle);
+            Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, new WindowInteropHelper(this).Handle);
         }
 
         private void MainWindow1_Closing(object sender, CancelEventArgs e)
@@ -57,24 +54,7 @@ namespace VK
             Bass.FreeMe();
         }
 
-        /// <summary>
-        ///     находит вкладку с именем и весли найдена возвращает индекс
-        /// </summary>
-        /// <returns></returns>
-        //public int FindTab(string name)
-        //{
-        //    int finded = -1;
-        //    for (int i = 0; i < TabControler.Items.Count; i++)
-        //    {
-        //        ClosableTab asdf = (ClosableTab)TabControler.Items[i];
-        //        if (asdf.Name == name)
-        //        {
-        //            finded = i;
-        //        }
-        //    }
-        //    return finded;
-        //}
-        public int FindTab(string name)
+      public int FindTab(string name)
         {
             var finded = -1;
             for (var i = 0; i < LayoutDocumentP.ChildrenCount; i++)
@@ -112,42 +92,6 @@ namespace VK
 
         private async void MyPageButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (FindTab("MyPage") == -1)
-            //{
-            //    //грузим данные в модель
-            //    UsersModel userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
-            //    //передаем для ссылку на сам таб кантролл и модель данных
-            //    PageControl Ac = new PageControl(TabControler, userModel);
-            //    ClosableTab ct = new ClosableTab();
-            //    ct.Name = "MyPage";
-            //    ct.Title = "Моя страница";
-            //    ct.Content = Ac;
-            //    TabControler.Items.Add(ct);
-            //    ct.Focus();
-            //}
-            //else
-            //{
-            //    TabControler.SelectedIndex = FindTab("MyPage");
-            //}
-            //if (FindTab("MyPage") == -1)
-            //{
-            //    //грузим данные в модель
-            //    var userModel = await VkUsers.GetAsync("", "", VkUsers.name_case.nom);
-            //    //передаем для ссылку на сам таб кантролл и модель данных
-            //    var Ac = new PageControl(userModel);
-
-            //    var ld = new LayoutDocument();
-            //    ld.Title = "Моя страница";
-            //    ld.ContentId = "MyPage";
-            //    ld.Content = Ac;
-            //    LayoutDocumentP.Children.Add(ld);
-            //    LayoutDocumentP.Children[FindTab("MyPage")].IsSelected = true;
-            //}
-            //else
-            //{
-            //    LayoutDocumentP.Children[FindTab("MyPage")].IsSelected = true;
-            //}
-
             if (FindTab("MyPage") == -1)
             {
                 //создаем view
@@ -174,92 +118,56 @@ namespace VK
             //if (FindTab("MyMessage") == -1)
             //{
             //    //грузим данные в модель
-            //    DialogsModel dm= await VkMessage.GetDialogsAsync();
+            //    var dm = await VkMessage.GetDialogsAsync();
             //    //передаем для ссылку на сам таб кантролл и модель данных
-            //    DialogControl Ac = new DialogControl(TabControler, dm);
-            //    ClosableTab ct = new ClosableTab();
-            //    ct.Name = "MyMessage";
-            //    ct.Title = "Мои сообщения";
-            //    ct.Content = Ac;
-            //    TabControler.Items.Add(ct);
-            //    ct.Focus();
+            //    var Ac = new DialogControl(dm);
+            //    var ld = new LayoutDocument();
+            //    ld.Title = "Мои сообщения";
+            //    ld.ContentId = "MyMessage";
+            //    ld.Content = Ac;
+            //    LayoutDocumentP.Children.Add(ld);
+            //    LayoutDocumentP.Children[FindTab("MyMessage")].IsSelected = true;
             //}
             //else
             //{
-            //    TabControler.SelectedIndex = FindTab("MyMessage");
+            //    LayoutDocumentP.Children[FindTab("MyMessage")].IsSelected = true;
             //}
 
-            if (FindTab("MyMessage") == -1)
-            {
-                //грузим данные в модель
-                var dm = await VkMessage.GetDialogsAsync();
-                //    //передаем для ссылку на сам таб кантролл и модель данных
-                var Ac = new DialogControl(dm);
-
-                var ld = new LayoutDocument();
-                ld.Title = "Мои сообщения";
-                ld.ContentId = "MyMessage";
-                ld.Content = Ac;
-                LayoutDocumentP.Children.Add(ld);
-                LayoutDocumentP.Children[FindTab("MyMessage")].IsSelected = true;
-            }
-            else
-            {
-                LayoutDocumentP.Children[FindTab("MyMessage")].IsSelected = true;
-            }
+            //создаем view
+            var dv = new DialogsView();
+            //создаем viewmodel
+            var dialoglist = new DialogListViewModel();
+            dv.DataContext = dialoglist;
+            //помещаем view на вкладку
+            var ld = new LayoutDocument();
+            ld.Title = "Мои сообщения";
+            ld.ContentId = "MyMessage";
+            ld.Content = dv;
+            LayoutDocumentP.Children.Add(ld);
+            LayoutDocumentP.Children[FindTab("MyMessage")].IsSelected = true;
         }
 
         private async void MyFriendsButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (FindTab("MyFriends") == -1)
-            //{
-            //    //грузим данные в модель
-            //    FriendsModel fm  = await VkFriends.GetAsync();
-            //    //передаем для ссылку на сам таб кантролл и модель данных
-            //    FriendsControl Ac = new FriendsControl(TabControler, fm);
-            //    ClosableTab ct = new ClosableTab();
-            //    ct.Name = "MyFriends";
-            //    ct.Title = "Мои друзья";
-            //    ct.Content = Ac;
-            //    TabControler.Items.Add(ct);
-            //    ct.Focus();
-            //}
-            //else
-            //{
-            //    TabControler.SelectedIndex = FindTab("MyFriends");
-            //}
-
-            //if (FindTab("MyFriends") == -1)
-            //{
-            //    //грузим данные в модель
-            //    FriendsModel fm  = await VkFriends.GetAsync();
-            //    //передаем для ссылку на сам таб кантролл и модель данных
-            //    FriendsControl Ac = new FriendsControl(fm);
-
-            //    LayoutDocument ld = new LayoutDocument();
-            //    ld.Title = "Мои друзья";
-            //    ld.ContentId = "MyFriends";
-            //    ld.Content = Ac;
-            //    LayoutDocumentP.Children.Add(ld);
-            //    LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
-            //}
-            //else
-            //{
-            //    LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
-            //}
-
-
-            //создаем view
-            var fv = new FriendsView();
-            var friendlist = new FriendsListViewModel();
-            fv.DataContext = friendlist;
-            //помещаем view на вкладку
-            var ld = new LayoutDocument();
-            ld.Title = "Мои друзья";
-            ld.ContentId = "MyFriends";
-            ld.Content = fv;
-            LayoutDocumentP.Children.Add(ld);
-            LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
+            if (FindTab("MyFriends") == -1)
+            {
+                //создаем view
+                var fv = new FriendsView();
+                var friendlist = new FriendsListViewModel();
+                fv.DataContext = friendlist;
+                //помещаем view на вкладку
+                var ld = new LayoutDocument();
+                ld.Title = "Мои друзья";
+                ld.ContentId = "MyFriends";
+                ld.Content = fv;
+                LayoutDocumentP.Children.Add(ld);
+                LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
+            }
+            else
+            {
+                LayoutDocumentP.Children[FindTab("MyFriends")].IsSelected = true;
+            }
+            
         }
     }
 }

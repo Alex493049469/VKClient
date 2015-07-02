@@ -15,6 +15,8 @@ namespace VK.ViewModel.Page
     {
         //модель данных
         public UsersModel UserModel;
+        //для доступа к пользователям
+        VkUsers vkusers = new VkUsers();
 
         public PageViewModel()
         {
@@ -24,27 +26,7 @@ namespace VK.ViewModel.Page
         public async void LoadModel()
         {
             //грузим данные в модель
-             UserModel =  VkUsers.Get("", "", VkUsers.name_case.nom);
-
-            //this.DataContext = userModel.response;
-
-            //FriendsButton.Content = "Друзья (" + userModel.response[0].counters.friends + ")";
-            //GroupButton.Content = "Группы (" + userModel.response[0].counters.groups + ")";
-            //PhotosButton.Content = "Фото (" + userModel.response[0].counters.photos + ")";
-            //AudiosButton.Content = "Аудио (" + userModel.response[0].counters.audios + ")";
-            //VideoButton.Content = "Видео (" + userModel.response[0].counters.videos + ")";
-
-            //BirthdayLabel.Content += " " + userModel.response[0].bdate;
-            //TownLabel.Content += " " + userModel.response[0].city.title;
-
-            ////тут тоже необходимо использовать конвертер
-            //if (userModel.response[0].relation == 7)
-            //{
-            //    FamilyStatusLabel.Content += " Влюблен в " + userModel.response[0].relation_partner.first_name + " " + userModel.response[0].relation_partner.last_name;
-            //}
-
-            //EducationLabel.Content += " " + userModel.response[0].university_name;
-
+            UserModel = vkusers.Get("", "", VkUsers.nameCase.nom);
         }
 
  
@@ -147,6 +129,27 @@ namespace VK.ViewModel.Page
             get
             {
                 return "Образование: " + UserModel.response[0].university_name;
+            }
+        }
+
+        public string Status
+        {
+            get
+            {
+                return UserModel.response[0].status;
+            }
+            set
+            {
+                UserModel.response[0].status = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string FullName
+        {
+            get
+            {
+                return UserModel.response[0].first_name + " " +UserModel.response[0].last_name;
             }
         }
     }
