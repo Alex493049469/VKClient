@@ -26,7 +26,6 @@
                 <Button Width="30"
                         Height="30"
                         Margin="5"
-                        Command="{Binding PlayAudioButtonClick}"
                         Style="{DynamicResource ButtonBlue}">
                     <Canvas Width="12" Height="12">
                         <Path Width="12"

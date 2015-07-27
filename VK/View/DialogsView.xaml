@@ -6,29 +6,50 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <DataTemplate x:Key="One">
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+
+                    <Image Width="100"
+                           Height="100"
+                           Margin="5"
+                           Source="{Binding GroupPhotos}"/>
+
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                        <TextBlock Text="{Binding Body}" />
+                        <TextBlock Text="{Binding UserCount}" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+
+        </DataTemplate>
+        <DataTemplate x:Key="Four">
+            <StackPanel Orientation="Horizontal">
+
+                <Image Width="22"
+                       Height="22"
+                       Margin="5"
+                       Source="{Binding GroupPhotos}" />
+
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                    <TextBlock Text="{Binding Body}" />
+                    <TextBlock Text="{Binding UserCount}" />
+                </StackPanel>
+
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid>
         <ListBox x:Name="ListMessage"
                  Margin="10,10,10,47"
+                 ItemTemplate="{StaticResource One}"
                  ItemsSource="{Binding DialogItemsViewModel,
-                                       IsAsync=True}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-
-                        <!--<Image Width="22"
-                                           Height="22"
-                                           Margin="5"
-                                           Source="/Images/audio_play.png" />-->
-
-                        <StackPanel>
-                            <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                            <TextBlock Text="{Binding Body}" />
-                            <TextBlock Text="{Binding UserCount}" />
-                        </StackPanel>
-
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                                       IsAsync=True}"
+                 SelectedItem="{Binding ItemSelected}" />
     </Grid>
 </UserControl>

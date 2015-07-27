@@ -9,31 +9,57 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using VKAPI.Model;
 using VKAPI.Model.DialogsModel;
+using VKAPI.Model.UsersModel;
 
 
 namespace VKAPI
 {
-    public static class VkMessage
+    public class VkMessage : VkBase
     {
         
         /// <summary>
         /// Возвращает список диалогов текущего пользователя.
         /// </summary>
         /// <returns></returns>
-        public static DialogsModel GetDialogs(int count)
+        public DialogsModel Get(int count)
         {
-            List<Message> liatMessages = new List<Message>();
-            WebRequest reqGET =
-                WebRequest.Create(
-                   @"https://api.vk.com/method/messages.getDialogs?&v=5.29&access_token=" + VkMain.token);
-            WebResponse resp = reqGET.GetResponse();
-            Stream stream = resp.GetResponseStream();
-            var sr = new StreamReader(stream);
-            string s = sr.ReadToEnd();
+            //используемый метод
+            Method = "messages.getDialogs";
+            //поля
+            ClearParameters();
+            //добавляем параметры если есть
+             AddParameter("count=", count);
 
+            //получаем данные в json
+            string str = GetData();
             //десериализуем
-            DialogsModel dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(s);
+            DialogsModel dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(str);
 
+            //далее сразу подгружаем фото пользователя или группы
+            string ids = "";
+            foreach (var item in dialogsModel.response.items)
+            {
+                if (ids.Length == 0)
+                {
+                    ids = item.message.user_id.ToString();
+                }
+                else
+                {
+                    ids += "," + item.message.user_id.ToString();
+                }
+            }
+
+
+            VkUsers vkusers = new VkUsers();
+            UsersModel um = vkusers.Get(ids, "", VkUsers.nameCase.nom);
+
+            for (int i = 0; i < dialogsModel.response.items.Count; i++)
+            {
+                if (dialogsModel.response.items[i].message.photo_100 ==null)
+                dialogsModel.response.items[i].message.photo_100 = um.response[i].photo_100;
+            }
+            
+           
             return dialogsModel;
         }
 
@@ -42,11 +68,11 @@ namespace VKAPI
         /// </summary>
         /// <param name="countAudio"></param>
         /// <returns></returns>
-        public static Task<DialogsModel> GetDialogsAsync(int count = 20)
+        public Task<DialogsModel> GetAsync(int count = 10)
         {
             return Task.Run(() =>
             {
-                DialogsModel messageModel = GetDialogs(count);
+                DialogsModel messageModel = Get(count);
                 return messageModel;
             });
         }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Core;
 using VKAPI;
 using VKAPI.Model.DialogsModel;
+using VKAPI.Model.UsersModel;
 
 namespace VK.ViewModel.Dialogs
 {
@@ -18,6 +19,12 @@ namespace VK.ViewModel.Dialogs
         //ViewModel Диалогов
         private ObservableCollection<DialogItemViewModel> _dialogItemsViewModel;
 
+        //выделенная в данный момент позиция
+        private DialogItemViewModel _item;
+
+        //для доступа кданным диалогов
+        VkMessage vkMessage = new VkMessage();
+
 
         public DialogListViewModel()
         {
@@ -28,7 +35,7 @@ namespace VK.ViewModel.Dialogs
         {
             DialogItemsViewModel = null;
             ObservableCollection<DialogItemViewModel> _item = new ObservableCollection<DialogItemViewModel>();
-            _dialogModel = await VkMessage.GetDialogsAsync();
+            _dialogModel = await vkMessage.GetAsync();
             foreach (var item in _dialogModel.response.items)
             {
                 DialogItemViewModel itemAudio = new DialogItemViewModel() { Item = item.message };
@@ -47,6 +54,16 @@ namespace VK.ViewModel.Dialogs
 
                 _dialogItemsViewModel = value;
 
+                OnPropertyChanged();
+            }
+        }
+
+        public DialogItemViewModel ItemSelected
+        {
+            get { return _item; }
+            set
+            {
+                _item = value;
                 OnPropertyChanged();
             }
         }

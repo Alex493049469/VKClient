@@ -42,13 +42,19 @@ namespace VKAPI
            ClearParameters();
            //добавляем параметры
            AddParameter("user_ids=", userIds);
-           AddParameter("fields=", Fieldsall);
+           AddParameter("fields=", fields.Length > 0 ? fields : Fieldsall);
            AddParameter("name_case=", nameCase.ToString());
            //получаем данные в json
            string str = GetData();
            //десериализуем
            UsersModel usersModel = JsonConvert.DeserializeObject<UsersModel>(str);
            return usersModel;
+       }
+
+       public UsersModel Get(string user_ids)
+       {
+            UsersModel userModel = Get(user_ids, "", nameCase.nom);
+            return userModel;
        }
 
 
@@ -60,6 +66,17 @@ namespace VKAPI
                 return userModel;
             });
        }
+
+       public Task<UsersModel> GetAsync(string user_ids)
+       {
+           return Task.Run(() =>
+           {
+               UsersModel userModel = Get(user_ids, "", nameCase.nom);
+               return userModel;
+           });
+       }
+
+
 
     }
 }

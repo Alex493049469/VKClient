@@ -145,7 +145,7 @@ namespace VKAPI.Model.UsersModel
         public string education_status { get; set; }
         public int relation { get; set; }
         public RelationPartner relation_partner { get; set; }
-        public Personal personal { get; set; }
+        //public Personal personal { get; set; }
         public string interests { get; set; }
         public string music { get; set; }
         public string activities { get; set; }
