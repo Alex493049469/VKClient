@@ -38,7 +38,7 @@ namespace VK.ViewModel.Audios
         //сохранение настроек
         private void SaveSettings()
         {
-            Settings.Default.volime = VolimePosition;
+            //Settings.Default.volime = VolimePosition;
             Settings.Default.Save();
         }
 

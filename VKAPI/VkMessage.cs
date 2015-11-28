@@ -59,7 +59,6 @@ namespace VKAPI
                 dialogsModel.response.items[i].message.photo_100 = um.response[i].photo_100;
             }
             
-           
             return dialogsModel;
         }
 
@@ -76,10 +75,6 @@ namespace VKAPI
                 return messageModel;
             });
         }
-
-
-        
-
-        
+  
     }
 }

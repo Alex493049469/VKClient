@@ -163,7 +163,7 @@
                 IsSelectionRangeEnabled="false"
                 SelectionEnd="0"
                 SelectionStart="0"
-                Value="{Binding SliderPosition,
+                Value="{Binding AudioPlayer.SliderPosition,
                                 Mode=TwoWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ValueChanged">
@@ -180,7 +180,7 @@
                 Maximum="1.0"
                 Minimum="0.0"
                 Orientation="Horizontal"
-                Value="{Binding VolimePosition,
+                Value="{Binding AudioPlayer.VolimePosition,
                                 Mode=TwoWay}" />
 
         <Button Name="PlayButton"
@@ -300,6 +300,6 @@
         <Label Margin="10,59,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Content="{Binding AudioSingleton.ItemPlaying.FullNameAudio}" />
+               Content="{Binding ItemPlaying.FullNameAudio}" />
     </Grid>
 </UserControl>
