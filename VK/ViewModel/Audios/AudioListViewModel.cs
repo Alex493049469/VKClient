@@ -30,7 +30,7 @@ namespace VK.ViewModel.Audios
         //одиночка - для проигрывания аудио в фоне
         private AudioPlayer _audioPlayer = new AudioPlayer();
         //выделенная в данный момент позиция
-        private AudioItemViewModel _item;
+        private AudioItemViewModel _itemSelected;
         //проигрываемая в данный момонт позиция
         private AudioItemViewModel _itemPlaying;
         //строка для поиска
@@ -133,10 +133,10 @@ namespace VK.ViewModel.Audios
 
         public AudioItemViewModel ItemSelected
         {
-            get { return _item; }
+            get { return _itemSelected; }
             set
             {
-                _item = value;
+                _itemSelected = value;
                 OnPropertyChanged();
             }
         }
@@ -247,6 +247,39 @@ namespace VK.ViewModel.Audios
         private async Task MyAudio(object o)
         {
             LoadAudio();
+        }
+        #endregion;
+
+        #region Клик по кнопке рекомендуемые
+        private AsyncDelegateCommand _audioRecommended;
+        public ICommand AudioRecommendedButtonClick
+        {
+            get
+            {
+                if (_audioRecommended == null)
+                {
+                    _audioRecommended = new AsyncDelegateCommand(AudioRecommended);
+                }
+                return _audioRecommended;
+            }
+        }
+
+        private async Task AudioRecommended(object o)
+        {
+            if (ItemSelected != null)
+            {
+                string targetAudio = ItemSelected.Item.owner_id + "_" + ItemSelected.Item.id;
+                AudioItemsViewModel = null;
+                ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
+                _audioModel = await vkaudio.GetRecommendationsAsync(targetAudio);
+                foreach (var item in _audioModel.response.items)
+                {
+                    AudioItemViewModel itemAudio = new AudioItemViewModel() { Item = item };
+                    itemAudio.IsMyItem = false;
+                    _item.Add(itemAudio);
+                }
+                AudioItemsViewModel = _item;
+            }
         }
         #endregion;
 

@@ -48,6 +48,26 @@ namespace VKAPI
             return Task.Run(() => Get(ownerId, albumId, audioIds, offset, count));
         }
 
+        public AudioModel GetRecommendations(string targetAudio)
+        {
+            //используемый метод
+            Method = "audio.getRecommendations";
+            ClearParameters();
+            //добавляем параметры
+            AddParameter("target_audio=", targetAudio);
+          
+            //получаем данные в json
+            string str = GetData();
+            //десериализуем
+            var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
+            return audioModel;
+        }
+
+        public Task<AudioModel> GetRecommendationsAsync(string targetAudio)
+        {
+            return Task.Run(() => GetRecommendations(targetAudio));
+        }
+
         /// <summary>
         /// Возвращает список аудиозаписей в соответствии с заданным критерием поиска. 
         /// </summary>

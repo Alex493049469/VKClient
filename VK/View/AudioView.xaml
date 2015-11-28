@@ -289,6 +289,7 @@
                 Margin="0,10,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
+                Command="{Binding AudioRecommendedButtonClick}"
                 Content="Рекомендуемое" />
         <Label Margin="10,0,0,0"
                HorizontalAlignment="Left"
