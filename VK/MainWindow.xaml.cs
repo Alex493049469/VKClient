@@ -17,6 +17,7 @@ namespace VK
     /// </summary>
     public partial class MainWindow : Window
     {
+        private AudioListViewModel audiolist;
         public MainWindow()
         {
             InitializeComponent();
@@ -71,8 +72,13 @@ namespace VK
             {
                 //создаем view
                 var fv = new AudioView();
-                //создаем viewmodel
-                var audiolist = new AudioListViewModel();
+                //создаем viewmodel если ее еще нет
+                
+                if (audiolist == null)
+                {
+                    audiolist = new AudioListViewModel();
+                }
+
                 fv.DataContext = audiolist;
                 //помещаем view на вкладку
                 var ld = new LayoutDocument();

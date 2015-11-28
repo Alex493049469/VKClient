@@ -26,6 +26,7 @@ namespace VK.ViewModel.Audios
         private AudioPlayer _audioPlayer = new AudioPlayer();
         //выделенная в данный момент позиция
         private AudioItemViewModel _item;
+        //проигрываемая в данный момонт позиция
         private AudioItemViewModel _itemPlaying;
         //строка для поиска
         private string _searchString;
