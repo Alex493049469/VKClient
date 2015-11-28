@@ -101,7 +101,6 @@
     <Compile Include="Converters\FamilyStatusConverter.cs" />
     <Compile Include="Converters\OnlineConverter.cs" />
     <Compile Include="Converters\TimeConverter.cs" />
-    <Compile Include="ViewModel\Audios\AudioSingleton.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Styles\VS2012\VS2012WindowStyle.cs" />
     <Compile Include="ViewModel\Audios\AudioItemViewModel.cs" />
