@@ -263,6 +263,7 @@
                 Margin="148,10,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
+                Command="{Binding SaveAudioButtonClick}"
                 Style="{DynamicResource ButtonBlue}">
             <Canvas Width="12" Height="14">
                 <Path Width="12"

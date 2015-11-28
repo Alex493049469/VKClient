@@ -73,7 +73,6 @@ namespace VK
                 //создаем view
                 var fv = new AudioView();
                 //создаем viewmodel если ее еще нет
-                
                 if (audiolist == null)
                 {
                     audiolist = new AudioListViewModel();

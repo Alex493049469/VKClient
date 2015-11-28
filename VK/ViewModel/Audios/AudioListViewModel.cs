@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data.Odbc;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Core;
+using Core.Command;
+using Microsoft.Win32;
 using NAudio.Gui;
 using NAudio.Wave;
 using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
+using Xceed.Wpf.Toolkit;
 
 namespace VK.ViewModel.Audios
 {
@@ -22,7 +28,6 @@ namespace VK.ViewModel.Audios
         //ViewModel Аудиозапсей
         private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
         //одиночка - для проигрывания аудио в фоне
-        // private AudioSingleton _audioSingleton = AudioSingleton.Instance;
         private AudioPlayer _audioPlayer = new AudioPlayer();
         //выделенная в данный момент позиция
         private AudioItemViewModel _item;
@@ -30,10 +35,17 @@ namespace VK.ViewModel.Audios
         private AudioItemViewModel _itemPlaying;
         //строка для поиска
         private string _searchString;
-
+        public RelayCommand PlayAudioButtonClick { get; private set; }
+        public RelayCommand PauseAudioButtonClick { get; private set; }
+        public RelayCommand StopAudioButtonClick { get; private set; }
+        public RelayCommand SaveAudioButtonClick { get; private set; }
         public AudioListViewModel()
         {
             LoadAudio();
+            PlayAudioButtonClick = new RelayCommand(PlayAudio);
+            PauseAudioButtonClick = new RelayCommand(PauseAudio);
+            StopAudioButtonClick = new RelayCommand(StopAudio);
+            SaveAudioButtonClick = new RelayCommand(SaveAudio);
             AudioPlayer.OnTrackEnd += NextAudioPlay;
         }
 
@@ -131,64 +143,26 @@ namespace VK.ViewModel.Audios
         #endregion;
 
         #region Плей
-        private AsyncDelegateCommand _playAudio;
-        public ICommand PlayAudioButtonClick
+        private void PlayAudio()
         {
-            get
-            {
-                if (_playAudio == null)
-                {
-                    _playAudio = new AsyncDelegateCommand(PlayAudio);
-                }
-                return _playAudio;
-            }
+             if (ItemSelected != null)
+             {
+                 AudioPlayer.Play(ItemSelected.Url);
+                 FingPlayingAudio();
+             }
         }
 
-        private async Task PlayAudio(object o)
-        {
-            if (ItemSelected != null)
-            {
-                AudioPlayer.Play(ItemSelected.Url);
-                FingPlayingAudio();
-            }
-        }
         #endregion;
 
         #region Пауза
-        private AsyncDelegateCommand _pauseAudio;
-        public ICommand PauseAudioButtonClick
-        {
-            get
-            {
-                if (_pauseAudio == null)
-                {
-                    _pauseAudio = new AsyncDelegateCommand(PauseAudio);
-                }
-                return _pauseAudio;
-            }
-        }
-
-        private async Task PauseAudio(object o)
+        private void PauseAudio()
         {
             AudioPlayer.Pause();
         }
         #endregion;
 
         #region Стоп
-        private AsyncDelegateCommand _stopAudio;
-        public ICommand StopAudioButtonClick
-        {
-            get
-            {
-                if (_stopAudio == null)
-                {
-                    _stopAudio = new AsyncDelegateCommand(StopAudio);
-                }
-                return _stopAudio;
-            }
-        }
-
-        private async Task StopAudio(object o)
+        private void StopAudio()
         {
             AudioPlayer.Stop();
         }
@@ -276,6 +250,25 @@ namespace VK.ViewModel.Audios
         }
         #endregion;
 
+        #region Клик по кнопке сохранить аудиозапись
+
+        private void SaveAudio()
+        {
+            var sfd = new SaveFileDialog();
+            sfd.DefaultExt = ".mp3";
+            sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
+            if (sfd.ShowDialog() == true)
+            {
+                WebClient webClient = new WebClient();
+                webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
+                webClient.DownloadFileCompleted += delegate(object sender, AsyncCompletedEventArgs args)
+                {
+                    MessageBox.Show("Файл успешно сохранен!");
+                };
+            }
+        }
+        #endregion
+
         #region Добавление аудиозаписи
         private AsyncDelegateCommand _addAudio;
         public ICommand AddAudioButtonClick
@@ -297,6 +290,7 @@ namespace VK.ViewModel.Audios
                 if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
                 {
                     await vkaudio.AddAsync(AudioItemsViewModel[i].Item.id, AudioItemsViewModel[i].Item.owner_id);
+                    MessageBox.Show("Аудиозапись успешно добавлена!");
                     break;
                 }
             }
@@ -323,7 +317,10 @@ namespace VK.ViewModel.Audios
                 if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
                 {
                     await vkaudio.DeleteAsync(AudioItemsViewModel[i].Item.id, AudioItemsViewModel[i].Item.owner_id);
-                    AudioItemsViewModel.Remove(AudioItemsViewModel[i]);
+                    if (AudioItemsViewModel.Remove(AudioItemsViewModel[i]))
+                    {
+                        MessageBox.Show("Аудиозапись успешно удалена!");
+                    }
                     break;
                 }
             }
