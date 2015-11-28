@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
-using Un4seen.Bass;
 using VK.Properties;
 using VK.View;
 using VK.ViewModel.Audios;
@@ -45,13 +44,12 @@ namespace VK
         /// </summary>
         public void LoadSettings()
         {
-            //инициализация библиотеки bass для проигрывания аудио
-            Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, new WindowInteropHelper(this).Handle);
+
         }
 
         private void MainWindow1_Closing(object sender, CancelEventArgs e)
         {
-            Bass.FreeMe();
+
         }
 
       public int FindTab(string name)

@@ -161,10 +161,10 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 IsSelectionRangeEnabled="false"
-                Maximum="{Binding AudioSingleton.LengthAudio}"
                 SelectionEnd="0"
                 SelectionStart="0"
-                Value="{Binding AudioSingleton.AudioPosition}">
+                Value="{Binding SliderPosition,
+                                Mode=TwoWay}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="ValueChanged">
                     <i:InvokeCommandAction Command="{Binding AudioPositionChainged}" />
@@ -177,10 +177,11 @@
                 Margin="355,90,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Maximum="100"
-                Minimum="0"
+                Maximum="1.0"
+                Minimum="0.0"
                 Orientation="Horizontal"
-                Value="{Binding AudioSingleton.VolimePosition}" />
+                Value="{Binding VolimePosition,
+                                Mode=TwoWay}" />
 
         <Button Name="PlayButton"
                 Width="43"

@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using Core;
-using Un4seen.Bass;
 using VK.Properties;
 
 namespace VK.ViewModel.Audios
@@ -75,7 +74,7 @@ namespace VK.ViewModel.Audios
             set
             {
                 _volimePosition = value;
-                Bass.BASS_ChannelSetAttribute(stream, BASSAttribute.BASS_ATTRIB_VOL, (float)VolimePosition / 100);
+             //   Bass.BASS_ChannelSetAttribute(stream, BASSAttribute.BASS_ATTRIB_VOL, (float)VolimePosition / 100);
                 SaveSettings();
                 OnPropertyChanged();
             }
@@ -89,19 +88,19 @@ namespace VK.ViewModel.Audios
            
             ItemPlaying = itemPlaying;
             
-            Bass.BASS_StreamFree(stream);
-            Bass.BASS_Start();
+            //Bass.BASS_StreamFree(stream);
+            //Bass.BASS_Start();
 
-            stream = Bass.BASS_StreamCreateURL(ItemPlaying.Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
+            //stream = Bass.BASS_StreamCreateURL(ItemPlaying.Url, 0, BASSFlag.BASS_DEFAULT, null, IntPtr.Zero);
 
-            if (stream != 0 && Bass.BASS_ChannelPlay(stream, false))
-            {
-                Bass.BASS_ChannelSetAttribute(stream, BASSAttribute.BASS_ATTRIB_VOL, (float)VolimePosition / 100);
-                //длина аудио
-                LengthAudio = int.Parse(((Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream)).ToString().Split(',', '.'))[0]));
-                AudioPosition = 0;
-                timerStart();
-            }
+            //if (stream != 0 && Bass.BASS_ChannelPlay(stream, false))
+            //{
+            //    Bass.BASS_ChannelSetAttribute(stream, BASSAttribute.BASS_ATTRIB_VOL, (float)VolimePosition / 100);
+            //    //длина аудио
+            //    LengthAudio = int.Parse(((Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetLength(stream)).ToString().Split(',', '.'))[0]));
+            //    AudioPosition = 0;
+            //    timerStart();
+            //}
         }
 
         private void timerStart()
@@ -115,8 +114,8 @@ namespace VK.ViewModel.Audios
         private void TimerTick(object sender, EventArgs e)
         {
             onFast = true;
-            int d = Absolution(int.Parse(((Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetPosition(stream)).ToString().Split(',', '.'))[0])));
-            AudioPosition = d;
+            //int d = Absolution(int.Parse(((Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetPosition(stream)).ToString().Split(',', '.'))[0])));
+            //AudioPosition = d;
             onFast = false;
             
         }
@@ -134,32 +133,32 @@ namespace VK.ViewModel.Audios
 
         public void Pause()
         {
-            if (Bass.BASS_ChannelIsActive(stream) == BASSActive.BASS_ACTIVE_PLAYING)
-            {
-                Bass.BASS_Pause();
-            }
-            else
-            {
-                Bass.BASS_Start();
-            }
+            //if (Bass.BASS_ChannelIsActive(stream) == BASSActive.BASS_ACTIVE_PLAYING)
+            //{
+            //    Bass.BASS_Pause();
+            //}
+            //else
+            //{
+            //    Bass.BASS_Start();
+            //}
         }
 
         public void Stop()
         {
-            Bass.BASS_StreamFree(stream);
+            //Bass.BASS_StreamFree(stream);
         }
 
         public void Fast()
         {
-            double TrackCurrPos = Math.Round(Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetPosition(stream, 0)));
+            //double TrackCurrPos = Math.Round(Bass.BASS_ChannelBytes2Seconds(stream, Bass.BASS_ChannelGetPosition(stream, 0)));
             
-            if (AudioPosition != TrackCurrPos && AudioPosition != TrackCurrPos - 1)
-            {
-                if (!onFast)
-                {
-                    Bass.BASS_ChannelSetPosition(stream, AudioPosition);
-                }
-            } 
+            //if (AudioPosition != TrackCurrPos && AudioPosition != TrackCurrPos - 1)
+            //{
+            //    if (!onFast)
+            //    {
+            //        Bass.BASS_ChannelSetPosition(stream, AudioPosition);
+            //    }
+            //} 
         }
 
         #region MVVM related

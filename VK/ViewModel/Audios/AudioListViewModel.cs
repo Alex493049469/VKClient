@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Core;
+using NAudio.Gui;
+using NAudio.Wave;
 using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
@@ -18,7 +22,7 @@ namespace VK.ViewModel.Audios
         //ViewModel Аудиозапсей
         private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
         //одиночка - для проигрывания аудио в фоне
-        private AudioSingleton _audioSingleton = AudioSingleton.Instance;
+       // private AudioSingleton _audioSingleton = AudioSingleton.Instance;
         //выделенная в данный момент позиция
         private AudioItemViewModel _item;
         //строка для поиска
@@ -26,6 +30,8 @@ namespace VK.ViewModel.Audios
 
         public AudioListViewModel()
         {
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Tick += TimerOnTick;
             LoadAudio();
         }
 
@@ -46,10 +52,10 @@ namespace VK.ViewModel.Audios
             AudioItemsViewModel = _item;
 
             //есле загрузки данных если у нас играла до песня то ищем ее в списке и помечаем как проигрываемую
-            if (AudioSingleton.ItemPlaying != null)
-            {
-                FingPlayingAudio();
-            }
+            //if (AudioSingleton.ItemPlaying != null)
+            //{
+            //    FingPlayingAudio();
+            //}
         }
 
         /// <summary>
@@ -59,14 +65,14 @@ namespace VK.ViewModel.Audios
         {
             for (int i = 0; i < AudioItemsViewModel.Count; i++)
             {
-                if (AudioItemsViewModel[i].Url == AudioSingleton.ItemPlaying.Url)
-                {
-                     AudioSingleton.ItemPlaying = null;
-                     AudioItemsViewModel[i].IsPlay = true;
-                     AudioSingleton.ItemPlaying = AudioItemsViewModel[i];
-                          
-                    break;
-                }
+                //if (AudioItemsViewModel[i].Url == AudioSingleton.ItemPlaying.Url)
+                //{
+                //    AudioSingleton.ItemPlaying = null;
+                //    AudioItemsViewModel[i].IsPlay = true;
+                //    AudioSingleton.ItemPlaying = AudioItemsViewModel[i];
+
+                //    break;
+                //}
             }
         }
 
@@ -96,15 +102,15 @@ namespace VK.ViewModel.Audios
             }
         }
 
-        public AudioSingleton AudioSingleton
-        {
-            get { return _audioSingleton; }
-            set
-            {
-                _audioSingleton = value;
-                OnPropertyChanged();
-            }
-        }
+        //public AudioSingleton AudioSingleton
+        //{
+        //    get { return _audioSingleton; }
+        //    set
+        //    {
+        //        _audioSingleton = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         public AudioItemViewModel ItemSelected
         {
@@ -135,13 +141,17 @@ namespace VK.ViewModel.Audios
         {
             if (ItemSelected != null)
             {
-                if (AudioSingleton.ItemPlaying != null)
-                {
-                    AudioSingleton.ItemPlaying.IsPlay = false; 
-                }
-                
-                ItemSelected.IsPlay = true;
-                AudioSingleton.Play(ItemSelected);
+                TryOpenInputFile(ItemSelected.Url);
+                Stop();
+                SliderPosition = 0;
+                Play();
+                //if (AudioSingleton.ItemPlaying != null)
+                //{
+                //    AudioSingleton.ItemPlaying.IsPlay = false; 
+                //}
+
+                //ItemSelected.IsPlay = true;
+                //AudioSingleton.Play(ItemSelected);
             }
         }
         #endregion;
@@ -162,7 +172,9 @@ namespace VK.ViewModel.Audios
 
         private async Task PauseAudio(object o)
         {
-            _audioSingleton.Pause();
+           // _audioSingleton.Pause()
+            
+            Pause();
         }
         #endregion;
 
@@ -182,7 +194,8 @@ namespace VK.ViewModel.Audios
 
         private async Task StopAudio(object o)
         {
-            AudioSingleton.Stop();
+           // AudioSingleton.Stop();
+            Stop();
         }
         #endregion;
 
@@ -203,11 +216,11 @@ namespace VK.ViewModel.Audios
         private async Task AudioPositionChainge(object o)
         {
             //проверяем кончилась ли песня
-            if (AudioSingleton.LengthAudio == Convert.ToInt32(AudioSingleton.AudioPosition))
-            {
-                NextAudioPlay();
-            }
-            AudioSingleton.Fast();
+            //if (AudioSingleton.LengthAudio == Convert.ToInt32(AudioSingleton.AudioPosition))
+            //{
+            //    NextAudioPlay();
+            //}
+            //AudioSingleton.Fast();
         }
 
         public void NextAudioPlay()
@@ -223,14 +236,14 @@ namespace VK.ViewModel.Audios
                     if (i + 1 < AudioItemsViewModel.Count)
                     {
                         //AudioItemsViewModel[i + 1].IsPlay = true;
-                        AudioSingleton.Play(AudioItemsViewModel[i + 1]);
+                       // AudioSingleton.Play(AudioItemsViewModel[i + 1]);
                         break;
                     }
                     else
                     {
                         i = -1;
                         //AudioItemsViewModel[i + 1].IsPlay = true;
-                        AudioSingleton.Play(AudioItemsViewModel[i + 1]);
+                      //  AudioSingleton.Play(AudioItemsViewModel[i + 1]);
                         break;
                     }
                   
@@ -343,5 +356,179 @@ namespace VK.ViewModel.Audios
 
         }
         #endregion
+
+
+        private string inputPath;
+        private string defaultDecompressionFormat;
+        private IWavePlayer wavePlayer;
+        private AudioFileReader reader;
+        private DispatcherTimer timer = new DispatcherTimer();
+        private double sliderPosition;
+        private string lastPlayed;
+        private static float volimePosition;
+        const double sliderMax = 10.0;
+       
+
+        public float VolimePosition
+        {
+            get { return volimePosition; }
+            set
+            {
+                volimePosition = value;
+                reader.Volume = volimePosition;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsPlaying
+        {
+            get { return wavePlayer != null && wavePlayer.PlaybackState == PlaybackState.Playing; }
+        }
+
+        public bool IsStopped
+        {
+            get { return wavePlayer == null || wavePlayer.PlaybackState == PlaybackState.Stopped; }
+        }
+
+        private void TimerOnTick(object sender, EventArgs eventArgs)
+        {
+            if (reader != null)
+            {
+                sliderPosition = Math.Min(sliderMax, reader.Position * sliderMax / reader.Length);
+                OnPropertyChanged("SliderPosition");
+            }
+        }
+
+        public double SliderPosition
+        {
+            get { return sliderPosition; }
+            set
+            {
+                if (sliderPosition != value)
+                {
+                    sliderPosition = value;
+                    if (reader != null)
+                    {
+                        var pos = (long)(reader.Length * sliderPosition/sliderMax);
+                        reader.Position = pos; // media foundation will worry about block align for us
+                       
+                    }
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool TryOpenInputFile(string file)
+        {
+            bool isValid = false;
+
+                using (var tempReader = new MediaFoundationReader(file))
+                {
+                    DefaultDecompressionFormat = tempReader.WaveFormat.ToString();
+                    InputPath = file;
+                    isValid = true;
+                }
+            
+
+            return isValid;
+        }
+
+        public string DefaultDecompressionFormat
+        {
+            get { return defaultDecompressionFormat; }
+            set
+            {
+                defaultDecompressionFormat = value;
+                OnPropertyChanged("DefaultDecompressionFormat");
+            }
+        }
+
+        public string InputPath
+        {
+            get { return inputPath; }
+            set
+            {
+                if (inputPath != value)
+                {
+                    inputPath = value;
+                    OnPropertyChanged("InputPath");
+                }
+            }
+        }
+
+
+        private void Stop()
+        {
+            if (wavePlayer != null)
+            {
+                wavePlayer.Stop();
+            }
+        }
+
+        private void Pause()
+        {
+            if (wavePlayer != null)
+            {
+                wavePlayer.Pause();
+                OnPropertyChanged("IsPlaying");
+                OnPropertyChanged("IsStopped");
+            }
+        }
+
+        private void Play()
+        {
+            if (wavePlayer == null)
+            {
+                CreatePlayer();
+            }
+            if (lastPlayed != inputPath && reader != null)
+            {
+                reader.Dispose();
+                reader = null;
+            }
+            if (reader == null)
+            {
+                reader = new AudioFileReader(inputPath);
+                lastPlayed = inputPath;
+                wavePlayer.Init(reader);
+            }
+            wavePlayer.Play();
+            OnPropertyChanged("IsPlaying");
+            OnPropertyChanged("IsStopped");
+            timer.Start();
+        }
+
+        private void CreatePlayer()
+        {
+            wavePlayer = new WaveOutEvent();
+            wavePlayer.PlaybackStopped += WavePlayerOnPlaybackStopped;
+        }
+
+        private void WavePlayerOnPlaybackStopped(object sender, StoppedEventArgs stoppedEventArgs)
+        {
+
+            if (reader != null)
+            {
+                SliderPosition = 0;
+                //reader.Position = 0;
+                //timer.Stop();
+            }
+            
+            OnPropertyChanged("IsPlaying");
+            OnPropertyChanged("IsStopped");
+        }
+
+
+        public void Dispose()
+        {
+            if (wavePlayer != null)
+            {
+                wavePlayer.Dispose();
+            }
+            if (reader != null)
+            {
+                reader.Dispose();
+            }
+        }
     }
 }
