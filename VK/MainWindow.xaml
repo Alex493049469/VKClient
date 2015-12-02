@@ -9,7 +9,6 @@
         Width="944"
         Height="624"
         AllowsTransparency="True"
-        Closing="MainWindow1_Closing"
         Icon="/Images/VkIconBlack.png"
         Style="{StaticResource VS2012WindowStyle}"
         WindowStartupLocation="CenterScreen"
@@ -58,13 +57,15 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Background="White">
-            <CheckBox Margin="0,10,10,10"
+            <CheckBox Width="176"
+                      Height="23"
+                      Margin="0,10,10,10"
                       HorizontalAlignment="Right"
                       VerticalAlignment="Bottom"
                       Content="Онлайн"
                       IsChecked="True"
                       Style="{DynamicResource CheckToogleButton}"
-                      UseLayoutRounding="True" Width="176" Height="23" />
+                      UseLayoutRounding="True" />
             <Button x:Name="MyPageButton"
                     Margin="3"
                     Click="MyPageButton_Click">

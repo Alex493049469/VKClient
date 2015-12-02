@@ -16,6 +16,8 @@ namespace VK.ViewModel.Friends
         private FriendsModel _friendViewModel;
         //ViewModel друзей
         private ObservableCollection<FriendItemViewModel> _friendItemsViewModel;
+        //выделенная в данный момент позиция
+        private FriendItemViewModel _itemSelected;
 
         public ObservableCollection<FriendItemViewModel> FriendsItemsViewModel
         {
@@ -49,6 +51,16 @@ namespace VK.ViewModel.Friends
                 _item.Add(itemAudio);
             }
             FriendsItemsViewModel = _item;
+        }
+
+        public FriendItemViewModel ItemSelected
+        {
+            get { return _itemSelected; }
+            set
+            {
+                _itemSelected = value;
+                OnPropertyChanged();
+            }
         }
 
     }

@@ -18,6 +18,7 @@ namespace VK
     public partial class MainWindow : Window
     {
         private AudioListViewModel audiolist;
+        private FriendsListViewModel friendlist;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,22 +37,8 @@ namespace VK
             else
             {
                 VkMain.token = Settings.Default.token;
-                LoadSettings();
             }
          }
-
-        /// <summary>
-        ///     загрузка настроек
-        /// </summary>
-        public void LoadSettings()
-        {
-
-        }
-
-        private void MainWindow1_Closing(object sender, CancelEventArgs e)
-        {
-
-        }
 
       public int FindTab(string name)
         {
@@ -156,7 +143,10 @@ namespace VK
             {
                 //создаем view
                 var fv = new FriendsView();
-                var friendlist = new FriendsListViewModel();
+                if (friendlist == null)
+                {
+                    friendlist = new FriendsListViewModel();
+                }
                 fv.DataContext = friendlist;
                 //помещаем view на вкладку
                 var ld = new LayoutDocument();
