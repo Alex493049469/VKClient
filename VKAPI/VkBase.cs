@@ -48,20 +48,11 @@ namespace VKAPI
         public string GenerateRequest()
         {
             string url = _baseUrl + Method + "?";
-
             if (Parameters.Count > 0)
             {
                 url += ConvertToStringParameters();
             }
-
-            //if (!string.IsNullOrEmpty(Fields))
-            //{
-            //    url += "&" + Fields;
-            //}
-
             url += "&" + ApiVersion + "&access_token=" + VkMain.token;
-
-
             return url;
         }
 
@@ -70,7 +61,7 @@ namespace VKAPI
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="value"></param>
-        protected void AddParameter(string parameter, object value)
+        private void AddParameter(string parameter, object value)
         {
             if (value != null)
             {
@@ -96,10 +87,19 @@ namespace VKAPI
             }
         }
 
+        protected void AddParameters(Dictionary<string, object> parameters)
+        {
+            ClearParameters();
+            foreach (var parameter in parameters)
+            {
+                AddParameter(parameter.Key, parameter.Value);
+            }
+        }
+
         /// <summary>
         /// Удаление параметров
         /// </summary>
-        protected void ClearParameters()
+        private void ClearParameters()
         {
             Parameters.Clear();
         }
@@ -123,7 +123,6 @@ namespace VKAPI
                     param = item.Key + item.Value;
                 }
             }
-
             return param;
         }
 

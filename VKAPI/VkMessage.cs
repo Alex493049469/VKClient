@@ -25,39 +25,41 @@ namespace VKAPI
         {
             //используемый метод
             Method = "messages.getDialogs";
-            //поля
-            ClearParameters();
-            //добавляем параметры если есть
-             AddParameter("count=", count);
 
+            //добавляем параметры если есть
+            var parameters = new Dictionary<string, object>
+            {
+                {"count=", count}
+            };
+             AddParameters(parameters);
             //получаем данные в json
             string str = GetData();
             //десериализуем
             DialogsModel dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(str);
 
             //далее сразу подгружаем фото пользователя или группы
-            string ids = "";
-            foreach (var item in dialogsModel.response.items)
-            {
-                if (ids.Length == 0)
-                {
-                    ids = item.message.user_id.ToString();
-                }
-                else
-                {
-                    ids += "," + item.message.user_id.ToString();
-                }
-            }
+            //string ids = "";
+            //foreach (var item in dialogsModel.response.items)
+            //{
+            //    if (ids.Length == 0)
+            //    {
+            //        ids = item.message.user_id.ToString();
+            //    }
+            //    else
+            //    {
+            //        ids += "," + item.message.user_id.ToString();
+            //    }
+            //}
 
 
-            VkUsers vkusers = new VkUsers();
-            UsersModel um = vkusers.Get(ids, "", VkUsers.nameCase.nom);
+            //VkUsers vkusers = new VkUsers();
+            //UsersModel um = vkusers.Get(ids, "", VkUsers.nameCase.nom);
 
-            for (int i = 0; i < dialogsModel.response.items.Count; i++)
-            {
-                if (dialogsModel.response.items[i].message.photo_100 ==null)
-                dialogsModel.response.items[i].message.photo_100 = um.response[i].photo_100;
-            }
+            //for (int i = 0; i < dialogsModel.response.items.Count; i++)
+            //{
+            //    if (dialogsModel.response.items[i].message.photo_100 ==null)
+            //    dialogsModel.response.items[i].message.photo_100 = um.response[i].photo_100;
+            //}
             
             return dialogsModel;
         }

@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VKAPI.Model.AudioModel;
 using System.Reflection;
 using System.Security.Policy;
+using VKAPI.Model.ErrorModel;
 
 namespace VKAPI
 {
@@ -29,13 +31,16 @@ namespace VKAPI
         {
             //используемый метод
             Method = "audio.get";
-            ClearParameters();
+            var parameters = new Dictionary<string, object>
+            {
+                {"owner_id=", ownerId},
+                {"album_id=", albumId},
+                {"audio_ids=", audioIds},
+                {"offset=", offset},
+                {"count=", count}
+            };
             //добавляем параметры
-            AddParameter("owner_id=", ownerId);
-            AddParameter("album_id=", albumId);
-            AddParameter("audio_ids=", audioIds);
-            AddParameter("offset=", offset);
-            AddParameter("count=", count);
+            AddParameters(parameters);
             //получаем данные в json
             string str = GetData();
             //десериализуем
@@ -52,10 +57,12 @@ namespace VKAPI
         {
             //используемый метод
             Method = "audio.getRecommendations";
-            ClearParameters();
             //добавляем параметры
-            AddParameter("target_audio=", targetAudio);
-          
+            var parameters = new Dictionary<string, object>
+            {
+                {"target_audio=", targetAudio},
+            };
+            AddParameters(parameters);
             //получаем данные в json
             string str = GetData();
             //десериализуем
@@ -84,16 +91,20 @@ namespace VKAPI
         {
             //используемый метод
             Method = "audio.search";
-            ClearParameters();
             //добавляем параметры
-            AddParameter("q=", q);
-            AddParameter("auto_complete=", autoComplete);
-            AddParameter("lyrics=", lyrics);
-            AddParameter("performer_only=", performerOnly);
-            AddParameter("sort=", sort);
-            AddParameter("search_own=", searchOwn);
-            AddParameter("offset=", offset);
-            AddParameter("count=", count);
+
+            var parameters = new Dictionary<string, object>
+            {
+                {"q=", q},
+                {"auto_complete=", autoComplete},
+                {"lyrics=", lyrics},
+                {"performer_only=", performerOnly},
+                {"sort=", sort},
+                {"search_own=", searchOwn},
+                {"offset=", offset},
+                {"count=", count}
+            };
+            AddParameters(parameters);
             //получаем данные в json
             string str = GetData();
             //десериализуем
@@ -116,10 +127,15 @@ namespace VKAPI
         {
             //используемый метод
             Method = "audio.add";
-            ClearParameters();
             //добавляем параметры
-            AddParameter("audio_id=", audioId);
-            AddParameter("owner_id=", ownerId);
+
+            var parameters = new Dictionary<string, object>
+            {
+                {"audio_id=", audioId},
+                {"owner_id=", ownerId}
+               
+            };
+            AddParameters(parameters);
             //получаем данные в json
             GetData();
         }
@@ -138,10 +154,15 @@ namespace VKAPI
         {
             //используемый метод
             Method = "audio.delete";
-            ClearParameters();
-            //добавляем параметры
-            AddParameter("audio_id=", audioId);
-            AddParameter("owner_id=", ownerId);
+
+            var parameters = new Dictionary<string, object>
+            {
+                {"audio_id=", audioId},
+                {"owner_id=", ownerId}
+               
+            };
+            AddParameters(parameters);
+          
             //получаем данные в json
             GetData();
         }
