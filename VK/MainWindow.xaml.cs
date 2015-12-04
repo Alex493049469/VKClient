@@ -17,8 +17,8 @@ namespace VK
     /// </summary>
     public partial class MainWindow : Window
     {
-        private AudioListViewModel audiolist;
-        private FriendsListViewModel friendlist;
+        private AudioListViewModel audiolist = null;
+        private FriendsListViewModel friendlist = null;
         public MainWindow()
         {
             InitializeComponent();
