@@ -67,7 +67,8 @@
                  Margin="0,50,0,0"
                  ItemTemplate="{StaticResource Myfriends}"
                  ItemsSource="{Binding FriendsItemsViewModel,
-                                       IsAsync=True}">
+                                       IsAsync=True}"
+                 SelectedItem="{Binding ItemSelected}">
             <ListBox.Style>
                 <Style TargetType="{x:Type ListBox}">
                     <Setter Property="Background" Value="{DynamicResource TextBox_fill_}" />

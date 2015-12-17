@@ -48,20 +48,11 @@ namespace VKAPI
         public string GenerateRequest()
         {
             string url = _baseUrl + Method + "?";
-
             if (Parameters.Count > 0)
             {
                 url += ConvertToStringParameters();
             }
-
-            //if (!string.IsNullOrEmpty(Fields))
-            //{
-            //    url += "&" + Fields;
-            //}
-
             url += "&" + ApiVersion + "&access_token=" + VkMain.token;
-
-
             return url;
         }
 
@@ -70,25 +61,23 @@ namespace VKAPI
         /// </summary>
         /// <param name="parameter"></param>
         /// <param name="value"></param>
-        protected void AddParameter(string parameter, object value)
+        private void AddParameter(string parameter, object value)
         {
             if (value != null)
             {
-                Type type = value.GetType();
-
-                if (type.Name == "Int32")
+                if (value is int)
                 {
-                    int val = Convert.ToInt32(value);
-                    if (val > 0)
+                    int valInt = (int)value;
+                    if (valInt != 0)
                     {
                         Parameters.Add(parameter, value.ToString());
                     }
                 }
 
-                if (type.Name == "String")
+                if (value is string)
                 {
-                    string val = Convert.ToString(value);
-                    if (val.Length > 0)
+                    var valStr = (string)value;
+                    if (valStr.Length > 0)
                     {
                         Parameters.Add(parameter, value.ToString());
                     }
@@ -96,10 +85,19 @@ namespace VKAPI
             }
         }
 
+        protected void AddParameters(Dictionary<string, object> parameters)
+        {
+            ClearParameters();
+            foreach (var parameter in parameters)
+            {
+                AddParameter(parameter.Key, parameter.Value);
+            }
+        }
+
         /// <summary>
         /// Удаление параметров
         /// </summary>
-        protected void ClearParameters()
+        private void ClearParameters()
         {
             Parameters.Clear();
         }
@@ -123,7 +121,6 @@ namespace VKAPI
                     param = item.Key + item.Value;
                 }
             }
-
             return param;
         }
 

@@ -141,7 +141,7 @@ namespace VK.ViewModel.Page
             set
             {
                 UserModel.response[0].status = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

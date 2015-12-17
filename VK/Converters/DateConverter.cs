@@ -12,8 +12,8 @@ namespace VKAPI.Converters
     {
        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
        {
-
-           double timestamp = (double)value;
+           int temp = (int)value;
+           double timestamp = (double)temp;
            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
            dateTime = dateTime.AddSeconds(timestamp);
 

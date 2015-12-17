@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Interop;
-using Un4seen.Bass;
 using VK.Properties;
 using VK.View;
 using VK.ViewModel.Audios;
@@ -18,6 +17,8 @@ namespace VK
     /// </summary>
     public partial class MainWindow : Window
     {
+        private AudioListViewModel audiolist = null;
+        private FriendsListViewModel friendlist = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,23 +37,8 @@ namespace VK
             else
             {
                 VkMain.token = Settings.Default.token;
-                LoadSettings();
             }
          }
-
-        /// <summary>
-        ///     загрузка настроек
-        /// </summary>
-        public void LoadSettings()
-        {
-            //инициализация библиотеки bass для проигрывания аудио
-            Bass.BASS_Init(-1, 44100, BASSInit.BASS_DEVICE_DEFAULT, new WindowInteropHelper(this).Handle);
-        }
-
-        private void MainWindow1_Closing(object sender, CancelEventArgs e)
-        {
-            Bass.FreeMe();
-        }
 
       public int FindTab(string name)
         {
@@ -73,8 +59,12 @@ namespace VK
             {
                 //создаем view
                 var fv = new AudioView();
-                //создаем viewmodel
-                var audiolist = new AudioListViewModel();
+                //создаем viewmodel если ее еще нет
+                if (audiolist == null)
+                {
+                    audiolist = new AudioListViewModel();
+                }
+
                 fv.DataContext = audiolist;
                 //помещаем view на вкладку
                 var ld = new LayoutDocument();
@@ -153,7 +143,10 @@ namespace VK
             {
                 //создаем view
                 var fv = new FriendsView();
-                var friendlist = new FriendsListViewModel();
+                if (friendlist == null)
+                {
+                    friendlist = new FriendsListViewModel();
+                }
                 fv.DataContext = friendlist;
                 //помещаем view на вкладку
                 var ld = new LayoutDocument();
