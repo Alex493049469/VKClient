@@ -10,7 +10,7 @@ using VK.Properties;
 
 namespace VK.ViewModel.Audios
 {
-    public class AudioPlayer : IDisposable, INotifyPropertyChanged
+    public class AudioPlayer : BaseViewModel, IDisposable
     {
         private IWavePlayer wavePlayer;
         private AudioFileReader reader;
@@ -57,7 +57,7 @@ namespace VK.ViewModel.Audios
                 if(reader != null)
                 reader.Volume = volimePosition;
                 SaveSettings();
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -72,7 +72,7 @@ namespace VK.ViewModel.Audios
                     if (OnTrackEnd != null) OnTrackEnd();
                     //Thread.Sleep(100);
                 }
-                OnPropertyChanged("SliderPosition");
+                RaisePropertyChanged("SliderPosition");
             }
         }
 
@@ -89,7 +89,7 @@ namespace VK.ViewModel.Audios
                         var pos = (long)(reader.Length * sliderPosition / sliderMax);
                         reader.Position = pos; // media foundation will worry about block align for us
                     }
-                    OnPropertyChanged();
+                    RaisePropertyChanged();
                 }
             }
         }
@@ -169,16 +169,6 @@ namespace VK.ViewModel.Audios
                 reader.Dispose();
             }
         }
-   
-        #region MVVM related
-        protected void OnPropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        #endregion
        
     }
 }

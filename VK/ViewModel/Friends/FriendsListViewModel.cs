@@ -11,7 +11,7 @@ namespace VK.ViewModel.Friends
 {
     class FriendsListViewModel : BaseViewModel
     {
-        VkFriends vkFriends = new VkFriends();
+        VkFriends _vkFriends = new VkFriends();
         //модель данных друзей
         private FriendsModel _friendViewModel;
         //ViewModel друзей
@@ -28,7 +28,7 @@ namespace VK.ViewModel.Friends
                     return;
                 _friendItemsViewModel = value;
 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
       
@@ -44,7 +44,7 @@ namespace VK.ViewModel.Friends
         {
             FriendsItemsViewModel = null;
             ObservableCollection<FriendItemViewModel> _item = new ObservableCollection<FriendItemViewModel>();
-            _friendViewModel = await vkFriends.GetAsync();
+            _friendViewModel = await _vkFriends.GetAsync();
             foreach (var item in _friendViewModel.response.items)
             {
                 FriendItemViewModel itemAudio = new FriendItemViewModel() { Item = item };
@@ -59,7 +59,7 @@ namespace VK.ViewModel.Friends
             set
             {
                 _itemSelected = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

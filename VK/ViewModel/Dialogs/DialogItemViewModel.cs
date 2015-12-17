@@ -11,100 +11,31 @@ namespace VK.ViewModel.Dialogs
 {
     class DialogItemViewModel : BaseViewModel
     {
+        public string Title { get; set; }
 
-        private Message _message;
-        public Message Item
-        {
-            get { return _message; }
-            set
-            {
-                _message = value;
-                OnPropertyChanged();
-            }
-        }
+        public string Body { get; set; }
 
-        public string Title
-        {
-            get { return _message.title; }
-            set
-            {
-                _message.title = value;
-                OnPropertyChanged();
-            }
-        }
+        public List<int> ChatActive { get; set; }
 
-        public string Body
-        {
-            get { return _message.body; }
-            set
-            {
-                _message.body = value;
-                OnPropertyChanged();
-            }
-        }
+        public int ReadState { get; set; }
+        public int Date { get; set; }
 
-        public string GroupPhotos
-        {
-            get { return _message.photo_100; }
-            set
-            {
-                _message.photo_100 = value;
-                OnPropertyChanged();
-            }
-        }
+        public string GroupPhoto50 { get; set; }
+        public string GroupPhoto100 { get; set; }
+        public string GroupPhoto200 { get; set; }
 
         //ид с кем переписка(есть только если переписка с 1ц)
-        public int UserId
-        {
-            get { return _message.user_id; }
-            set
-            {
-                _message.user_id = value;
-                OnPropertyChanged();
-            }
-        }
+        public int UserId { get; set; }
+        public string UserIdPhoto { get; set; }
 
-        private string _userIdPhoto;
-        public string UserIdPhoto
-        {
-            get { return _userIdPhoto; }
-            set
-            {
-                _userIdPhoto = value;
-                OnPropertyChanged();
-            }
-        }
+        public string UserOnePhoto { get; set; }
 
+        public string UserTwoPhoto { get; set; }
 
-        //public ObservableCollection<int> ChatActive
-        //{
-        //    get { return _message.chat_active; }
-        //    set
-        //    {
-        //        _message.chat_active = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public string UserThreePhoto { get; set; }
 
-        //private ObservableCollection<string> _chatActivePhoto;
-        //public ObservableCollection<string> ChatActivePhoto
-        //{
-        //    get { return _chatActivePhoto; }
-        //    set
-        //    {
-        //        _chatActivePhoto = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
+        public string UserFourPhoto { get; set; }
 
-        public int UserCount
-        {
-            get { return _message.users_count; }
-            set
-            {
-                _message.users_count = value;
-                OnPropertyChanged();
-            }
-        }
+        public int? UserCount { get; set; }
     }
 }

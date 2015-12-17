@@ -162,6 +162,6 @@ namespace VKAPI.Model.UsersModel
 
     public class UsersModel
     {
-        public ObservableCollection<Response> response { get; set; }
+        public List<Response> response { get; set; }
     }
 }

@@ -27,14 +27,9 @@ namespace VK.ViewModel.Audios
         readonly VkAudio _vkaudio = new VkAudio();
         //ViewModel Аудиозапсей
         private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
-        //одиночка - для проигрывания аудио в фоне
+        //для проигрывания аудио в фоне
         private AudioPlayer _audioPlayer = new AudioPlayer();
-        //выделенная в данный момент позиция
-        private AudioItemViewModel _itemSelected;
-        //проигрываемая в данный момонт позиция
-        private AudioItemViewModel _itemPlaying;
-        //строка для поиска
-        private string _searchString;
+
         public RelayCommand PlayAudioButtonClick { get; private set; }
         public RelayCommand PauseAudioButtonClick { get; private set; }
         public RelayCommand StopAudioButtonClick { get; private set; }
@@ -59,8 +54,17 @@ namespace VK.ViewModel.Audios
             _audioModel = await _vkaudio.GetAsync();
             foreach (var item in _audioModel.response.items)
             {
-                AudioItemViewModel itemAudio = new AudioItemViewModel() {Item = item};
-                itemAudio.IsMyItem = true;
+                AudioItemViewModel itemAudio = new AudioItemViewModel()
+                {
+                    Id = item.id,
+                    OwnerId = item.owner_id,
+                    IsMyItem = true,
+                    Url = item.url,
+                    Title = item.title,
+                    Duration = item.duration,
+                    Artist = item.artist
+                };
+
                 _item.Add(itemAudio);
             }
             AudioItemsViewModel = _item;
@@ -83,29 +87,14 @@ namespace VK.ViewModel.Audios
                     AudioItemsViewModel[i].IsPlay = false;
                 }
             }
+           
         }
 
         #region Свойства
-       
-        public string SearchString
-        {
-            get { return _searchString; }
-            set
-            {
-                _searchString = value;
-                OnPropertyChanged();
-            }
-        }
 
-        public AudioItemViewModel ItemPlaying
-        {
-            get { return _itemPlaying; }
-            set
-            {
-                _itemPlaying = value;
-                OnPropertyChanged();
-            }
-        }
+        public string SearchString { get; set; }
+
+        public AudioItemViewModel ItemPlaying { get; set; }
         
         public ObservableCollection<AudioItemViewModel> AudioItemsViewModel
         {
@@ -117,7 +106,7 @@ namespace VK.ViewModel.Audios
 
                 _audioItemsViewModel = value;
 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -127,19 +116,11 @@ namespace VK.ViewModel.Audios
             set
             {
                 _audioPlayer = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
-        public AudioItemViewModel ItemSelected
-        {
-            get { return _itemSelected; }
-            set
-            {
-                _itemSelected = value;
-                OnPropertyChanged();
-            }
-        }
+        public AudioItemViewModel ItemSelected { get; set; }
         #endregion;
 
         #region Плей
@@ -221,8 +202,16 @@ namespace VK.ViewModel.Audios
             _audioModel = await _vkaudio.SearchAsync(SearchString);
             foreach (var item in _audioModel.response.items)
             {
-                AudioItemViewModel itemAudio = new AudioItemViewModel() { Item = item };
-                itemAudio.IsMyItem = false;
+                AudioItemViewModel itemAudio = new AudioItemViewModel()
+                {
+                    Id = item.id,
+                    OwnerId = item.owner_id,
+                    IsMyItem = false,
+                    Url = item.url,
+                    Title = item.title,
+                    Duration = item.duration,
+                    Artist = item.artist
+                };
                 _item.Add(itemAudio);
                 //ConnectItemViewModel(itemAudio);
             }
@@ -268,14 +257,22 @@ namespace VK.ViewModel.Audios
         {
             if (ItemSelected != null)
             {
-                string targetAudio = ItemSelected.Item.owner_id + "_" + ItemSelected.Item.id;
+                string targetAudio = ItemSelected.OwnerId + "_" + ItemSelected.Id;
                 AudioItemsViewModel = null;
                 ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
                 _audioModel = await _vkaudio.GetRecommendationsAsync(targetAudio);
                 foreach (var item in _audioModel.response.items)
                 {
-                    AudioItemViewModel itemAudio = new AudioItemViewModel() { Item = item };
-                    itemAudio.IsMyItem = false;
+                    AudioItemViewModel itemAudio = new AudioItemViewModel()
+                    {
+                        Id = item.id,
+                        OwnerId = item.owner_id,
+                        IsMyItem = false,
+                        Url = item.url,
+                        Title = item.title,
+                        Duration = item.duration,
+                        Artist = item.artist
+                    };
                     _item.Add(itemAudio);
                 }
                 AudioItemsViewModel = _item;
@@ -322,7 +319,7 @@ namespace VK.ViewModel.Audios
             {
                 if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
                 {
-                    await _vkaudio.AddAsync(AudioItemsViewModel[i].Item.id, AudioItemsViewModel[i].Item.owner_id);
+                    await _vkaudio.AddAsync(AudioItemsViewModel[i].Id, AudioItemsViewModel[i].OwnerId);
                     MessageBox.Show("Аудиозапись успешно добавлена!");
                     break;
                 }
@@ -349,7 +346,7 @@ namespace VK.ViewModel.Audios
             {
                 if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
                 {
-                    await _vkaudio.DeleteAsync(AudioItemsViewModel[i].Item.id, AudioItemsViewModel[i].Item.owner_id);
+                    await _vkaudio.DeleteAsync(AudioItemsViewModel[i].Id, AudioItemsViewModel[i].OwnerId);
                     if (AudioItemsViewModel.Remove(AudioItemsViewModel[i]))
                     {
                         MessageBox.Show("Аудиозапись успешно удалена!");

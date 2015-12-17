@@ -20,7 +20,7 @@ namespace VK.ViewModel.Friends
             set
             {
                 _item = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -31,7 +31,7 @@ namespace VK.ViewModel.Friends
             set
             {
                 _item.first_name = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -41,7 +41,7 @@ namespace VK.ViewModel.Friends
             set
             {
                 _item.last_name = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -51,7 +51,7 @@ namespace VK.ViewModel.Friends
             set
             {
                 _item.online = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -61,7 +61,7 @@ namespace VK.ViewModel.Friends
             set
             {
                 _item.photo_100 = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -75,7 +75,7 @@ namespace VK.ViewModel.Friends
             set
             {
                 _image = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

@@ -65,21 +65,19 @@ namespace VKAPI
         {
             if (value != null)
             {
-                Type type = value.GetType();
-
-                if (type.Name == "Int32")
+                if (value is int)
                 {
-                    int val = Convert.ToInt32(value);
-                    if (val > 0)
+                    int valInt = (int)value;
+                    if (valInt != 0)
                     {
                         Parameters.Add(parameter, value.ToString());
                     }
                 }
 
-                if (type.Name == "String")
+                if (value is string)
                 {
-                    string val = Convert.ToString(value);
-                    if (val.Length > 0)
+                    var valStr = (string)value;
+                    if (valStr.Length > 0)
                     {
                         Parameters.Add(parameter, value.ToString());
                     }

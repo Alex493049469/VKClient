@@ -62,6 +62,36 @@ namespace VKAPI
            });
        }
 
+       public UsersModel GetPhoto(string userIds)
+       {
+           string fieldsPhoto = "photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, photo_id";
+          //используемый метод
+           Method = "users.get";
+
+           //добавляем параметры
+           var parameters = new Dictionary<string, object>
+           {
+               {"user_ids=", userIds},
+               {"fields=", fieldsPhoto},
+           };
+           AddParameters(parameters);
+           //получаем данные в json
+           string str = GetData();
+           //десериализуем
+           UsersModel usersModel = JsonConvert.DeserializeObject<UsersModel>(str);
+           return usersModel;
+       }
+
+       public Task<UsersModel> GetPhotoAsync(string user_ids)
+       {
+           return Task.Run(() =>
+           {
+               UsersModel userModel = GetPhoto(user_ids);
+               return userModel;
+           });
+       }
+
+
 
 
     }
