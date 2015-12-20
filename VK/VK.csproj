@@ -108,6 +108,7 @@
     <Compile Include="Styles\VS2012\VS2012WindowStyle.cs" />
     <Compile Include="ViewModel\Audios\AudioItemViewModel.cs" />
     <Compile Include="ViewModel\Audios\AudioListViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\DataTemplateSelector\DialogDataTemplateSelector.cs" />
     <Compile Include="ViewModel\Dialogs\DialogListViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\DialogItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendItemViewModel.cs" />
