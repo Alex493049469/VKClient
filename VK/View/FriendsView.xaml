@@ -6,6 +6,7 @@
              xmlns:friends="clr-namespace:VK.ViewModel.Friends"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModel="clr-namespace:VK.ViewModel"
+             Background="White"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">

@@ -15,6 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>52ff4054</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -58,38 +59,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.AvalonDock">
-      <HintPath>..\packages\Xceed.Wpf.AvalonDock.2.6.15111.10510\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
-      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Aero.2.6.15111.10510\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
-      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Metro.2.6.15111.10510\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.MetroAccent">
-      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.MetroAccent.2.6.15111.10510\lib\net40\Xceed.Wpf.AvalonDock.Themes.MetroAccent.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Office2007">
-      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.Office2007.2.6.15111.10510\lib\net40\Xceed.Wpf.AvalonDock.Themes.Office2007.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
-      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.VS2010.2.6.15111.10510\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Themes">
-      <HintPath>..\packages\Xceed.Wpf.Themes.2.6.15111.10510\lib\net40\Xceed.Wpf.Themes.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Themes.Metro">
-      <HintPath>..\packages\Xceed.Wpf.Themes.Metro.2.6.15111.10510\lib\net40\Xceed.Wpf.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Themes.Office2007">
-      <HintPath>..\packages\Xceed.Wpf.Themes.Office2007.2.6.15111.10510\lib\net40\Xceed.Wpf.Themes.Office2007.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>..\packages\Xceed.Wpf.Toolkit.2.6.15111.10510\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -280,7 +249,9 @@
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Включите восстановление пакетов NuGet, чтобы загрузить их. Дополнительные сведения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets'))" />
   </Target>
+  <Import Project="..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets" Condition="Exists('..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

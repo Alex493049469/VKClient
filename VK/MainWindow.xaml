@@ -15,40 +15,20 @@
         WindowStyle="None"
         mc:Ignorable="d">
     <Grid UseLayoutRounding="True">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25*" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <!--<TabControl x:Name="TabControler" Margin="210,0,0,0" />-->
-
-        <xcad:DockingManager Name="DockingManagers"
-                             Margin="201,0,0,0"
-                             AllowMixedOrientation="True"
-                             BorderThickness="1">
-            <xcad:DockingManager.Theme>
-                <xcad:MetroTheme />
-            </xcad:DockingManager.Theme>
-            
-            <xcad:LayoutRoot x:Name="_layoutRoot">
-                <xcad:LayoutPanel Orientation="Horizontal">
-                    <xcad:LayoutDocumentPaneGroup>
-                        <xcad:LayoutDocumentPane x:Name="LayoutDocumentP" />
-                    </xcad:LayoutDocumentPaneGroup>
-                    <xcad:LayoutAnchorablePaneGroup DockWidth="125" />
-                </xcad:LayoutPanel>
-
-
-            </xcad:LayoutRoot>
-        </xcad:DockingManager>
-
-        <StackPanel Width="196"
-                    Height="auto"
-                    Margin="5,0,0,0"
+        <StatusBar Height="24" VerticalAlignment="Bottom">
+            <TextBlock Margin="3,0,0,0"><Run Text="" />
+            </TextBlock>
+            <StatusBarItem HorizontalAlignment="Right">
+                <ResizeGrip Opacity="0.75" />
+            </StatusBarItem>
+        </StatusBar>
+        <StackPanel Grid.Row="0"
+                    Width="200"
+                    Margin="0,0,0,25"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
                     Background="White">
             <CheckBox Width="176"
                       Height="23"
@@ -60,7 +40,7 @@
                       Style="{DynamicResource CheckToogleButton}"
                       UseLayoutRounding="True" />
             <Button x:Name="MyPageButton"
-                    Margin="3"
+                    Margin="10,3"
                     Click="MyPageButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
@@ -75,7 +55,7 @@
             </Button>
             <Button x:Name="MyFriendsButton"
                     Height="37"
-                    Margin="3"
+                    Margin="10,3"
                     Click="MyFriendsButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
@@ -90,7 +70,7 @@
             </Button>
             <Button x:Name="MyPhotoButton"
                     Height="37"
-                    Margin="3"
+                    Margin="10,3"
                     IsEnabled="False">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
@@ -105,7 +85,7 @@
             </Button>
             <Button x:Name="MyVideoButton"
                     Height="37"
-                    Margin="3"
+                    Margin="10,3"
                     IsEnabled="False">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
@@ -119,10 +99,8 @@
                 </StackPanel>
             </Button>
             <Button x:Name="MyMessageButton"
-                    Width="190"
                     Height="37"
-                    Margin="3,3,0,3"
-                    HorizontalAlignment="Left"
+                    Margin="10,3"
                     Click="MyMessageButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
@@ -137,7 +115,7 @@
             </Button>
             <Button x:Name="AudioButton"
                     Height="37"
-                    Margin="3"
+                    Margin="10,3"
                     Click="AudioButton_Click">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
@@ -152,7 +130,7 @@
             </Button>
             <Button x:Name="GroupButton"
                     Height="37"
-                    Margin="3"
+                    Margin="10,3"
                     IsEnabled="False">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
@@ -167,7 +145,7 @@
             </Button>
             <Button x:Name="SettingsButton"
                     Height="37"
-                    Margin="3"
+                    Margin="10,3"
                     IsEnabled="False"
                     UseLayoutRounding="True">
                 <StackPanel Width="174"
@@ -182,15 +160,10 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <StatusBar Grid.Row="1"
-                   Height="24"
-                   VerticalAlignment="Bottom">
-            <TextBlock Margin="3,0,0,0"><Run Text="" />
-            </TextBlock>
-            <StatusBarItem HorizontalAlignment="Right">
-                <ResizeGrip Opacity="0.75" />
-            </StatusBarItem>
-        </StatusBar>
+        <ContentControl Name="Content"
+                        Grid.Row="0"
+                        Margin="200,0,0,25"
+                        VerticalAlignment="Stretch" />
     </Grid>
 
 </Window>

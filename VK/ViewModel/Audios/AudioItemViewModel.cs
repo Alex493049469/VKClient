@@ -3,6 +3,7 @@ using VKAPI.Model.AudioModel;
 
 namespace VK.ViewModel.Audios
 {
+
     class AudioItemViewModel : BaseViewModel
     {
         public int Id { get; set; }

@@ -3,7 +3,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace Core
-{
+{   
+    [Magic]
     public class BaseViewModel : INotifyPropertyChanged
     {
         #region MVVM related

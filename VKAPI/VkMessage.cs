@@ -35,7 +35,7 @@ namespace VKAPI
             //получаем данные в json
             string str = GetData();
             //десериализуем
-            DialogsModel dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(str);
+            var dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(str);
 
             return dialogsModel;
         }

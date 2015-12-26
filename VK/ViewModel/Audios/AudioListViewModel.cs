@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data.Odbc;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Core;
@@ -15,7 +16,6 @@ using NAudio.Wave;
 using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
-using Xceed.Wpf.Toolkit;
 
 namespace VK.ViewModel.Audios
 {
