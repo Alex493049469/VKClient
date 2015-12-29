@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace VKAPI
 {
-    public abstract class VkBase
+    public class VkBase
     {
         //базовый Url
         private string _baseUrl = @"https://api.vk.com/method/";
@@ -52,7 +52,7 @@ namespace VKAPI
             {
                 url += ConvertToStringParameters();
             }
-            url += "&" + ApiVersion + "&access_token=" + VkMain.token;
+            url += "&" + ApiVersion + "&access_token=" + VkSettings.Token;
             return url;
         }
 

@@ -150,6 +150,7 @@
                             <Setter Property="Template" Value="{StaticResource WaitControlTemplate}" />
 
                         </Trigger>
+
                     </Style.Triggers>
                 </Style>
             </ListBox.Style>

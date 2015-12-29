@@ -1,19 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using VKAPI.Model;
 using VKAPI.Model.FriendsModel;
 
-
-
-namespace VKAPI
+namespace VKAPI.Category
 {
     /// <summary>
     ///     Класс для работы с Друзьями
     /// </summary>
-    public class VkFriends : VkBase
+    public class Friends : VkBase
     {
         //список всех полей
         private string FieldsAll = "nickname, domain, sex, bdate, city, country, timezone, photo_50, photo_100, photo_200_orig, has_mobile, contacts, education, online, relation, last_seen, status, can_write_private_message, can_see_all_posts, can_post, universities ";

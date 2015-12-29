@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using VKAPI.Model;
 using VKAPI.Model.UsersModel;
 
-namespace VKAPI
+namespace VKAPI.Category
 {
-    public class VkUsers : VkBase
+    public class Users : VkBase
     {
        //падеж для склонения имени и фамилии пользователя. 
        //Возможные значения: именительный – nom, родительный – gen, дательный – dat, винительный – acc, творительный – ins, предложный – abl. По умолчанию nom. 
@@ -53,7 +47,7 @@ namespace VKAPI
            return usersModel;
        }
 
-       public Task<UsersModel> GetAsync(string user_ids)
+       public Task<UsersModel> GetAsync(string user_ids = "")
        {
            return Task.Run(() =>
            {

@@ -14,160 +14,254 @@
         <converters:DateConverter x:Key="DateConverter" x:Shared="false" />
         <dataTemplates:DialogDataTemplateSelector x:Key="DialogDataTemplateSelector" />
         <DataTemplate x:Key="One" DataType="{x:Type chat:DialogItemViewModel}">
-            <StackPanel Orientation="Horizontal">
-                <Image Width="100"
-                       Height="100"
-                       Source="{Binding UserOnePhoto}" />
-                <StackPanel Width="150"
-                            MaxWidth="150"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                    <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" />
+            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Width="60"
+                           Height="60"
+                           Source="{Binding UserOnePhoto}" />
+                    <StackPanel Width="150"
+                                MaxWidth="150"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" />
+                    </StackPanel>
+                    <StackPanel Margin="10,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Image MaxWidth="40"
+                               MaxHeight="40"
+                               Margin="5"
+                               Source="{Binding UserIdPhoto}">
+                            <Image.Clip>
+                                <RectangleGeometry RadiusX="5"
+                                                   RadiusY="5"
+                                                   Rect="0,0,40,40" />
+                            </Image.Clip>
+                        </Image>
+                        <TextBlock Width="400"
+                                   Height="50"
+                                   MaxWidth="400"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Body}"
+                                   TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel Margin="20,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                    <Image MaxWidth="50"
-                           MaxHeight="50"
-                           Source="{Binding UserIdPhoto}" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Body}" />
-                </StackPanel>
-            </StackPanel>
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="Two">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal">
-                    <Image Width="50"
-                           Height="50"
-                           Margin="5,0,0,0"
-                           Source="{Binding UserOnePhoto}" />
-                    <Image Width="50"
-                           Height="50"
-                           Margin="5,0,5,0"
-                           Source="{Binding UserTwoPhoto}" />
+            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="29"
+                               Height="60"
+                               Source="{Binding UserOnePhoto}"
+                               Stretch="UniformToFill" />
+                        <Image Width="29"
+                               Height="60"
+                               Margin="2,0,0,0"
+                               Source="{Binding UserTwoPhoto}"
+                               Stretch="UniformToFill" />
+                    </StackPanel>
+                    <StackPanel Width="150"
+                                MaxWidth="150"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                        <TextBlock Text="{Binding UserCount}" />
+                    </StackPanel>
+                    <StackPanel Margin="10,0,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Image MaxWidth="40"
+                               MaxHeight="40"
+                               Margin="5"
+                               Source="{Binding UserIdPhoto}">
+                            <Image.Clip>
+                                <RectangleGeometry RadiusX="5"
+                                                   RadiusY="5"
+                                                   Rect="0,0,40,40" />
+                            </Image.Clip>
+                        </Image>
+                        <TextBlock Width="400"
+                                   Height="40"
+                                   MaxWidth="400"
+                                   Text="{Binding Body}"
+                                   TextWrapping="WrapWithOverflow" />
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel>
-                    <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                    <TextBlock Text="{Binding UserCount}" />
-                </StackPanel>
-                <StackPanel Margin="20,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                    <Image MaxWidth="50"
-                           MaxHeight="50"
-                           Source="{Binding UserIdPhoto}" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Body}" />
-                </StackPanel>
-            </StackPanel>
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="Three">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal">
-                    <Image Width="50"
-                           Height="100"
-                           Source="{Binding UserOnePhoto}"
-                           Stretch="Uniform" />
-                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
-                        <Image Width="50"
-                               Height="50"
-                               Source="{Binding UserTwoPhoto}" />
-                        <Image Width="50"
-                               Height="50"
-                               Source="{Binding UserThreePhoto}" />
+            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="25"
+                               Height="25"
+                               Margin="2"
+                               Source="{Binding UserOnePhoto}"
+                               Stretch="Uniform" />
+                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                            <Image Width="25"
+                                   Height="25"
+                                   Margin="2"
+                                   Source="{Binding UserTwoPhoto}" />
+                            <Image Width="25"
+                                   Height="25"
+                                   Margin="2"
+                                   Source="{Binding UserThreePhoto}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Width="150"
+                                MaxWidth="150"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                        <TextBlock Text="{Binding UserCount}" />
+                    </StackPanel>
+                    <StackPanel Margin="20,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Image MaxWidth="50"
+                               MaxHeight="50"
+                               Source="{Binding UserIdPhoto}">
+                            <Image.Clip>
+                                <RectangleGeometry RadiusX="5"
+                                                   RadiusY="5"
+                                                   Rect="0,0,40,40" />
+                            </Image.Clip>
+                        </Image>
+                        <TextBlock Width="400"
+                                   Height="50"
+                                   Text="{Binding Body}"
+                                   TextWrapping="WrapWithOverflow" />
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Width="150"
-                            MaxWidth="150"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                    <TextBlock Text="{Binding UserCount}" />
-                </StackPanel>
-                <StackPanel Margin="20,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                    <Image MaxWidth="50"
-                           MaxHeight="50"
-                           Source="{Binding UserIdPhoto}" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Body}" />
-                </StackPanel>
-            </StackPanel>
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="Four">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
-                        <Image Width="50"
-                               Height="50"
-                               Source="{Binding UserOnePhoto}" />
-                        <Image Width="50"
-                               Height="50"
-                               Source="{Binding UserTwoPhoto}" />
+            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                            <Image Width="25"
+                                   Height="25"
+                                   Margin="2"
+                                   Source="{Binding UserOnePhoto}" />
+                            <Image Width="25"
+                                   Height="25"
+                                   Margin="2"
+                                   Source="{Binding UserTwoPhoto}" />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                            <Image Width="25"
+                                   Height="25"
+                                   Margin="2"
+                                   Source="{Binding UserThreePhoto}" />
+                            <Image Width="25"
+                                   Height="25"
+                                   Margin="2"
+                                   Source="{Binding UserFourPhoto}" />
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel VerticalAlignment="Center" Orientation="Vertical">
-                        <Image Width="50"
-                               Height="50"
-                               Source="{Binding UserThreePhoto}" />
-                        <Image Width="50"
-                               Height="50"
-                               Source="{Binding UserFourPhoto}" />
+                    <StackPanel Width="150"
+                                MaxWidth="150"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                        <TextBlock Text="{Binding UserCount}" />
+                    </StackPanel>
+                    <StackPanel Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Image MaxWidth="40"
+                               MaxHeight="40"
+                               Margin="5"
+                               Source="{Binding UserIdPhoto}">
+                            <Image.Clip>
+                                <RectangleGeometry RadiusX="5"
+                                                   RadiusY="5"
+                                                   Rect="0,0,40,40" />
+                            </Image.Clip>
+                        </Image>
+                        <StackPanel HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <TextBlock Width="400"
+                                       Height="15"
+                                       FontWeight="Bold"
+                                       Text="{Binding LastMessageUserName}"
+                                       TextWrapping="WrapWithOverflow" />
+                            <TextBlock Width="400"
+                                       Height="25"
+                                       MaxWidth="400"
+                                       Text="{Binding Body}"
+                                       TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Width="150"
-                            MaxWidth="150"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                    <TextBlock Text="{Binding UserCount}" />
-                </StackPanel>
-                <StackPanel Margin="20,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                    <Image MaxWidth="50"
-                           MaxHeight="50"
-                           Source="{Binding UserIdPhoto}" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Body}" />
-                </StackPanel>
-            </StackPanel>
+            </Border>
         </DataTemplate>
 
         <DataTemplate x:Key="Group">
-            <StackPanel Orientation="Horizontal">
-                <Image Width="100"
-                       Height="100"
-                       Source="{Binding GroupPhoto100}" />
-                <StackPanel Width="150"
-                            MaxWidth="150"
-                            Margin="10,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                    <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                    <TextBlock Text="{Binding UserCount}" />
+            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    <Image Width="60"
+                           Height="60"
+                           Source="{Binding GroupPhoto100}" />
+                    <StackPanel Width="150"
+                                MaxWidth="150"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                        <TextBlock FontWeight="Bold" Text="{Binding Title}" />
+                        <TextBlock Text="{Binding UserCount}" />
+                    </StackPanel>
+                    <StackPanel Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Image MaxWidth="40"
+                               MaxHeight="40"
+                               Margin="5"
+                               Source="{Binding UserIdPhoto}">
+                            <Image.Clip>
+                                <RectangleGeometry RadiusX="5"
+                                                   RadiusY="5"
+                                                   Rect="0,0,40,40" />
+                            </Image.Clip>
+                        </Image>
+                        <StackPanel HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <TextBlock Width="400"
+                                       Height="15"
+                                       FontWeight="Bold"
+                                       Text="{Binding LastMessageUserName}"
+                                       TextWrapping="WrapWithOverflow" />
+                            <TextBlock Width="400"
+                                       Height="25"
+                                       MaxWidth="400"
+                                       Text="{Binding Body}"
+                                       TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
-                <StackPanel Margin="20,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Orientation="Horizontal">
-                    <Image MaxWidth="50"
-                           MaxHeight="50"
-                           Source="{Binding UserIdPhoto}" />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Body}" />
-                </StackPanel>
-            </StackPanel>
+            </Border>
         </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
         <ListBox x:Name="ListMessage"
-                 Margin="0,50,0,0"
+                 Margin="0,10"
                  ItemTemplateSelector="{StaticResource DialogDataTemplateSelector}"
                  ItemsSource="{Binding DialogItemsViewModel,
                                        IsAsync=True}"
@@ -186,6 +280,10 @@
                     <Setter Property="ScrollViewer.PanningMode" Value="Both" />
                     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="VirtualizingPanel.IsContainerVirtualizable" Value="True" />
+                    <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+                    <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
+                    <Setter Property="VirtualizingPanel.CacheLength" Value="2.2" />
                     <Style.Triggers>
                         <Trigger Property="ItemsSource" Value="{x:Null}">
                             <Setter Property="Template" Value="{StaticResource WaitControlTemplate}" />

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Core;
 using VK.ViewModel.Friends;
 using VKAPI;
+using VKAPI.Category;
 using VKAPI.Model.UsersModel;
 
 namespace VK.ViewModel.Page
@@ -16,7 +17,7 @@ namespace VK.ViewModel.Page
         //модель данных
         public UsersModel UserModel;
         //для доступа к пользователям
-        VkUsers vkusers = new VkUsers();
+        Users vkusers = new Users();
 
         public PageViewModel()
         {
@@ -26,7 +27,7 @@ namespace VK.ViewModel.Page
         public async void LoadModel()
         {
             //грузим данные в модель
-            UserModel = vkusers.Get("", "", VkUsers.nameCase.nom);
+            UserModel = vkusers.Get("", "", Users.nameCase.nom);
         }
 
  

@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Core;
-using VKAPI.Core;
+
 
 
 namespace VKAPI.Model.FriendsModel

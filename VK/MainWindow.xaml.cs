@@ -11,86 +11,99 @@ using VK.ViewModel.Friends;
 using VK.ViewModel.Page;
 using VKAPI;
 
+
 namespace VK
 {
 	/// <summary>
-	///     Логика взаимодействия для MainWindow.xaml
+	///Логика взаимодействия для MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private VkApi _vk = new VkApi();
+
 		//View models
-		private BaseViewModel audiosViewModel;
-		private BaseViewModel friendsViewModel;
-		private BaseViewModel pageViewModel;
-		private BaseViewModel dialogsViewModel;
+		private BaseViewModel _audiosViewModel;
+		private BaseViewModel _friendsViewModel;
+		private BaseViewModel _pageViewModel;
+		private BaseViewModel _dialogsViewModel;
 
 		//Views
-		private UserControl audiosView;
-		private UserControl friendsView;
-		private UserControl pageView;
-		private UserControl dialogsView;
+		private UserControl _audiosView;
+		private UserControl _friendsView;
+		private UserControl _pageView;
+		private UserControl _dialogsView;
 
 		public MainWindow()
 		{
 			InitializeComponent();
+
 			if (Settings.Default.token == "")
 			{
 				//скрываем главную форму если нет токена 
 				Visibility = Visibility.Hidden;
 				//отображаем окно авторизации
-				var authorization = new AuthorizationWindow();
+				var authorization = new AuthorizationWindow { main = this };
 				//ссылка на главную форму
-				authorization.main = this;
 				authorization.Show();
 			}
 			else
 			{
-				VkMain.token = Settings.Default.token;
+				VkSettings.Token = Settings.Default.token;
 			}
-		 }
+
+			//Auth test = new Auth();
+			//test.Authorization("89505810519", "Alex895098920646");
+
+			//_vk.Auth.Authorization("89505810519", "Alex895098920646");
+		}
 
 		private void AudioButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (audiosView == null) audiosView = new AudioView();
-			if (audiosViewModel == null)
+			if (_audiosView == null) _audiosView = new AudioView();
+			if (_audiosViewModel == null)
 			{
-				audiosViewModel = new AudioListViewModel();
-				audiosView.DataContext = audiosViewModel;
+				_audiosViewModel = new AudioListViewModel();
+				_audiosView.DataContext = _audiosViewModel;
 			}
-			Content.Content = audiosView;
+			Content.Content = _audiosView;
 		}
 
 		private void MyPageButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (pageView == null) pageView = new PageView();
-			if (pageViewModel == null)
+			if (_pageView == null) _pageView = new PageView();
+			if (_pageViewModel == null)
 			{
-				pageViewModel = new PageViewModel();
-				pageView.DataContext = pageViewModel;
+				_pageViewModel = new PageViewModel();
+				_pageView.DataContext = _pageViewModel;
 			}
-			Content.Content = pageView;
+			Content.Content = _pageView;
 		}
 
 		private void MyMessageButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (dialogsView == null) dialogsView = new DialogsView();
-			if (dialogsViewModel == null)
+			if (_dialogsView == null) _dialogsView = new DialogsView();
+			if (_dialogsViewModel == null)
 			{
-				dialogsViewModel = new DialogListViewModel();
-				dialogsView.DataContext = dialogsViewModel;
+				_dialogsViewModel = new DialogListViewModel();
+				_dialogsView.DataContext = _dialogsViewModel;
 			}
-			Content.Content = dialogsView;
+			Content.Content = _dialogsView;
 		}
 
 		private void MyFriendsButton_Click(object sender, RoutedEventArgs e)
 		{
-			if (friendsView == null) friendsView = new FriendsView();
-			if (friendsViewModel == null)
+			if (_friendsView == null) _friendsView = new FriendsView();
+			if (_friendsViewModel == null)
 			{
-				friendsViewModel = new FriendsListViewModel();
-				friendsView.DataContext = friendsViewModel;
+				_friendsViewModel = new FriendsListViewModel();
+				_friendsView.DataContext = _friendsViewModel;
 			}
-			Content.Content = friendsView;
+			Content.Content = _friendsView;
+		}
+
+		private void SettingsButton_Click(object sender, RoutedEventArgs e)
+		{
+			
 		}
 
 	}

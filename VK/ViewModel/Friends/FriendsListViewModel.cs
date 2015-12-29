@@ -11,7 +11,7 @@ namespace VK.ViewModel.Friends
 {
     class FriendsListViewModel : BaseViewModel
     {
-        VkFriends _vkFriends = new VkFriends();
+		VkApi _vk = new VkApi();
         //модель данных друзей
         private FriendsModel _friendViewModel;
         //ViewModel друзей
@@ -44,7 +44,7 @@ namespace VK.ViewModel.Friends
         {
             FriendsItemsViewModel = null;
             ObservableCollection<FriendItemViewModel> _item = new ObservableCollection<FriendItemViewModel>();
-            _friendViewModel = await _vkFriends.GetAsync();
+			_friendViewModel = await _vk.Friends.GetAsync();
             foreach (var item in _friendViewModel.response.items)
             {
                 FriendItemViewModel itemAudio = new FriendItemViewModel() { Item = item };

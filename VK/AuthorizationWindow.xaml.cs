@@ -26,7 +26,7 @@ namespace VK
         {
             InitializeComponent();
             //загружаем страницу авторизации
-            BrowserAuth.Navigate(VkMain.vk_auth_url);
+            BrowserAuth.Navigate(VkSettings.vk_auth_url);
             
             
         }
@@ -50,7 +50,7 @@ namespace VK
 
                 Settings.Default.token = url;
                 Settings.Default.Save();
-                VkMain.token = Settings.Default.token;
+                VkSettings.Token = Settings.Default.token;
 
                 main.Visibility = Visibility.Visible;
                 this.Close();

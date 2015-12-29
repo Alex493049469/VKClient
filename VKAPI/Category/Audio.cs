@@ -1,19 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VKAPI.Model.AudioModel;
-using System.Reflection;
-using System.Security.Policy;
-using VKAPI.Model.ErrorModel;
 
-namespace VKAPI
+namespace VKAPI.Category
 {
     /// <summary>
     ///     Класс для работы с аудиозаписями
     /// </summary>
-    public class VkAudio : VkBase
+    public class Audio : VkBase
     {
         /// <summary>
         ///    Возвращает список аудиозаписей пользователя или сообщества
@@ -48,7 +43,7 @@ namespace VKAPI
             return audioModel;
         }
 
-        public Task<AudioModel> GetAsync(int ownerId = 0, int albumId = 0, string audioIds = "sdfsdf",  int offset = 0, int count =1000)
+        public Task<AudioModel> GetAsync(int ownerId = 0, int albumId = 0, string audioIds = "",  int offset = 0, int count =1000)
         {
             return Task.Run(() => Get(ownerId, albumId, audioIds, offset, count));
         }

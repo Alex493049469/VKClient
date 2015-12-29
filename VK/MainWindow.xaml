@@ -30,9 +30,9 @@
                     Margin="0,0,0,25"
                     HorizontalAlignment="Left"
                     Background="White">
-            <CheckBox Width="176"
+            <CheckBox Width="160"
                       Height="23"
-                      Margin="0,10,10,10"
+                      Margin="0,10,20,10"
                       HorizontalAlignment="Right"
                       VerticalAlignment="Bottom"
                       Content="Онлайн"
@@ -146,7 +146,8 @@
             <Button x:Name="SettingsButton"
                     Height="37"
                     Margin="10,3"
-                    IsEnabled="False"
+                    Click="SettingsButton_Click"
+                    IsEnabled="True"
                     UseLayoutRounding="True">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"

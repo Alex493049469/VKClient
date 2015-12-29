@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>52ff4054</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>5941b014</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -80,6 +80,7 @@
     <Compile Include="ViewModel\Dialogs\DataTemplateSelector\DialogDataTemplateSelector.cs" />
     <Compile Include="ViewModel\Dialogs\DialogListViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\DialogItemViewModel.cs" />
+    <Compile Include="ViewModel\Dialogs\DialogProvider.cs" />
     <Compile Include="ViewModel\Friends\FriendItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendsListViewModel.cs" />
     <Compile Include="ViewModel\Page\PageViewModel.cs" />
@@ -94,6 +95,12 @@
     </Compile>
     <Compile Include="View\PageView.xaml.cs">
       <DependentUpon>PageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Test.xaml.cs">
+      <DependentUpon>Test.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Page Include="AuthorizationWindow.xaml">
       <SubType>Designer</SubType>
@@ -152,6 +159,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Test.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,6 +255,7 @@
     <Resource Include="maly2.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Model\" />
     <Folder Include="ViewModel\Main\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

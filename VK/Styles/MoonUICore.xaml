@@ -2978,17 +2978,20 @@
                         <Rectangle x:Name="Backgrd" />
                         <Border x:Name="IconBorder"
                                 Background="Transparent"
-                                BorderThickness="2"
-                                CornerRadius="2"
-                                Padding="2,4">
+                                CornerRadius="2">
                             <ContentPresenter x:Name="TextData" />
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Backgrd" Property="Fill" Value="{DynamicResource HoverBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Text_light_}" />
+                        </Trigger>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="Backgrd" Property="Fill" Value="{DynamicResource ActiveBrush}" />
                             <Setter Property="Foreground" Value="{DynamicResource Text_light_}" />
                         </Trigger>
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -3026,6 +3029,11 @@
     <LinearGradientBrush x:Key="ActiveBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Offset="0.31" Color="{StaticResource Fill_active_top}" />
         <GradientStop Offset="1" Color="{StaticResource Fill_active_bottom}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HoverBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+        <GradientStop Offset="0.31" Color="LightSteelBlue" />
+        <GradientStop Offset="1" Color="LightSteelBlue" />
     </LinearGradientBrush>
 
     <!--  ScrollBar  -->

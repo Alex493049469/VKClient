@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using VKAPI;
+using VKAPI.Category;
 using VKAPI.Model.DialogsModel;
 using VKAPI.Model.UsersModel;
 
@@ -20,9 +21,8 @@ namespace VK.ViewModel.Dialogs
         private ObservableCollection<DialogItemViewModel> _dialogItemsViewModel = new ObservableCollection<DialogItemViewModel>();
 
         //для доступа к данным диалогов
-        VkMessage vkMessage = new VkMessage();
-        //для подгрузки фотографий пользователей к диалогам
-        VkUsers vkUsers = new VkUsers();
+		VkApi _vk = new VkApi();
+       
 
         public DialogListViewModel()
         {
@@ -32,7 +32,7 @@ namespace VK.ViewModel.Dialogs
         public async void LoadDialogs()
         {
             DialogItemsViewModel = null;
-            _dialogModel = await vkMessage.GetDialogsAsync();
+			_dialogModel = await _vk.Messages.GetDialogsAsync();
 
            ObservableCollection<DialogItemViewModel> itemsDialog = new ObservableCollection<DialogItemViewModel>();
             foreach (var item in _dialogModel.response.items)
@@ -48,38 +48,39 @@ namespace VK.ViewModel.Dialogs
                     UserCount = item.message.users_count,
                     ChatActive = item.message.chat_active,
                     ReadState = item.message.read_state,
-                    Date = item.message.date
-                  
+                    Date = item.message.date,
+					Out = item.message.@out
                 };
 
                 itemsDialog.Add(itemDialog);
             }
+
             //если несколько пользователей то берем их из ChatActive если 1 то userId
             //собираем все их id 
-            List<int> UserIdList = new List<int>();
+            List<int> userIdList = new List<int>();
             foreach (var item in itemsDialog)
             {
                 if (item.UserCount == 1 || item.UserCount == null)
                 {
-                    if (!UserIdList.Contains(item.UserId))
+                    if (!userIdList.Contains(item.UserId))
                     {
-                        UserIdList.Add(item.UserId);
+                        userIdList.Add(item.UserId);
                     }
                 }
                 if (item.UserCount > 1 )
                 {
                     foreach (var id in item.ChatActive)
                     {
-                        if (!UserIdList.Contains(id))
+                        if (!userIdList.Contains(id))
                         {
-                            UserIdList.Add(id);
+                            userIdList.Add(id);
                         }
                     }
                 }
             }
 
             string UserIds = "";
-            foreach (var id in UserIdList)
+            foreach (var id in userIdList)
             {
                 if (UserIds == "")
                 {
@@ -91,8 +92,8 @@ namespace VK.ViewModel.Dialogs
                 }
             }
             //получаем всю необходимую информацию о пользовалелях кто в диалогах 
-            UsersModel users = await vkUsers.GetPhotoAsync(UserIds);
-           
+            UsersModel users = await _vk.Users.GetPhotoAsync(UserIds);
+            UsersModel thisUser = await _vk.Users.GetAsync();
             //здесь в зависимости от количества собеседников подгружаем фотки
             foreach (var item in itemsDialog)
             {
@@ -101,12 +102,21 @@ namespace VK.ViewModel.Dialogs
                     var userTemp = users.response.Find(i => i.id == item.UserId);
                     item.UserOnePhoto = userTemp.photo_100;
                     item.Title = userTemp.first_name + " " + userTemp.last_name;
+	                if (item.Out == 1)
+	                {
+		                item.UserIdPhoto = thisUser.response[0].photo_100;
+	                }
+					
                     continue;
                 }
 
                 var user = users.response.Find(i => i.id == item.UserId);
-                if (user != null)
-                    item.UserIdPhoto = user.photo_100;
+	            if (user != null)
+					{
+						item.UserIdPhoto = user.photo_100;
+						item.LastMessageUserName = user.first_name + " " + user.last_name;
+					}
+                   
                 if (item.ChatActive.Count == 2)
                 {
                     item.UserOnePhoto = users.response.Find(i => i.id == item.ChatActive[0]).photo_100;
@@ -123,6 +133,7 @@ namespace VK.ViewModel.Dialogs
                
                 if (item.ChatActive.Count >= 4)
                 {
+
                     item.UserOnePhoto = users.response.Find(i => i.id == item.ChatActive[0]).photo_100;
                     item.UserTwoPhoto = users.response.Find(i => i.id == item.ChatActive[1]).photo_100;
                     item.UserThreePhoto = users.response.Find(i => i.id == item.ChatActive[2]).photo_100;

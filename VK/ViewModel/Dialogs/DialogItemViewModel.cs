@@ -37,5 +37,9 @@ namespace VK.ViewModel.Dialogs
         public string UserFourPhoto { get; set; }
 
         public int? UserCount { get; set; }
+
+		public int Out { get; set; }
+
+		public string LastMessageUserName { get; set; }
     }
 }

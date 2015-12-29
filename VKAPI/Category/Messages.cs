@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Xml;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using VKAPI.Model;
 using VKAPI.Model.DialogsModel;
-using VKAPI.Model.UsersModel;
 
-
-namespace VKAPI
+namespace VKAPI.Category
 {
-    public class VkMessage : VkBase
+    public class Messages : VkBase
     {
         
         /// <summary>
@@ -45,7 +36,7 @@ namespace VKAPI
         /// </summary>
         /// <param name="countAudio"></param>
         /// <returns></returns>
-        public Task<DialogsModel> GetDialogsAsync(int count = 15)
+        public Task<DialogsModel> GetDialogsAsync(int count = 50)
         {
             return Task.Run(() =>
             {
