@@ -12,7 +12,7 @@ namespace VKAPI.Category
         /// Возвращает список диалогов текущего пользователя.
         /// </summary>
         /// <returns></returns>
-        public DialogsModel GetDialogs(int count)
+		public DialogsModel GetDialogs(int count, int offset = 0)
         {
             //используемый метод
             Method = "messages.getDialogs";
@@ -20,7 +20,8 @@ namespace VKAPI.Category
             //добавляем параметры если есть
             var parameters = new Dictionary<string, object>
             {
-                {"count=", count}
+                {"count=", count},
+                {"offset=", offset}
             };
              AddParameters(parameters);
             //получаем данные в json
@@ -36,11 +37,11 @@ namespace VKAPI.Category
         /// </summary>
         /// <param name="countAudio"></param>
         /// <returns></returns>
-        public Task<DialogsModel> GetDialogsAsync(int count = 50)
+        public Task<DialogsModel> GetDialogsAsync(int count, int offset = 0)
         {
             return Task.Run(() =>
             {
-                DialogsModel messageModel = GetDialogs(count);
+                DialogsModel messageModel = GetDialogs(count, offset);
                 return messageModel;
             });
         }

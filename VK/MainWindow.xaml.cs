@@ -87,6 +87,7 @@ namespace VK
 				_dialogsViewModel = new DialogListViewModel();
 				_dialogsView.DataContext = _dialogsViewModel;
 			}
+			//DialogViewLazy dvl = new DialogViewLazy();
 			Content.Content = _dialogsView;
 		}
 

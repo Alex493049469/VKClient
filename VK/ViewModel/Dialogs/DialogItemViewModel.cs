@@ -9,7 +9,7 @@ using VKAPI.Model.DialogsModel;
 
 namespace VK.ViewModel.Dialogs
 {
-    class DialogItemViewModel : BaseViewModel
+	 class DialogItemViewModel : BaseViewModel
     {
         public string Title { get; set; }
 
