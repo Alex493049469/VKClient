@@ -15,7 +15,7 @@
         <converters:DateConverter x:Key="DateConverter" x:Shared="false" />
         <dataTemplates:DialogDataTemplateSelector x:Key="DialogDataTemplateSelector" />
         <DataTemplate x:Key="One" DataType="{x:Type chat:DialogItemViewModel}">
-            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+            <Border BorderBrush="#c9d9ed" BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <Image Width="60"
                            Height="60"
@@ -53,7 +53,7 @@
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="Two">
-            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+            <Border BorderBrush="#c9d9ed" BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="29"
@@ -98,7 +98,7 @@
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="Three">
-            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+            <Border BorderBrush="#c9d9ed" BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="25"
@@ -147,7 +147,7 @@
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="Four">
-            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+            <Border BorderBrush="#c9d9ed" BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <StackPanel VerticalAlignment="Center" Orientation="Vertical">
@@ -213,7 +213,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="Group">
-            <Border BorderBrush="{StaticResource VS2012WindowBorderBrush}" BorderThickness="1">
+            <Border BorderBrush="#c9d9ed" BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <Image Width="60"
                            Height="60"
@@ -292,7 +292,7 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type baseControl:LazyLoadListBox}">
                                 <Border>
-                                    <Grid>
+                                    <Grid Background="#eeeeee">
                                         <Grid.RowDefinitions>
                                             <RowDefinition />
                                             <RowDefinition Height="Auto" />
