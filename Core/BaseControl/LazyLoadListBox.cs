@@ -28,11 +28,18 @@ namespace Core.BaseControl
 			set { SetValue(IsLoadingProperty, value); }
 		}
 
+		/// <summary>
+		/// Команда выполняемая для подгрузки данных
+		/// </summary>
 		public ICommand LoadCommand
 		{
 			get { return (ICommand)GetValue(LoadCommandProperty); }
 			set { SetValue(LoadCommandProperty, value); }
 		}
+
+		/// <summary>
+		/// Если true то использовать линивую подгрузку
+		/// </summary>
 		public bool IsLazyLoad
 		{
 			get { return (bool)GetValue(IsLazyLoadProperty); }
@@ -48,7 +55,7 @@ namespace Core.BaseControl
 			var scrollViewer = GetTemplateChild("PART_SCROLLVIEWER") as ScrollViewer;
 			if (scrollViewer != null)
 			{
-				scrollViewer.CanContentScroll = true;
+				//scrollViewer.CanContentScroll = true;
 				scrollViewer.ScrollChanged += scrollViewer_ScrollChanged;
 			}
 		}

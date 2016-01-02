@@ -18,9 +18,18 @@ namespace VK.ViewModel.Dialogs
 		//индекс начала
 		private int _index = 0;
 		//размер страници
-		private int _count = 20;
+		private int _count = 50;
 		//модель данных диалогов
 		public DialogsModel _dialogModel;
+		//Общее количество диалогов
+		private int _countDialog = 0;
+
+		public int CountDialog
+		{
+			get { return _countDialog; }
+			set { _countDialog = value; }
+			
+		}
 		//для доступа к данным диалогов
 		VkApi _vk = new VkApi();
 
@@ -59,6 +68,7 @@ namespace VK.ViewModel.Dialogs
 
 		public async void LoadDialogs()
 		{
+			if (DialogItemsViewModel != null && DialogItemsViewModel.Count == CountDialog) return;
 			_dialogModel = await _vk.Messages.GetDialogsAsync(_count, _index);
 
 			ObservableCollection<DialogItemViewModel> itemsDialog = new ObservableCollection<DialogItemViewModel>();
@@ -81,6 +91,7 @@ namespace VK.ViewModel.Dialogs
 
 				itemsDialog.Add(itemDialog);
 			}
+			CountDialog = _dialogModel.response.count;
 
 			//если несколько пользователей то берем их из ChatActive если 1 то userId
 			//собираем все их id 

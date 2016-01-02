@@ -10,6 +10,7 @@ namespace VKAPI
 {
     public class VkBase
     {
+		//Так же необходимо реализовать таймер который будет контроллировать чтоб не уходило более 3 запросов в секунду
         //базовый Url
         private string _baseUrl = @"https://api.vk.com/method/";
         ///вызываемый метод

@@ -12,7 +12,6 @@
         Icon="/Images/VkIconBlack.png"
         Style="{StaticResource VS2012WindowStyle}"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
         mc:Ignorable="d">
     <Grid UseLayoutRounding="True">
         <Grid.RowDefinitions>

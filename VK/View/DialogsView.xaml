@@ -261,7 +261,7 @@
     </UserControl.Resources>
 
     <Grid>
-        <baseControl:LazyLoadListBox Margin="0,10"
+        <baseControl:LazyLoadListBox Margin="0,10,0,25"
                                      IsLoading="{Binding Isloading,
                                                          Mode=TwoWay,
                                                          UpdateSourceTrigger=PropertyChanged}"
@@ -278,14 +278,14 @@
                     <Setter Property="Foreground" Value="{DynamicResource Text_dark_}" />
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-                    <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
                     <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
                     <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
                     <Setter Property="ScrollViewer.PanningMode" Value="Both" />
                     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                     <Setter Property="VirtualizingPanel.IsContainerVirtualizable" Value="True" />
-                    <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+                    <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
                     <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
                     <Setter Property="VirtualizingPanel.CacheLength" Value="2.2" />
                     <Setter Property="Template">
@@ -313,5 +313,13 @@
                 </Style>
             </baseControl:LazyLoadListBox.Style>
         </baseControl:LazyLoadListBox>
+        <Label Margin="10,0,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Bottom"
+               Content="Всего:" />
+        <Label Margin="53,0,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Bottom"
+               Content="{Binding CountDialog}" />
     </Grid>
 </UserControl>
