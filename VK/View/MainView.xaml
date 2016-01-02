@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        x:Name="MainWindow1"
+        x:Name="MainView"
         Title="VKClient Alpha 2"
         Width="944"
         Height="624"
@@ -40,14 +40,14 @@
                       UseLayoutRounding="True" />
             <Button x:Name="MyPageButton"
                     Margin="10,3"
-                    Click="MyPageButton_Click">
+                    Command="{Binding OpenPageCommand}">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
                     <Image Width="24"
                            Height="21"
                            Margin="5"
-                           Source="Images/53house.png" />
+                           Source="/Images/53house.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Моя страница" />
                     </TextBlock>
                 </StackPanel>
@@ -55,14 +55,14 @@
             <Button x:Name="MyFriendsButton"
                     Height="37"
                     Margin="10,3"
-                    Click="MyFriendsButton_Click">
+                    Command="{Binding OpenFriendsCommand}">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
                     <Image Width="24"
                            Height="21"
                            Margin="5"
-                           Source="Images/111user.png" />
+                           Source="/Images/111user.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Друзья" />
                     </TextBlock>
                 </StackPanel>
@@ -77,7 +77,7 @@
                     <Image Width="24"
                            Height="21"
                            Margin="5"
-                           Source="Images/121landscape.png" />
+                           Source="/Images/121landscape.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Фотографии" />
                     </TextBlock>
                 </StackPanel>
@@ -92,7 +92,7 @@
                     <Image Width="26"
                            Height="23"
                            Margin="5"
-                           Source="Images/videos2.png" />
+                           Source="/Images/videos2.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Видеозаписи" />
                     </TextBlock>
                 </StackPanel>
@@ -100,14 +100,14 @@
             <Button x:Name="MyMessageButton"
                     Height="37"
                     Margin="10,3"
-                    Click="MyMessageButton_Click">
+                    Command="{Binding OpenDialogsCommand}">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
                     <Image Width="24"
                            Height="21"
                            Margin="5"
-                           Source="Images/18envelope.png" />
+                           Source="/Images/18envelope.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Сообщения" />
                     </TextBlock>
                 </StackPanel>
@@ -115,14 +115,14 @@
             <Button x:Name="AudioButton"
                     Height="37"
                     Margin="10,3"
-                    Click="AudioButton_Click">
+                    Command="{Binding OpenAudioCommand}">
                 <StackPanel Width="174"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
                     <Image Width="24"
                            Height="21"
                            Margin="5"
-                           Source="Images/194note2.png" />
+                           Source="/Images/194note2.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Аудиозаписи" />
                     </TextBlock>
                 </StackPanel>
@@ -137,7 +137,7 @@
                     <Image Width="24"
                            Height="21"
                            Margin="5"
-                           Source="Images/112group.png" />
+                           Source="/Images/112group.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Группы" />
                     </TextBlock>
                 </StackPanel>
@@ -145,7 +145,6 @@
             <Button x:Name="SettingsButton"
                     Height="37"
                     Margin="10,3"
-                    Click="SettingsButton_Click"
                     IsEnabled="True"
                     UseLayoutRounding="True">
                 <StackPanel Width="174"
@@ -154,7 +153,7 @@
                     <Image Width="24"
                            Height="21"
                            Margin="5"
-                           Source="Images/19gear.png" />
+                           Source="/Images/19gear.png" />
                     <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Настройки" />
                     </TextBlock>
                 </StackPanel>
@@ -163,7 +162,8 @@
         <ContentControl Name="Content"
                         Grid.Row="0"
                         Margin="200,0,0,25"
-                        VerticalAlignment="Stretch" />
+                        VerticalAlignment="Stretch"
+                        Content="{Binding ContentPanel}" />
     </Grid>
 
 </Window>

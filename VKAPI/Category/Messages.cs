@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VKAPI.Model.DialogsModel;
+using VKAPI.Model.MessagesModel;
 
 namespace VKAPI.Category
 {
@@ -46,17 +47,18 @@ namespace VKAPI.Category
             });
         }
 
-        public void Get()
+		public void GetChat(string chatId, string fields)
         {
             //используемый метод
-            Method = "messages.get";
+			Method = "messages.getChat";
 
             //добавляем параметры если есть
-            //var parameters = new Dictionary<string, object>
-            //{
-            //    {"count=", count}
-            //};
-            //AddParameters(parameters);
+			var parameters = new Dictionary<string, object>
+            {
+                {"chat_id=", chatId},
+                {"fields=", fields}
+            };
+            AddParameters(parameters);
             //получаем данные в json
             string str = GetData();
             //десериализуем
@@ -64,6 +66,26 @@ namespace VKAPI.Category
 
             //return dialogsModel;
         }
+
+		public MessagesModel GetHistory(int chatId, int count)
+		{
+			//используемый метод
+			Method = "messages.getHistory";
+
+			//добавляем параметры если есть
+			var parameters = new Dictionary<string, object>
+            {
+                {"chat_id=", chatId},
+                {"count=", count}
+            };
+			AddParameters(parameters);
+			//получаем данные в json
+			string str = GetData();
+			//десериализуем
+			MessagesModel messagesModel = JsonConvert.DeserializeObject<MessagesModel>(str);
+
+			return messagesModel;
+		}
   
     }
 }
