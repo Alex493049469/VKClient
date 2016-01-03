@@ -67,7 +67,7 @@ namespace VKAPI.Category
             //return dialogsModel;
         }
 
-		public MessagesModel GetHistory(int chatId, int count)
+		public MessagesModel GetHistoryChat(int IdChat, int count, int rev = 0)
 		{
 			//используемый метод
 			Method = "messages.getHistory";
@@ -75,8 +75,30 @@ namespace VKAPI.Category
 			//добавляем параметры если есть
 			var parameters = new Dictionary<string, object>
             {
-                {"chat_id=", chatId},
-                {"count=", count}
+                {"chat_id=", IdChat},
+                {"count=", count},
+                {"rev=", rev}
+            };
+			AddParameters(parameters);
+			//получаем данные в json
+			string str = GetData();
+			//десериализуем
+			MessagesModel messagesModel = JsonConvert.DeserializeObject<MessagesModel>(str);
+
+			return messagesModel;
+		}
+
+		public MessagesModel GetHistoryUser(int IdUser, int count, int rev = 0)
+		{
+			//используемый метод
+			Method = "messages.getHistory";
+
+			//добавляем параметры если есть
+			var parameters = new Dictionary<string, object>
+            {
+                {"user_id=", IdUser},
+                {"count=", count},
+                {"rev=", rev}
             };
 			AddParameters(parameters);
 			//получаем данные в json

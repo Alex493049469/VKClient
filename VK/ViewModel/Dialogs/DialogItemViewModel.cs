@@ -41,5 +41,6 @@ namespace VK.ViewModel.Dialogs
 		public int Out { get; set; }
 
 		public string LastMessageUserName { get; set; }
+		public int? ChatId { get; set; }
     }
 }

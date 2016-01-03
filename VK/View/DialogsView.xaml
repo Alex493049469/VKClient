@@ -6,6 +6,7 @@
              xmlns:converters="clr-namespace:VKAPI.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dataTemplates="clr-namespace:VK.ViewModel.Dialogs.DataTemplateSelector"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Background="White"
              d:DesignHeight="300"
@@ -262,13 +263,16 @@
 
     <Grid>
         <baseControl:LazyLoadListBox Margin="0,10,0,25"
-                                     IsLoading="{Binding Isloading,
-                                                         Mode=TwoWay,
-                                                         UpdateSourceTrigger=PropertyChanged}"
                                      ItemTemplateSelector="{StaticResource DialogDataTemplateSelector}"
-                                     ItemsSource="{Binding DialogItemsViewModel}"
+                                     ItemsSource="{Binding DialogItemsViewModel,
+                                                           IsAsync=True}"
                                      LoadCommand="{Binding LoadCommand}"
                                      SelectedItem="{Binding ItemSelected}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding OpenMessagesCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <baseControl:LazyLoadListBox.Style>
                 <Style TargetType="{x:Type baseControl:LazyLoadListBox}">
                     <Setter Property="IsLazyLoad" Value="True" />

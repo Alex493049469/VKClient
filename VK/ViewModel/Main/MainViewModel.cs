@@ -76,6 +76,8 @@ namespace VK.ViewModel.Main
 			if (_dialogsViewModel == null)
 			{
 				_dialogsViewModel = new DialogListViewModel();
+				var dialog = _dialogsViewModel as DialogListViewModel;
+				dialog._mainView = this;
 				_dialogsView.DataContext = _dialogsViewModel;
 			}
 			ContentPanel = _dialogsView;
@@ -94,9 +96,7 @@ namespace VK.ViewModel.Main
 
 		private void OpenSettings()
 		{
-			//для доступа к данным диалогов
-			VkApi _vk = new VkApi();
-			var qwe =_vk.Messages.GetHistory(130, 20);
+
 		}
 	}
 }

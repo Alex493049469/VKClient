@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Core.Command;
+using VK.View;
+using VK.ViewModel.Main;
+using VK.ViewModel.Messages;
 using VKAPI;
 using VKAPI.Category;
 using VKAPI.Model.DialogsModel;
@@ -15,14 +18,22 @@ namespace VK.ViewModel.Dialogs
 {
 	class DialogListViewModel : BaseViewModel
 	{
+		//не очень красивое решение но пока так
+		//ссылка на главную форму
+		public MainViewModel _mainView;
+
 		//индекс начала
 		private int _index = 0;
 		//размер страници
-		private int _count = 50;
+		private int _count = 25;
 		//модель данных диалогов
 		public DialogsModel _dialogModel;
 		//Общее количество диалогов
 		private int _countDialog = 0;
+
+		//Commands
+		public RelayCommand OpenMessagesCommand { get; private set; }
+		public RelayCommand LoadCommand { get; set; }
 
 		public int CountDialog
 		{
@@ -30,10 +41,9 @@ namespace VK.ViewModel.Dialogs
 			set { _countDialog = value; }
 			
 		}
+
 		//для доступа к данным диалогов
 		VkApi _vk = new VkApi();
-
-		public RelayCommand LoadCommand { get; set; }
 
 		//ViewModel Диалогов
 		private ObservableCollection<DialogItemViewModel> _dialogItemsViewModel;
@@ -51,17 +61,11 @@ namespace VK.ViewModel.Dialogs
 			}
 		}
 
-		private bool _isLoading = false;
-		public bool Isloading
-		{
-			set { _isLoading = value; RaisePropertyChanged(); }
-			get { return _isLoading; }
-		}
-
 		public DialogItemViewModel ItemSelected { get; set; }
 
 		public DialogListViewModel()
 		{
+			OpenMessagesCommand = new RelayCommand(OpenMessages);
 			LoadCommand = new RelayCommand(LoadDialogs);
 			LoadDialogs();
 		}
@@ -86,7 +90,8 @@ namespace VK.ViewModel.Dialogs
 					ChatActive = item.message.chat_active,
 					ReadState = item.message.read_state,
 					Date = item.message.date,
-					Out = item.message.@out
+					Out = item.message.@out,
+					ChatId = item.message.chat_id
 				};
 
 				itemsDialog.Add(itemDialog);
@@ -190,6 +195,24 @@ namespace VK.ViewModel.Dialogs
 			}
 			_index += _count;
 			
+		}
+
+		public void OpenMessages()
+		{
+			var messagesView = new MessagesView();
+			MessageListViewModel messageViewModel;
+			if (ItemSelected.ChatId == null)
+			{
+				messageViewModel = new MessageListViewModel(false, (int)ItemSelected.UserId);
+			}
+			else
+			{
+				messageViewModel = new MessageListViewModel(true, (int)ItemSelected.ChatId);
+			}
+
+			
+			messagesView.DataContext = messageViewModel;
+			_mainView.ContentPanel = messagesView;
 		}
 
 
