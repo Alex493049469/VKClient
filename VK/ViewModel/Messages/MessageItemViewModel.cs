@@ -20,8 +20,14 @@ namespace VK.ViewModel.Messages
 		public int ChatId { get; set; }
 		public List<FwdMessage> FwdMessages { get; set; }
 		public int? Emoji { get; set; }
-		public List<Attachment2> Attachments { get; set; }
+		public List<Attachment> Attachments { get; set; }
 		public string UserIdPhoto { get; set; }
 		public string UserName { get; set; }
+		public string GiftThumb_256 { get; set; }
+		public string LastMessageUserName { get; set; }
+		public string StickerPhoto_128 { get; set; }
+		public string Photo { get; set; }
+		public int PhotoWidth { get; set; }
+		public int PhotoHeight { get; set; }
 	}
 }

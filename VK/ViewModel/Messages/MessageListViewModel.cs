@@ -38,18 +38,19 @@ namespace VK.ViewModel.Messages
 			LoadMessage(isChat, id);
 		}
 
-		public async  void LoadMessage(bool isChat, int id)
+		public async void LoadMessage(bool isChat, int id)
 		{
 			MessagesModel _messageModel;
 			if (isChat)
 			{
-				_messageModel = _vk.Messages.GetHistoryChat(id, 20);
+				_messageModel = await _vk.Messages.GetHistoryChatAsync(id, 20);
 			}
 			else
 			{
-				_messageModel = _vk.Messages.GetHistoryUser(id, 20);
+				_messageModel = await _vk.Messages.GetHistoryUserAsync(id, 20);
 			}
 
+			_messageModel.response.items.Reverse();
 			ObservableCollection<MessageItemViewModel> itemsMessages = new ObservableCollection<MessageItemViewModel>();
 			foreach (var item in _messageModel.response.items)
 			{
@@ -65,12 +66,30 @@ namespace VK.ViewModel.Messages
 					Attachments = item.attachments,
 					Emoji = item.emoji,
 					FwdMessages = item.fwd_messages,
-					ReadState = item.read_state
+					ReadState = item.read_state,
 				};
+
+				if (item.attachments != null)
+				{
+					if (item.attachments[0].type == "gift")
+					{
+						itemMessage.GiftThumb_256 = item.attachments[0].gift.thumb_256;
+					}
+					if (item.attachments[0].type == "sticker")
+					{
+						itemMessage.StickerPhoto_128 = item.attachments[0].sticker.photo_128;
+					}
+					if (item.attachments[0].type == "photo")
+					{
+						itemMessage.Photo = item.attachments[0].photo.photo_604;
+						itemMessage.PhotoHeight = Convert.ToInt32(item.attachments[0].photo.height*0.7);
+						itemMessage.PhotoWidth = Convert.ToInt32(item.attachments[0].photo.width*0.7);
+					}
+				}
 
 				itemsMessages.Add(itemMessage);
 			}
-			itemsMessages.ToList().ForEach(MessageItemsViewModel.Add);
+			
 
 			//если несколько пользователей то берем их из ChatActive если 1 то userId
 			//собираем все их id 
@@ -100,7 +119,7 @@ namespace VK.ViewModel.Messages
 					UserIds += ","+ userId;
 				}
 			}
-			////получаем всю необходимую информацию о пользовалелях кто в диалогах 
+			//получаем всю необходимую информацию о пользовалелях кто в диалогах 
 			UsersModel users = await _vk.Users.GetPhotoAsync(UserIds);
 
 			foreach (var item in itemsMessages)
@@ -110,14 +129,20 @@ namespace VK.ViewModel.Messages
 					var userTemp = users.response.Find(i => i.id == item.UserId);
 					item.UserIdPhoto = userTemp.photo_100;
 					item.UserName = userTemp.first_name + " " + userTemp.last_name;
+					item.LastMessageUserName = userTemp.first_name + " отправил подарок ";
 				}
 				else
 				{
 					var userTemp = users.response.Find(i => i.id == item.FromId);
 					item.UserIdPhoto = userTemp.photo_100;
 					item.UserName = userTemp.first_name + " " + userTemp.last_name;
+					item.LastMessageUserName = userTemp.first_name + " отправил подарок ";
 				}
+
+				
 			}
+
+			itemsMessages.ToList().ForEach(MessageItemsViewModel.Add);
 
 		}
 

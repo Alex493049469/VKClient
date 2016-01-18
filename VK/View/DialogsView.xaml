@@ -5,7 +5,7 @@
              xmlns:chat="clr-namespace:VK.ViewModel.Dialogs"
              xmlns:converters="clr-namespace:VKAPI.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dataTemplates="clr-namespace:VK.ViewModel.Dialogs.DataTemplateSelector"
+             xmlns:dataTemplateSelectors="clr-namespace:VK.DataTemplateSelectors"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Background="White"
@@ -14,7 +14,8 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:DateConverter x:Key="DateConverter" x:Shared="false" />
-        <dataTemplates:DialogDataTemplateSelector x:Key="DialogDataTemplateSelector" />
+        <dataTemplateSelectors:DialogDataTemplateSelector x:Key="DialogDataTemplateSelector" />
+
         <DataTemplate x:Key="One" DataType="{x:Type chat:DialogItemViewModel}">
             <Border BorderBrush="#c9d9ed" BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
@@ -89,11 +90,20 @@
                                                    Rect="0,0,40,40" />
                             </Image.Clip>
                         </Image>
-                        <TextBlock Width="400"
-                                   Height="40"
-                                   MaxWidth="400"
-                                   Text="{Binding Body}"
-                                   TextWrapping="WrapWithOverflow" />
+                        <StackPanel HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <TextBlock Width="400"
+                                       Height="15"
+                                       FontWeight="Bold"
+                                       Text="{Binding LastMessageUserName}"
+                                       TextWrapping="WrapWithOverflow" />
+                            <TextBlock Width="400"
+                                       Height="25"
+                                       MaxWidth="400"
+                                       Text="{Binding Body}"
+                                       TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -139,10 +149,20 @@
                                                    Rect="0,0,40,40" />
                             </Image.Clip>
                         </Image>
-                        <TextBlock Width="400"
-                                   Height="50"
-                                   Text="{Binding Body}"
-                                   TextWrapping="WrapWithOverflow" />
+                        <StackPanel HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <TextBlock Width="400"
+                                       Height="15"
+                                       FontWeight="Bold"
+                                       Text="{Binding LastMessageUserName}"
+                                       TextWrapping="WrapWithOverflow" />
+                            <TextBlock Width="400"
+                                       Height="30"
+                                       MaxWidth="400"
+                                       Text="{Binding Body}"
+                                       TextWrapping="WrapWithOverflow" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -203,7 +223,7 @@
                                        Text="{Binding LastMessageUserName}"
                                        TextWrapping="WrapWithOverflow" />
                             <TextBlock Width="400"
-                                       Height="25"
+                                       Height="30"
                                        MaxWidth="400"
                                        Text="{Binding Body}"
                                        TextWrapping="WrapWithOverflow" />
@@ -212,7 +232,6 @@
                 </StackPanel>
             </Border>
         </DataTemplate>
-
         <DataTemplate x:Key="Group">
             <Border BorderBrush="#c9d9ed" BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
@@ -292,6 +311,7 @@
                     <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
                     <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
                     <Setter Property="VirtualizingPanel.CacheLength" Value="2.2" />
+                    <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type baseControl:LazyLoadListBox}">

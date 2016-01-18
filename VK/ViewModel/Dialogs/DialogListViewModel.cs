@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.VisualStyles;
 using Core;
 using Core.Command;
 using VK.View;
@@ -19,28 +20,22 @@ namespace VK.ViewModel.Dialogs
 	class DialogListViewModel : BaseViewModel
 	{
 		//не очень красивое решение но пока так
-		//ссылка на главную форму
+		//ссылка на главную viewModel
 		public MainViewModel _mainView;
 
 		//индекс начала
-		private int _index = 0;
-		//размер страници
+		private int _index;
+		//размер страницы
 		private int _count = 25;
 		//модель данных диалогов
 		public DialogsModel _dialogModel;
 		//Общее количество диалогов
-		private int _countDialog = 0;
 
 		//Commands
 		public RelayCommand OpenMessagesCommand { get; private set; }
 		public RelayCommand LoadCommand { get; set; }
 
-		public int CountDialog
-		{
-			get { return _countDialog; }
-			set { _countDialog = value; }
-			
-		}
+		public int CountDialog { get; set; }
 
 		//для доступа к данным диалогов
 		VkApi _vk = new VkApi();
@@ -65,6 +60,7 @@ namespace VK.ViewModel.Dialogs
 
 		public DialogListViewModel()
 		{
+			CountDialog = 0;
 			OpenMessagesCommand = new RelayCommand(OpenMessages);
 			LoadCommand = new RelayCommand(LoadDialogs);
 			LoadDialogs();
@@ -91,7 +87,8 @@ namespace VK.ViewModel.Dialogs
 					ReadState = item.message.read_state,
 					Date = item.message.date,
 					Out = item.message.@out,
-					ChatId = item.message.chat_id
+					ChatId = item.message.chat_id,
+					Attachment = item.message.attachments
 				};
 
 				itemsDialog.Add(itemDialog);
@@ -134,12 +131,46 @@ namespace VK.ViewModel.Dialogs
 					UserIds += "," + id;
 				}
 			}
+
 			//получаем всю необходимую информацию о пользовалелях кто в диалогах 
 			UsersModel users = await _vk.Users.GetPhotoAsync(UserIds);
 			UsersModel thisUser = await _vk.Users.GetAsync();
 			//здесь в зависимости от количества собеседников подгружаем фотки
 			foreach (var item in itemsDialog)
 			{
+				//проверка что в сообщении есть вложения
+				//определяем тип вложения и пишем его в сообщение
+				if (item.Attachment != null) // если ли вложения?
+				{
+					switch (item.Attachment[0].type)
+					{
+						case "photo":
+							item.Body = "Фотография";
+							break;
+						case "audio":
+							item.Body = "Аудиозапись";
+							break;
+						case "gift":
+							item.Body = "Подарок";
+							break;
+						case "wall":
+							item.Body = "Запись со стены";
+							break;
+						case "video":
+							item.Body = "Видеозапись";
+							break;
+						case "sticker":
+							item.Body = "Стикер";
+							break;
+						case "doc":
+							item.Body = "Документ";
+							break;
+						default:
+							item.Body = item.Attachment[0].type;
+							break;
+					}
+				}
+
 				if (item.ChatActive == null || item.UserCount == null)
 				{
 					var userTemp = users.response.Find(i => i.id == item.UserId);
@@ -176,7 +207,6 @@ namespace VK.ViewModel.Dialogs
 
 				if (item.ChatActive.Count >= 4)
 				{
-
 					item.UserOnePhoto = users.response.Find(i => i.id == item.ChatActive[0]).photo_100;
 					item.UserTwoPhoto = users.response.Find(i => i.id == item.ChatActive[1]).photo_100;
 					item.UserThreePhoto = users.response.Find(i => i.id == item.ChatActive[2]).photo_100;
@@ -210,7 +240,6 @@ namespace VK.ViewModel.Dialogs
 				messageViewModel = new MessageListViewModel(true, (int)ItemSelected.ChatId);
 			}
 
-			
 			messagesView.DataContext = messageViewModel;
 			_mainView.ContentPanel = messagesView;
 		}

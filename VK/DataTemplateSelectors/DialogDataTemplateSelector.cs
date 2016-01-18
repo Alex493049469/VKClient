@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using VK.ViewModel.Dialogs;
 
-namespace VK.ViewModel.Dialogs.DataTemplateSelector
+namespace VK.DataTemplateSelectors
 {
     class DialogDataTemplateSelector : System.Windows.Controls.DataTemplateSelector
     {

@@ -38,8 +38,17 @@ namespace VK.ViewModel.Main
 		public RelayCommand OpenFriendsCommand { get; private set; }
 
 		//Binding Property
-		public object ContentPanel { get; set; }
-		
+		private object objectContent;
+		public object ContentPanel
+		{
+			get { return objectContent; }
+			set
+			{
+				objectContent = value;
+				RaisePropertyChanged();
+			}
+		}
+
 		public MainViewModel()
 		{
 			OpenDialogsCommand = new RelayCommand(OpenDialogs);
@@ -81,6 +90,7 @@ namespace VK.ViewModel.Main
 				_dialogsView.DataContext = _dialogsViewModel;
 			}
 			ContentPanel = _dialogsView;
+			
 		}
 
 		private void OpenFriends()

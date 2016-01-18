@@ -143,6 +143,7 @@
                     <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
                     <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
                     <Setter Property="VirtualizingPanel.CacheLength" Value="2.2" />
+                    <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
 
 
                     <Style.Triggers>

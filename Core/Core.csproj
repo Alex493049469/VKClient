@@ -46,6 +46,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseControl\ListBoxBehavior\AutoScrollHandler.cs" />
+    <Compile Include="BaseControl\ListBoxBehavior\ListBoxBehavior.cs" />
     <Compile Include="BaseViewModel.cs" />
     <Compile Include="Command\AsyncDelegateCommand.cs" />
     <Compile Include="Command\DelegateCommand.cs" />

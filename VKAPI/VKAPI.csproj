@@ -49,10 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization\Auth.cs" />
+    <Compile Include="Handlers\ErrorHandlerRequest.cs" />
     <Compile Include="Model\ErrorModel\ErrorModel.cs" />
     <Compile Include="Model\MessagesModel\MessagesModel.cs" />
     <Compile Include="VkApi.cs" />
-    <Compile Include="VkBase.cs" />
+    <Compile Include="Handlers\VkRequest.cs" />
     <Compile Include="VkLongPool.cs" />
     <Compile Include="Model\AudioModel\AudioModel.cs" />
     <Compile Include="Model\DialogsModel\DialogsModel.cs" />
