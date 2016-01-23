@@ -5,7 +5,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+
 using VK.ViewModel.Dialogs;
 using VKAPI.Model.DialogsModel;
 
@@ -28,7 +28,7 @@ namespace VK.DataProvider
 			var fileContents = _cache[name] as ObservableCollection<DialogItemViewModel>;
 			//JsonConvert.DeserializeObject<ObjectCache>(str);
 
-			var qwe = JsonConvert.SerializeObject(fileContents);
+			//var qwe = JsonConvert.SerializeObject(fileContents);
 			//if (fileContents == null)
 			//{
 			//	CacheItemPolicy policy = new CacheItemPolicy();
