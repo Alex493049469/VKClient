@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="VK.View.MainMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+    <StackPanel Width="200"
+                HorizontalAlignment="Left"
+                Background="White">
+        <Button x:Name="MyPageButton"
+                Margin="10,3"
+                Command="{Binding OpenPageCommand}">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="24"
+                       Height="21"
+                       Margin="5"
+                       Source="/Images/53house.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Моя страница" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="MyFriendsButton"
+                Height="37"
+                Margin="10,3"
+                Command="{Binding OpenFriendsCommand}">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="24"
+                       Height="21"
+                       Margin="5"
+                       Source="/Images/111user.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Друзья" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="MyPhotoButton"
+                Height="37"
+                Margin="10,3"
+                IsEnabled="False">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="24"
+                       Height="21"
+                       Margin="5"
+                       Source="/Images/121landscape.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Фотографии" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="MyVideoButton"
+                Height="37"
+                Margin="10,3"
+                IsEnabled="False">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="26"
+                       Height="23"
+                       Margin="5"
+                       Source="/Images/videos2.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Видеозаписи" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="MyMessageButton"
+                Height="37"
+                Margin="10,3"
+                Command="{Binding OpenDialogsCommand}">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="24"
+                       Height="21"
+                       Margin="5"
+                       Source="/Images/18envelope.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Сообщения" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="AudioButton"
+                Height="37"
+                Margin="10,3"
+                Command="{Binding OpenAudioCommand}">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="24"
+                       Height="21"
+                       Margin="5"
+                       Source="/Images/194note2.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Аудиозаписи" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="GroupButton"
+                Height="37"
+                Margin="10,3"
+                IsEnabled="False">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="24"
+                       Height="21"
+                       Margin="5"
+                       Source="/Images/112group.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Группы" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <Button x:Name="SettingsButton"
+                Height="37"
+                Margin="10,3"
+                IsEnabled="True"
+                UseLayoutRounding="True">
+            <StackPanel Width="174"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Image Width="24"
+                       Height="21"
+                       Margin="5"
+                       Source="/Images/19gear.png" />
+                <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Настройки" />
+                </TextBlock>
+            </StackPanel>
+        </Button>
+
+    </StackPanel>
+</UserControl>

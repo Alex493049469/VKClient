@@ -21,7 +21,7 @@ namespace VK.ViewModel.Dialogs
 	{
 		//не очень красивое решение но пока так
 		//ссылка на главную viewModel
-		public MainViewModel _mainView;
+		public MainViewModel _content;
 
 		//индекс начала
 		private int _index;
@@ -70,6 +70,8 @@ namespace VK.ViewModel.Dialogs
 		{
 			if (DialogItemsViewModel != null && DialogItemsViewModel.Count == CountDialog) return;
 			_dialogModel = await _vk.Messages.GetDialogsAsync(_count, _index);
+
+			
 
 			ObservableCollection<DialogItemViewModel> itemsDialog = new ObservableCollection<DialogItemViewModel>();
 			foreach (var item in _dialogModel.response.items)
@@ -224,7 +226,7 @@ namespace VK.ViewModel.Dialogs
 				itemsDialog.ToList().ForEach(DialogItemsViewModel.Add);
 			}
 			_index += _count;
-			
+
 		}
 
 		public void OpenMessages()
@@ -241,7 +243,7 @@ namespace VK.ViewModel.Dialogs
 			}
 
 			messagesView.DataContext = messageViewModel;
-			_mainView.ContentPanel = messagesView;
+			_content.ContentPanel= messagesView;
 		}
 
 

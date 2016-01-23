@@ -1,112 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using Core;
-using Core.Command;
-using VK.Properties;
-using VK.View;
-using VK.ViewModel.Audios;
-using VK.ViewModel.Dialogs;
-using VK.ViewModel.Friends;
-using VK.ViewModel.Page;
-using VKAPI;
+﻿using Core;
+using VK.ViewModel.AuthorizedUser;
+using VK.ViewModel.MainMenu;
 
 namespace VK.ViewModel.Main
 {
 	class MainViewModel : BaseViewModel
 	{
 		//View models
-		private BaseViewModel _audiosViewModel;
-		private BaseViewModel _friendsViewModel;
-		private BaseViewModel _pageViewModel;
-		private BaseViewModel _dialogsViewModel;
-
-		//Views
-		private UserControl _audiosView;
-		private UserControl _friendsView;
-		private UserControl _pageView;
-		private UserControl _dialogsView;
-
-		//Commands
-		public RelayCommand OpenDialogsCommand { get; private set; }
-		public RelayCommand OpenAudioCommand { get; private set; }
-		public RelayCommand OpenPageCommand { get; private set; }
-		public RelayCommand OpenFriendsCommand { get; private set; }
+		private BaseViewModel _authorizedUserViewModel;
+		private BaseViewModel _mainMenuViewModel;
 
 		//Binding Property
-		private object objectContent;
+		private object _objectContent;
 		public object ContentPanel
 		{
-			get { return objectContent; }
+			get { return _objectContent; }
 			set
 			{
-				objectContent = value;
+				_objectContent = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public BaseViewModel AuthorizedUserViewModel
+		{
+			get { return _authorizedUserViewModel; }
+			set
+			{
+				_authorizedUserViewModel = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public BaseViewModel MainMenuViewModel
+		{
+			get { return _mainMenuViewModel; }
+			set
+			{
+				_mainMenuViewModel = value;
 				RaisePropertyChanged();
 			}
 		}
 
 		public MainViewModel()
 		{
-			OpenDialogsCommand = new RelayCommand(OpenDialogs);
-			OpenAudioCommand = new RelayCommand(OpenAudios);
-			OpenPageCommand = new RelayCommand(OpenMyPage);
-			OpenFriendsCommand = new RelayCommand(OpenFriends);
+			MainMenuViewModel = new MainMenuViewModel(this);
+			AuthorizedUserViewModel = new AuthorizedUserViewModel();
 		}
 
-		private void OpenAudios()
-		{
-			if (_audiosView == null) _audiosView = new AudioView();
-			if (_audiosViewModel == null)
-			{
-				_audiosViewModel = new AudioListViewModel();
-				_audiosView.DataContext = _audiosViewModel;
-			}
-			ContentPanel = _audiosView;
-		}
-
-		private void OpenMyPage()
-		{
-			if (_pageView == null) _pageView = new PageView();
-			if (_pageViewModel == null)
-			{
-				_pageViewModel = new PageViewModel();
-				_pageView.DataContext = _pageViewModel;
-			}
-			ContentPanel = _pageView;
-		}
-
-		private void OpenDialogs()
-		{
-			if (_dialogsView == null) _dialogsView = new DialogsView();
-			if (_dialogsViewModel == null)
-			{
-				_dialogsViewModel = new DialogListViewModel();
-				var dialog = _dialogsViewModel as DialogListViewModel;
-				dialog._mainView = this;
-				_dialogsView.DataContext = _dialogsViewModel;
-			}
-			ContentPanel = _dialogsView;
-			
-		}
-
-		private void OpenFriends()
-		{
-			if (_friendsView == null) _friendsView = new FriendsView();
-			if (_friendsViewModel == null)
-			{
-				_friendsViewModel = new FriendsListViewModel();
-				_friendsView.DataContext = _friendsViewModel;
-			}
-			ContentPanel = _friendsView;
-		}
-
-		private void OpenSettings()
-		{
-
-		}
 	}
 }

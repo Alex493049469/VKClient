@@ -269,7 +269,7 @@
                                        Text="{Binding LastMessageUserName}"
                                        TextWrapping="WrapWithOverflow" />
                             <TextBlock Width="400"
-                                       Height="25"
+                                       Height="30"
                                        MaxWidth="400"
                                        Text="{Binding Body}"
                                        TextWrapping="WrapWithOverflow" />

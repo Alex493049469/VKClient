@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using VKAPI.Authorization;
 using VKAPI.Category;
 
 namespace VKAPI
@@ -15,16 +14,14 @@ namespace VKAPI
 	{
 		public VkApi()
 		{
-			Auth = new Auth();
-
 			Audio = new Audio();
 			Friends = new Friends();
 			Messages = new Messages();
 			Users = new Users();
+			Account = new Account();
 		}
 
-		public Auth Auth { get; set; }
-
+		public Account Account { get; set; }
 		public Audio Audio { get; private set; }
 		public Friends Friends{ get; private set; }
 		public Messages Messages{ get; private set; }

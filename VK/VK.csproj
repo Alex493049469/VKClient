@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>a264e01e</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>5f932d4a</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,8 +44,13 @@
       <HintPath>..\packages\NAudio.1.7.3\lib\net35\NAudio.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
@@ -65,7 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataProvider\DataProvider.cs" />
     <Compile Include="DataTemplateSelectors\MessageDataTemplateSelector.cs" />
+    <Compile Include="Services\VkNotifiedService.cs" />
     <Compile Include="ViewModel\Audios\AudioPlayer.cs" />
     <Compile Include="AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
@@ -79,10 +86,12 @@
     <Compile Include="ViewModel\Audios\AudioItemViewModel.cs" />
     <Compile Include="ViewModel\Audios\AudioListViewModel.cs" />
     <Compile Include="DataTemplateSelectors\DialogDataTemplateSelector.cs" />
+    <Compile Include="ViewModel\AuthorizedUser\AuthorizedUserViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\DialogListViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\DialogItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendsListViewModel.cs" />
+    <Compile Include="ViewModel\MainMenu\MainMenuViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
     <Compile Include="ViewModel\Messages\MessageItemViewModel.cs" />
     <Compile Include="ViewModel\Messages\MessageListViewModel.cs" />
@@ -90,11 +99,17 @@
     <Compile Include="View\AudioView.xaml.cs">
       <DependentUpon>AudioView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AuthorizedUserView.xaml.cs">
+      <DependentUpon>AuthorizedUserView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogsView.xaml.cs">
       <DependentUpon>DialogsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FriendsView.xaml.cs">
       <DependentUpon>FriendsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainMenuView.xaml.cs">
+      <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MessagesView.xaml.cs">
       <DependentUpon>MessagesView.xaml</DependentUpon>
@@ -107,6 +122,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="IconApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AuthorizedUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -250,9 +273,7 @@
   <ItemGroup>
     <Resource Include="maly2.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -260,7 +281,9 @@
       <ErrorText>Данный проект ссылается на пакеты NuGet, отсутствующие на этом компьютере. Включите восстановление пакетов NuGet, чтобы загрузить их. Дополнительные сведения см. по адресу: http://go.microsoft.com/fwlink/?LinkID=322105. Отсутствует следующий файл: {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets'))" />
   </Target>
+  <Import Project="..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets" Condition="Exists('..\packages\KindOfMagic.1.2.6\build\KindOfMagic.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

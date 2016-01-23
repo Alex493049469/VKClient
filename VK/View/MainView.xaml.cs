@@ -1,19 +1,9 @@
-﻿using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using Core;
+﻿using System.Windows;
 using VK.Properties;
-using VK.View;
-using VK.ViewModel.Audios;
-using VK.ViewModel.Dialogs;
-using VK.ViewModel.Friends;
 using VK.ViewModel.Main;
-using VK.ViewModel.Page;
 using VKAPI;
 
-
-namespace VK
+namespace VK.View
 {
 	public partial class MainWindow : Window
 	{

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using VKAPI.Handlers;
 using VKAPI.Model.DialogsModel;
 using VKAPI.Model.ErrorModel;
+using VKAPI.Model.LongPullModel;
 using VKAPI.Model.MessagesModel;
 
 namespace VKAPI.Category
@@ -134,6 +135,33 @@ namespace VKAPI.Category
 				return messageModel;
 			});
 		}
-  
+
+		public LongPullModel GetLongPollServer(bool useSsl = false, bool needPts = false)
+		{
+			VkRequest.Method = "messages.getLongPollServer";
+
+			//добавляем параметры если есть
+			var parameters = new Dictionary<string, object>
+			{
+				{"use_ssl=", useSsl},
+				{"need_pts=", needPts}
+			};
+
+			VkRequest.AddParameters(parameters);
+			//получаем данные в json
+			string str = VkRequest.GetData();
+			LongPullModel longPullModel = JsonConvert.DeserializeObject<LongPullModel>(str);
+			return longPullModel;
+		}
+
+		public Task<LongPullModel> GetLongPollServerAsync(bool useSsl = false, bool needPts = false)
+		{
+			return Task.Run(() =>
+			{
+				LongPullModel messageModel = GetLongPollServer(useSsl, needPts);
+				return messageModel;
+			});
+		}
+
 	}
 }
