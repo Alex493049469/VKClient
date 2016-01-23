@@ -167,13 +167,7 @@
                 SelectionEnd="0"
                 SelectionStart="0"
                 Value="{Binding AudioPlayer.SliderPosition,
-                                Mode=TwoWay}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="ValueChanged">
-                    <i:InvokeCommandAction Command="{Binding AudioPositionChainged}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Slider>
+                                Mode=TwoWay}" />
         <Slider x:Name="Volime"
                 Width="60"
                 Height="26"
