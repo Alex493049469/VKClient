@@ -24,8 +24,6 @@ namespace VK.View
 			{
 				VkSettings.Token = Settings.Default.token;
 			}
-
-			DataContext = new MainViewModel();
 		}
 
 	}

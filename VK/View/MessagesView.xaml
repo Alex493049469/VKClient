@@ -2,11 +2,11 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:chat="clr-namespace:VK.ViewModel.Messages"
-             xmlns:converters="clr-namespace:VKAPI.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dataTemplateSelectors="clr-namespace:VK.DataTemplateSelectors"
              xmlns:listBoxBehavior="clr-namespace:Core.BaseControl.ListBoxBehavior;assembly=Core"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters1="clr-namespace:VK.Converters"
              MinWidth="450"
              MinHeight="500"
              Background="White"
@@ -15,7 +15,7 @@
              mc:Ignorable="d">
     <UserControl.Resources>
 
-        <converters:TimeConverter x:Key="TimeConverter" x:Shared="false" />
+        <converters1:TimeConverter x:Key="TimeConverter" x:Shared="false" />
         <dataTemplateSelectors:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector" />
 
         <DataTemplate x:Key="MessagesTemplate" DataType="{x:Type chat:MessageItemViewModel}">

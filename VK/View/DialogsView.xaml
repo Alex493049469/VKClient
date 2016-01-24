@@ -3,17 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:baseControl="clr-namespace:Core.BaseControl;assembly=Core"
              xmlns:chat="clr-namespace:VK.ViewModel.Dialogs"
-             xmlns:converters="clr-namespace:VKAPI.Converters"
+             xmlns:converters1="clr-namespace:VK.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dataTemplateSelectors="clr-namespace:VK.DataTemplateSelectors"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Background="White"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             DataContext="{Binding Dialog,
+                                   Source={StaticResource Locator}}"
+             d:DesignHeight="387"
+             d:DesignWidth="597"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:DateConverter x:Key="DateConverter" x:Shared="false" />
+        <converters1:DateConverter x:Key="DateConverter" x:Shared="false" />
+        <converters1:CountUsersConverter x:Key="CountUsersConverter" x:Shared="false" />
         <dataTemplateSelectors:DialogDataTemplateSelector x:Key="DialogDataTemplateSelector" />
 
         <DataTemplate x:Key="One" DataType="{x:Type chat:DialogItemViewModel}">
@@ -74,7 +77,8 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                         <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                        <TextBlock Text="{Binding UserCount}" />
+                        <TextBlock Text="{Binding UserCount, Converter={StaticResource CountUsersConverter}}" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" />
                     </StackPanel>
                     <StackPanel Margin="10,0,0,0"
                                 HorizontalAlignment="Right"
@@ -134,7 +138,8 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                         <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                        <TextBlock Text="{Binding UserCount}" />
+                        <TextBlock Text="{Binding UserCount, Converter={StaticResource CountUsersConverter}}" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" />
                     </StackPanel>
                     <StackPanel Margin="20,0,0,0"
                                 HorizontalAlignment="Center"
@@ -198,7 +203,8 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                         <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                        <TextBlock Text="{Binding UserCount}" />
+                        <TextBlock Text="{Binding UserCount, Converter={StaticResource CountUsersConverter}}" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" />
                     </StackPanel>
                     <StackPanel Margin="10,0,0,0"
                                 HorizontalAlignment="Center"
@@ -244,7 +250,8 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                         <TextBlock FontWeight="Bold" Text="{Binding Title}" />
-                        <TextBlock Text="{Binding UserCount}" />
+                        <TextBlock Text="{Binding UserCount, Converter={StaticResource CountUsersConverter}}" />
+                        <TextBlock Text="{Binding Date, Converter={StaticResource DateConverter}}" />
                     </StackPanel>
                     <StackPanel Margin="10,0,0,0"
                                 HorizontalAlignment="Center"

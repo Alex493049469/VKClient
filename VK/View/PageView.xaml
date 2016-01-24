@@ -4,6 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Background="White"
+             DataContext="{Binding Page,
+                                   Source={StaticResource Locator}}"
              d:DesignHeight="500"
              d:DesignWidth="600"
              mc:Ignorable="d">

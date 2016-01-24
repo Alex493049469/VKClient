@@ -5,7 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Width="181"
              Height="115"
-             Background="AliceBlue"
+             Background="#FFeeeeee"
+             DataContext="{Binding AuthorizeUser,
+                                   Source={StaticResource Locator}}"
              mc:Ignorable="d">
     <Grid Margin="0,0,96,33">
 

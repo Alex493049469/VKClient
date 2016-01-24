@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms.VisualStyles;
 using Core;
 using Core.Command;
 using VK.View;
-using VK.ViewModel.Main;
 using VK.ViewModel.Messages;
 using VKAPI;
-using VKAPI.Category;
 using VKAPI.Model.DialogsModel;
 using VKAPI.Model.UsersModel;
 
 namespace VK.ViewModel.Dialogs
 {
-	class DialogListViewModel : BaseViewModel
+	public class DialogListViewModel : BaseViewModel
 	{
-		//не очень красивое решение но пока так
-		//ссылка на главную viewModel
-		public MainViewModel _content;
-
 		//индекс начала
 		private int _index;
 		//размер страницы
@@ -243,7 +233,8 @@ namespace VK.ViewModel.Dialogs
 			}
 
 			messagesView.DataContext = messageViewModel;
-			_content.ContentPanel= messagesView;
+			ViewModelLocator.Main.ContentPanel = messagesView;
+
 		}
 
 

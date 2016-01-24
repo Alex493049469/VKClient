@@ -9,6 +9,8 @@
         Width="944"
         Height="624"
         AllowsTransparency="True"
+        DataContext="{Binding Main,
+                              Source={StaticResource Locator}}"
         Icon="/Images/VkIconBlack.png"
         Style="{StaticResource VS2012WindowStyle}"
         WindowStartupLocation="CenterScreen"
@@ -28,9 +30,8 @@
                     Background="White">
             <view:AuthorizedUserView Width="Auto"
                                      Height="116"
-                                     Margin="5"
-                                     DataContext="{Binding AuthorizedUserViewModel}" />
-            <view:MainMenuView DataContext="{Binding MainMenuViewModel}" />
+                                     Margin="5" />
+            <view:MainMenuView />
         </StackPanel>
         <ContentControl x:Name="Content"
                         Grid.Row="0"

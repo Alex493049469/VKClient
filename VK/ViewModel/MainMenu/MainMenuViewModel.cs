@@ -2,23 +2,13 @@
 using Core;
 using Core.Command;
 using VK.View;
-using VK.ViewModel.Audios;
-using VK.ViewModel.Dialogs;
-using VK.ViewModel.Friends;
 using VK.ViewModel.Main;
-using VK.ViewModel.Page;
 
 namespace VK.ViewModel.MainMenu
 {
-	class MainMenuViewModel : BaseViewModel
+	public class MainMenuViewModel : BaseViewModel
 	{
 		private MainViewModel _content;
-
-		//View models
-		private BaseViewModel _audiosViewModel;
-		private BaseViewModel _friendsViewModel;
-		private BaseViewModel _pageViewModel;
-		private BaseViewModel _dialogsViewModel;
 
 		//Views
 		private UserControl _audiosView;
@@ -45,46 +35,24 @@ namespace VK.ViewModel.MainMenu
 		private void OpenAudios()
 		{
 			if (_audiosView == null) _audiosView = new AudioView();
-			if (_audiosViewModel == null)
-			{
-				_audiosViewModel = new AudioListViewModel();
-				_audiosView.DataContext = _audiosViewModel;
-			}
 			_content.ContentPanel = _audiosView;
 		}
 
 		private void OpenMyPage()
 		{
 			if (_pageView == null) _pageView = new PageView();
-			if (_pageViewModel == null)
-			{
-				_pageViewModel = new PageViewModel();
-				_pageView.DataContext = _pageViewModel;
-			}
 			_content.ContentPanel = _pageView;
 		}
 
 		private void OpenDialogs()
 		{
 			if (_dialogsView == null) _dialogsView = new DialogsView();
-			if (_dialogsViewModel == null)
-			{
-				_dialogsViewModel = new DialogListViewModel();
-				var dialog = _dialogsViewModel as DialogListViewModel;
-				dialog._content = _content;
-				_dialogsView.DataContext = _dialogsViewModel;
-			}
 			_content.ContentPanel = _dialogsView;
 		}
 
 		private void OpenFriends()
 		{
 			if (_friendsView == null) _friendsView = new FriendsView();
-			if (_friendsViewModel == null)
-			{
-				_friendsViewModel = new FriendsListViewModel();
-				_friendsView.DataContext = _friendsViewModel;
-			}
 			_content.ContentPanel = _friendsView;
 		}
 	}

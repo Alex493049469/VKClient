@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Media.Imaging;
 using Core;
 using VKAPI.Model.FriendsModel;
 
 namespace VK.ViewModel.Friends
 {
-    class FriendItemViewModel : BaseViewModel
+   public class FriendItemViewModel : BaseViewModel
     {
         private Item _item;
         public Item Item

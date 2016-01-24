@@ -1,18 +1,18 @@
 ﻿<UserControl x:Class="VK.View.FriendsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters1="clr-namespace:VKAPI.Converters"
+             xmlns:converters="clr-namespace:VK.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:friends="clr-namespace:VK.ViewModel.Friends"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModel="clr-namespace:VK.ViewModel"
              Background="White"
+             DataContext="{Binding FriendsList,
+                                   Source={StaticResource Locator}}"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
 
-        <converters1:OnlineConverter x:Key="onlineConverter" x:Shared="false" />
+        <converters:OnlineConverter x:Key="onlineConverter" x:Shared="false" />
 
         <DataTemplate x:Key="Myfriends">
             <Grid Margin="0">

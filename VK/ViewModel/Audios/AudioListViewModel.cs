@@ -19,7 +19,7 @@ using VKAPI.Model.AudioModel;
 
 namespace VK.ViewModel.Audios
 {
-    class AudioListViewModel : BaseViewModel
+    public class AudioListViewModel : BaseViewModel
     {
         //Модель данных аудиозаписей
         private AudioModel _audioModel;

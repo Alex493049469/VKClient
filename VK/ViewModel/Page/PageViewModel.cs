@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
-using VK.ViewModel.Friends;
-using VKAPI;
+﻿using Core;
 using VKAPI.Category;
 using VKAPI.Model.UsersModel;
 
 namespace VK.ViewModel.Page
 {
-    class PageViewModel : BaseViewModel
+    public class PageViewModel : BaseViewModel
     {
         //модель данных
         public UsersModel UserModel;
