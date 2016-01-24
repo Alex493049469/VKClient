@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace VKAPI.Converters
+namespace VK.Converters
 {
     public class FamilyStatusConverter : IValueConverter
     {
