@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
+using Core.Command;
 using VK.ViewModel.Dialogs;
 using VKAPI;
 using VKAPI.Model.MessagesModel;
@@ -16,6 +17,11 @@ namespace VK.ViewModel.Messages
 	{
 		//для доступа к данным диалогов
 		VkApi _vk = new VkApi();
+
+		//индекс начала
+		private int _index;
+		//размер страницы
+		private int _count = 25;
 
 		//Properties
 		private ObservableCollection<MessageItemViewModel> _messageItemsViewModel = new ObservableCollection<MessageItemViewModel>();
@@ -33,21 +39,26 @@ namespace VK.ViewModel.Messages
 			}
 		}
 
+		private bool _isChat;
+		private int _id;
+
 		public MessageListViewModel(bool isChat, int id)
 		{
-			LoadMessage(isChat, id);
+			_isChat = isChat;
+			_id = id;
+			LoadMessage();
 		}
 
-		public async void LoadMessage(bool isChat, int id)
+		public async void LoadMessage()
 		{
 			MessagesModel _messageModel;
-			if (isChat)
+			if (_isChat)
 			{
-				_messageModel = await _vk.Messages.GetHistoryChatAsync(id, 20);
+				_messageModel = await _vk.Messages.GetHistoryChatAsync(_id, _count, _index);
 			}
 			else
 			{
-				_messageModel = await _vk.Messages.GetHistoryUserAsync(id, 20);
+				_messageModel = await _vk.Messages.GetHistoryUserAsync(_id, _count, _index);
 			}
 
 			_messageModel.response.items.Reverse();
@@ -143,7 +154,7 @@ namespace VK.ViewModel.Messages
 			}
 
 			itemsMessages.ToList().ForEach(MessageItemsViewModel.Add);
-
+			_index += _count;
 		}
 
 

@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="VK.View.MessagesView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:baseControl="clr-namespace:Core.BaseControl;assembly=Core"
              xmlns:chat="clr-namespace:VK.ViewModel.Messages"
+             xmlns:converters1="clr-namespace:VK.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dataTemplateSelectors="clr-namespace:VK.DataTemplateSelectors"
              xmlns:listBoxBehavior="clr-namespace:Core.BaseControl.ListBoxBehavior;assembly=Core"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converters1="clr-namespace:VK.Converters"
              MinWidth="450"
              MinHeight="500"
              Background="White"
@@ -136,15 +137,16 @@
 
     </UserControl.Resources>
     <Grid Background="White">
-        <ListBox Name="ListMessages"
-                 Margin="10,10,10,67"
-                 ItemTemplateSelector="{StaticResource MessageDataTemplateSelector}"
-                 ItemsSource="{Binding MessageItemsViewModel,
-                                       IsAsync=True}"
-                 SelectedItem="{Binding ItemSelected}"
-                 listBoxBehavior:ListBoxBehavior.AutoScroll="True">
-            <ListBox.Style>
-                <Style TargetType="{x:Type ListBox}">
+        <baseControl:LazyLoadListBox Name="ListMessages"
+                                     Margin="10,10,10,67"
+                                     ItemTemplateSelector="{StaticResource MessageDataTemplateSelector}"
+                                     ItemsSource="{Binding MessageItemsViewModel,
+                                                           IsAsync=True}"
+                                     LoadCommand="{Binding LoadCommand}"
+                                     SelectedItem="{Binding ItemSelected}"
+                                     listBoxBehavior:ListBoxBehavior.AutoScroll="True">
+            <baseControl:LazyLoadListBox.Style>
+                <Style TargetType="{x:Type baseControl:LazyLoadListBox}">
                     <Setter Property="Background" Value="{DynamicResource TextBox_fill_}" />
                     <Setter Property="BorderBrush" Value="{StaticResource CheckBox_stroke_color_}" />
                     <Setter Property="BorderThickness" Value="1" />
@@ -185,8 +187,8 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-            </ListBox.Style>
-        </ListBox>
+            </baseControl:LazyLoadListBox.Style>
+        </baseControl:LazyLoadListBox>
         <RichTextBox Height="52"
                      Margin="10,0,11,10"
                      VerticalAlignment="Bottom">

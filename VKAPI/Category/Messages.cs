@@ -76,7 +76,7 @@ namespace VKAPI.Category
 			//return dialogsModel;
 		}
 
-		public MessagesModel GetHistoryChat(int IdChat, int count, int rev = 0)
+		public MessagesModel GetHistoryChat(int IdChat, int count, int offset, int rev = 0)
 		{
 			//используемый метод
 			VkRequest.Method = "messages.getHistory";
@@ -86,7 +86,8 @@ namespace VKAPI.Category
 			{
 				{"chat_id=", IdChat},
 				{"count=", count},
-				{"rev=", rev}
+				{"rev=", rev},
+				{"offset=", offset}
 			};
 			VkRequest.AddParameters(parameters);
 			//получаем данные в json
@@ -97,16 +98,16 @@ namespace VKAPI.Category
 			return messagesModel;
 		}
 
-		public Task<MessagesModel> GetHistoryChatAsync(int IdChat, int count, int rev = 0)
+		public Task<MessagesModel> GetHistoryChatAsync(int IdChat, int count, int offset, int rev = 0)
 		{
 			return Task.Run(() =>
 			{
-				MessagesModel messageModel = GetHistoryChat(IdChat, count, rev);
+				MessagesModel messageModel = GetHistoryChat(IdChat, count, offset, rev);
 				return messageModel;
 			});
 		}
 
-		public MessagesModel GetHistoryUser(int IdUser, int count, int rev = 0)
+		public MessagesModel GetHistoryUser(int IdUser, int count, int offset, int rev = 0)
 		{
 			//используемый метод
 			VkRequest.Method = "messages.getHistory";
@@ -116,7 +117,8 @@ namespace VKAPI.Category
 			{
 				{"user_id=", IdUser},
 				{"count=", count},
-				{"rev=", rev}
+				{"rev=", rev},
+				{"offset=", offset}
 			};
 			VkRequest.AddParameters(parameters);
 			//получаем данные в json
@@ -127,11 +129,11 @@ namespace VKAPI.Category
 			return messagesModel;
 		}
 
-		public Task<MessagesModel> GetHistoryUserAsync(int IdUser, int count, int rev = 0)
+		public Task<MessagesModel> GetHistoryUserAsync(int IdUser, int count, int offset, int rev = 0)
 		{
 			return Task.Run(() =>
 			{
-				MessagesModel messageModel = GetHistoryUser(IdUser, count, rev);
+				MessagesModel messageModel = GetHistoryUser(IdUser, count, offset, rev);
 				return messageModel;
 			});
 		}

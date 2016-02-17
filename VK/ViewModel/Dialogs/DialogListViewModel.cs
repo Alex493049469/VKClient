@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Core;
 using Core.Command;
+using VK.Services;
 using VK.View;
 using VK.ViewModel.Messages;
 using VKAPI;
@@ -30,6 +31,9 @@ namespace VK.ViewModel.Dialogs
 		//для доступа к данным диалогов
 		VkApi _vk = new VkApi();
 
+		//сервис вызывающий обновления данных
+		VkNotifiedService notified = new VkNotifiedService();
+
 		//ViewModel Диалогов
 		private ObservableCollection<DialogItemViewModel> _dialogItemsViewModel;
 		public ObservableCollection<DialogItemViewModel> DialogItemsViewModel
@@ -54,6 +58,9 @@ namespace VK.ViewModel.Dialogs
 			OpenMessagesCommand = new RelayCommand(OpenMessages);
 			LoadCommand = new RelayCommand(LoadDialogs);
 			LoadDialogs();
+
+			//notified.LongPool();
+		
 		}
 
 		public async void LoadDialogs()
@@ -61,7 +68,6 @@ namespace VK.ViewModel.Dialogs
 			if (DialogItemsViewModel != null && DialogItemsViewModel.Count == CountDialog) return;
 			_dialogModel = await _vk.Messages.GetDialogsAsync(_count, _index);
 
-			
 
 			ObservableCollection<DialogItemViewModel> itemsDialog = new ObservableCollection<DialogItemViewModel>();
 			foreach (var item in _dialogModel.response.items)

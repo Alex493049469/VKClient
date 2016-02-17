@@ -5,12 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Core;
+using Newtonsoft.Json;
 using VKAPI;
 using VKAPI.Model.LongPullModel;
 
 namespace VK.Services
 {
-	public class VkNotifiedService
+	public class VkNotifiedService : Singleton<VkNotifiedService>
 	{
 		private VkApi _vk = new VkApi();
 
@@ -20,34 +22,34 @@ namespace VK.Services
 
 		public VkNotifiedService()
 		{
-			//LongPool();
+		//	LongPool();
 		}
 
-		//public async void LongPool(Updates updates = null)
-		//{
-		//	if (updates == null)
-		//	{
-		//		var longPull = await _vk.Messages.GetLongPollServerAsync();
-		//		Server = longPull.response.server;
-		//		Ts = longPull.response.ts;
-		//		Key = longPull.response.key;
-		//	}
-		//	else
-		//	{
-		//		Ts = updates.ts;
-		//	}
-			
-		//	var reqGet = WebRequest.Create(@"http://" +Server + "?act=a_check&key=" + Key + "&ts=" + Ts + "&wait=25&mode=2");
-		//	var resp = await reqGet.GetResponseAsync();
-		//	var stream = resp.GetResponseStream();
+		public async void LongPool(Updates updates = null)
+		{
+			if (updates == null)
+			{
+				var longPull = await _vk.Messages.GetLongPollServerAsync();
+				Server = longPull.response.server;
+				Ts = longPull.response.ts;
+				Key = longPull.response.key;
+			}
+			else
+			{
+				Ts = updates.ts;
+			}
 
-		//	var sr = new StreamReader(stream);
-		//	var str = sr.ReadToEnd();
+			var reqGet = WebRequest.Create(@"http://" + Server + "?act=a_check&key=" + Key + "&ts=" + Ts + "&wait=25&mode=2");
+			var resp = await reqGet.GetResponseAsync();
+			var stream = resp.GetResponseStream();
 
-		//	//var updateModel = JsonConvert.DeserializeObject<Updates>(str);
+			var sr = new StreamReader(stream);
+			var str = sr.ReadToEnd();
 
-		//	LongPool(updateModel);
-		//}
+			var updateModel = JsonConvert.DeserializeObject<Updates>(str);
+
+			LongPool(updateModel);
+		}
 
 
 
