@@ -20,19 +20,16 @@ namespace VK.ViewModel.Dialogs
 		private int _count = 25;
 		//модель данных диалогов
 		public DialogsModel _dialogModel;
-		//Общее количество диалогов
 
 		//Commands
 		public RelayCommand OpenMessagesCommand { get; private set; }
 		public RelayCommand LoadCommand { get; set; }
-
+		
+		//Общее количество диалогов
 		public int CountDialog { get; set; }
 
 		//для доступа к данным диалогов
 		VkApi _vk = new VkApi();
-
-		//сервис вызывающий обновления данных
-		VkNotifiedService notified = new VkNotifiedService();
 
 		//ViewModel Диалогов
 		private ObservableCollection<DialogItemViewModel> _dialogItemsViewModel;
@@ -59,8 +56,6 @@ namespace VK.ViewModel.Dialogs
 			LoadCommand = new RelayCommand(LoadDialogs);
 			LoadDialogs();
 
-			//notified.LongPool();
-		
 		}
 
 		public async void LoadDialogs()
@@ -86,7 +81,8 @@ namespace VK.ViewModel.Dialogs
 					Date = item.message.date,
 					Out = item.message.@out,
 					ChatId = item.message.chat_id,
-					Attachment = item.message.attachments
+					Attachment = item.message.attachments,
+					Unread = item.unread
 				};
 
 				itemsDialog.Add(itemDialog);

@@ -18,9 +18,11 @@
         <converters1:DateConverter x:Key="DateConverter" x:Shared="false" />
         <converters1:CountUsersConverter x:Key="CountUsersConverter" x:Shared="false" />
         <dataTemplateSelectors:DialogDataTemplateSelector x:Key="DialogDataTemplateSelector" />
-
+        <Brush x:Key="UnreadMessage">#436796</Brush>
         <DataTemplate x:Key="One" DataType="{x:Type chat:DialogItemViewModel}">
-            <Border BorderBrush="#c9d9ed" BorderThickness="1">
+            <Border Name="Border"
+                    BorderBrush="#c9d9ed"
+                    BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <Image Width="60"
                            Height="60"
@@ -56,9 +58,16 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsUnread}" Value="True">
+                    <Setter TargetName="Border" Property="Background" Value="#FFbababa" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
         <DataTemplate x:Key="Two">
-            <Border BorderBrush="#c9d9ed" BorderThickness="1">
+            <Border Name="Border"
+                    BorderBrush="#c9d9ed"
+                    BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="29"
@@ -111,9 +120,16 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsUnread}" Value="True">
+                    <Setter TargetName="Border" Property="Background" Value="#FFbababa" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
         <DataTemplate x:Key="Three">
-            <Border BorderBrush="#c9d9ed" BorderThickness="1">
+            <Border Name="Border"
+                    BorderBrush="#c9d9ed"
+                    BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <Image Width="25"
@@ -173,7 +189,9 @@
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="Four">
-            <Border BorderBrush="#c9d9ed" BorderThickness="1">
+            <Border Name="Border"
+                    BorderBrush="#c9d9ed"
+                    BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <StackPanel Orientation="Horizontal">
                         <StackPanel VerticalAlignment="Center" Orientation="Vertical">
@@ -237,9 +255,16 @@
                     </StackPanel>
                 </StackPanel>
             </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsUnread}" Value="True">
+                    <Setter TargetName="Border" Property="Background" Value="#FFbababa" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
         <DataTemplate x:Key="Group">
-            <Border BorderBrush="#c9d9ed" BorderThickness="1">
+            <Border Name="Border"
+                    BorderBrush="#c9d9ed"
+                    BorderThickness="1">
                 <StackPanel Margin="5" Orientation="Horizontal">
                     <Image Width="60"
                            Height="60"
@@ -282,8 +307,26 @@
                                        TextWrapping="WrapWithOverflow" />
                         </StackPanel>
                     </StackPanel>
+                    <StackPanel Name="UnreadMessage"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                        <Border Background="#d1dae3"
+                                BorderThickness="1"
+                                CornerRadius="5,5,5,5">
+                            <TextBlock Margin="5"
+                                       VerticalAlignment="Center"
+                                       FontWeight="Bold"
+                                       Foreground="{StaticResource UnreadMessage}"
+                                       Text="{Binding Unread}" />
+                        </Border>
+                    </StackPanel>
                 </StackPanel>
             </Border>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsUnread}" Value="False">
+                    <Setter TargetName="UnreadMessage" Property="Visibility" Value="Hidden" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
     </UserControl.Resources>
 

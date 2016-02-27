@@ -43,6 +43,17 @@ namespace VK.ViewModel.Dialogs
 		public string LastMessageUserName { get; set; }
 		public int? ChatId { get; set; }
 
+		public int Unread { get; set; }
+
+		public bool IsUnread
+		{
+			get
+			{
+				var qwe  = Unread > 0;
+				return qwe;
+			}
+		}
+
 		public List<Attachment> Attachment { get; set; }
 	}
 }

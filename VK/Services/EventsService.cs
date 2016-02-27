@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Core;
 using Newtonsoft.Json;
 using VKAPI;
-using VKAPI.Model.LongPullModel;
 
 namespace VK.Services
 {
-	public class VkNotifiedService : Singleton<VkNotifiedService>
+	public class EventsService : Singleton<EventsService>
 	{
 		private VkApi _vk = new VkApi();
 
@@ -20,9 +15,9 @@ namespace VK.Services
 		private int Ts;
 		private string Key;
 
-		public VkNotifiedService()
+		public EventsService()
 		{
-		//	LongPool();
+			LongPool();
 		}
 
 		public async void LongPool(Updates updates = null)

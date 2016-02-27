@@ -154,8 +154,6 @@ namespace VKAPI.Model.DialogsModel
         public string title { get; set; }
         //текст сообщения.
         public string body { get; set; }
-        //массив медиа-вложений
-        public List<Attachment> attachments { get; set; }
         //идентификатор беседы.
         public int? chat_id { get; set; }
         //идентификаторы авторов последних сообщений беседы.
@@ -172,16 +170,29 @@ namespace VKAPI.Model.DialogsModel
         public string photo_100 { get; set; }
         //url копии фотографии беседы шириной 200px.
         public string photo_200 { get; set; }
+		//массив медиа-вложений
+		public List<Attachment> attachments { get; set; }
+		public int? emoji { get; set; }
+		public List<FwdMessage> fwd_messages { get; set; }
     }
+
+	public class FwdMessage
+	{
+		public int user_id { get; set; }
+		public int date { get; set; }
+		public string body { get; set; }
+	}
 
     public class Item
     {
+		public int unread { get; set; }
         public Message message { get; set; }
     }
 
     public class Response
     {
         public int count { get; set; }
+		public int unread_dialogs { get; set; }
         public List<Item> items { get; set; }
     }
 
