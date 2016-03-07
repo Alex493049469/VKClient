@@ -17,14 +17,13 @@ namespace VKAPI.Category
 
 		public FriendsModel Get()
 		{
-			VkRequest.Method = "friends.get";
 			var parameters = new Dictionary<string, object>
 			{
 				{"fields=", FieldsStandart},
 				{"order=", "hints"},
 			};
-			VkRequest.AddParameters(parameters);
-			string str = VkRequest.GetData();
+
+			string str = VkRequest.GetData("friends.get", parameters);
 			FriendsModel friendsModel = JsonConvert.DeserializeObject<FriendsModel>(str);
 			return friendsModel;
 		}

@@ -30,8 +30,6 @@ namespace VKAPI.Category
 	   public UsersModel Get(string userIds ="", string fields = "", nameCase nameCase = nameCase.nom)
 	   {
 		   string FieldsAll = "sex, bdate, city, country, photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, photo_id, online, online_mobile, domain, has_mobile, contacts, connections, site, education, universities, schools, can_post, can_see_all_posts, can_see_audio, can_write_private_message, status, last_seen, common_count, relation, relatives, counters, screen_name, maiden_name, timezone, occupation,activities, interests, music, movies, tv, books, games, about, quotes, personal, friends_status";
-		   //используемый метод
-		   VkRequest.Method = "users.get";
 
 		   //добавляем параметры
 		   var parameters = new Dictionary<string, object>
@@ -40,9 +38,8 @@ namespace VKAPI.Category
 			   {"fields=", fields.Length > 0 ? fields : FieldsAll},
 			   {"name_case=", nameCase.ToString()}
 		   };
-		   VkRequest.AddParameters(parameters);
-		   //получаем данные в json
-		   string str = VkRequest.GetData();
+
+		   string str = VkRequest.GetData("users.get", parameters);
 		   //десериализуем
 		   UsersModel usersModel = JsonConvert.DeserializeObject<UsersModel>(str);
 		   return usersModel;
@@ -60,8 +57,6 @@ namespace VKAPI.Category
 	   public UsersModel GetPhoto(string userIds)
 	   {
 		   string fieldsPhoto = "photo_50, photo_100, photo_200_orig, photo_200, photo_400_orig, photo_max, photo_max_orig, photo_id";
-		  //используемый метод
-		   VkRequest.Method = "users.get";
 
 		   //добавляем параметры
 		   var parameters = new Dictionary<string, object>
@@ -69,9 +64,8 @@ namespace VKAPI.Category
 			   {"user_ids=", userIds},
 			   {"fields=", fieldsPhoto},
 		   };
-		   VkRequest.AddParameters(parameters);
-		   //получаем данные в json
-		   string str = VkRequest.GetData();
+
+		   string str = VkRequest.GetData("users.get", parameters);
 		   //десериализуем
 		   UsersModel usersModel = JsonConvert.DeserializeObject<UsersModel>(str);
 		   return usersModel;

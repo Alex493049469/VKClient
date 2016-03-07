@@ -20,10 +20,7 @@ namespace VKAPI.Category
 		/// <returns></returns>
 		public bool SetOnline()
 		{
-			//используемый метод
-			VkRequest.Method = "account.setOnline";
-			//получаем данные в json
-			string str = VkRequest.GetData();
+			string str = VkRequest.GetData("account.setOnline");
 			return true;
 		}
 
@@ -33,10 +30,7 @@ namespace VKAPI.Category
 		/// <returns></returns>
 		public bool SetOffline()
 		{
-			//используемый метод
-			VkRequest.Method = "account.setOffline";
-			//получаем данные в json
-			string str = VkRequest.GetData();
+			string str = VkRequest.GetData("account.setOffline");
 			return true;
 		}
 

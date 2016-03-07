@@ -1,58 +1,123 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
 using Core;
 using Newtonsoft.Json;
 using VKAPI;
+using VKAPI.Model.LongPullModel;
 
 namespace VK.Services
 {
-	public class EventsService : Singleton<EventsService>
+	/// <summary>
+	/// Сервис оповещает о наборе текста, новых сообщениях и тд.
+	/// </summary>
+	public class EventsService
 	{
 		private VkApi _vk = new VkApi();
 
-		private string Server;
-		private int Ts;
-		private string Key;
+		LongPullModel lpm;
 
-		public EventsService()
-		{
-			LongPool();
-		}
+		int ts;
+		int pts;
+
+		//событие на которое надо подписаться для оповещения что пришло новое сообщение
+		public delegate void MethodContainer(MessageNew message);
+		public event MethodContainer NewMessage;
 
 		public async void LongPool(Updates updates = null)
 		{
 			if (updates == null)
 			{
-				var longPull = await _vk.Messages.GetLongPollServerAsync();
-				Server = longPull.response.server;
-				Ts = longPull.response.ts;
-				Key = longPull.response.key;
+				lpm = await _vk.Messages.GetLongPollServerAsync();
 			}
 			else
 			{
-				Ts = updates.ts;
+				lpm.response.ts = updates.ts;
+				lpm.response.pts = updates.pts;
 			}
 
-			var reqGet = WebRequest.Create(@"http://" + Server + "?act=a_check&key=" + Key + "&ts=" + Ts + "&wait=25&mode=2");
+			var reqGet = WebRequest.Create(@"http://" + lpm.response.server + "?act=a_check&key=" + lpm.response.key + "&ts=" + lpm.response.ts + "&wait=25&mode=32");
 			var resp = await reqGet.GetResponseAsync();
 			var stream = resp.GetResponseStream();
 
 			var sr = new StreamReader(stream);
 			var str = sr.ReadToEnd();
 
-			var updateModel = JsonConvert.DeserializeObject<Updates>(str);
+			Updates updateModel = JsonConvert.DeserializeObject<Updates>(str);
+
+			if (updates != null)
+			{
+				ts = updates.ts;
+				pts = updates.pts;
+			}
+			else
+			{
+				ts = lpm.response.ts;
+				pts = lpm.response.pts;
+			}
+
+			DetectTypeEvent(updateModel);
 
 			LongPool(updateModel);
 		}
 
+		private void DetectTypeEvent(Updates updates)
+		{
+			foreach (var update in updates.updates)
+			{
+				int codeTypeEvent = Convert.ToInt32(update[0]);
 
+				if (codeTypeEvent == 61)
+				{
+					//MessageBox.Show("Петрович набирает сообщение");
+				}
+
+				//4,$message_id,$flags,$from_id,$timestamp,$subject,$text,$attachments
+				if (codeTypeEvent == 4)
+				{
+					//получаем новые сообщения
+					var qwe = _vk.Messages.GetLongPollHistory(ts, pts);
+
+					var message = new MessageNew
+					{
+						TypeEvent = Convert.ToInt32(update[0]),
+						MessageId = Convert.ToInt32(update[1]),
+						Flags = Convert.ToInt32(update[2]),
+						FromId = Convert.ToInt32(update[3]),
+						Timestamp = Convert.ToInt32(update[4]),
+						Subject = Convert.ToString(update[5]),
+						Text = Convert.ToString(update[6])
+					};
+
+					if (NewMessage != null) NewMessage(message);
+				}
+			}
+		}
+
+
+
+		public class MessageNew
+		{
+			public int TypeEvent { get; set; }
+			public int MessageId { get; set; }
+			public int Flags { get; set; }
+			public int FromId { get; set; }
+			public int Timestamp { get; set; }
+			public string Subject { get; set; }
+			public string Text { get; set; }
+
+		}
 
 		public class Updates
 		{
 			public int ts { get; set; }
+			public int pts { get; set; }
 			public List<List<object>> updates { get; set; }
 		}
 		
 	}
+
 }

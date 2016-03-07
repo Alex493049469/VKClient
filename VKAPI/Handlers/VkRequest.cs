@@ -1,114 +1,102 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace VKAPI.Handlers
 {
 	/// <summary>
-	/// Отвечает за формирование и отправка запроса к Vk Api
+	/// Отвечает за формирование и отправку запроса Vk Api
 	/// </summary>
 	internal static class VkRequest
 	{
 		//Так же необходимо реализовать таймер который будет контроллировать чтоб не уходило более 3 запросов в секунду
+
 		//базовый Url
 		private static string _baseUrl = @"https://api.vk.com/method/";
-		///вызываемый метод
-		public static string Method;
-		//список необходимых параметров параметр = значение
-		internal static Dictionary<string, string> Parameters = new Dictionary<string, string>();
+
 		//версия Api
-		internal static string ApiVersion = "v=5.29";
-		//Сфомированная строка запроса
-		internal static string Url;
+		private static string ApiVersion = "v=5.29";
 
 		/// <summary>
 		/// Отправка запроса и получение ответа в строку
 		/// </summary>
 		/// <returns></returns>
-		internal static string GetData()
+		internal static string GetData(string method, Dictionary<string, object> parameters = null)
 		{
-			Url = GenerateRequest();
-
-			var reqGet = WebRequest.Create(Url);
-			var resp = reqGet.GetResponse();
-			var stream = resp.GetResponseStream();
+			string url = GenerateRequest(method, ClearEmptyParameters(parameters));
+			//чтоб не превычать максимальную частоту запросов к VK api (3 раза в секунду)
+			Thread.Sleep(200);
+			var webRequest = WebRequest.Create(url);
+			var response = webRequest.GetResponse();
+			var stream = response.GetResponseStream();
 			var sr = new StreamReader(stream);
-			var str = sr.ReadToEnd();
+			var data = sr.ReadToEnd();
 
-			//возвращаем данные
-			return str;
+			return data;
 		}
 
 		/// <summary>
 		/// склеивание всех параметров в строку запроса
 		/// </summary>
 		/// <returns></returns>
-		public static string GenerateRequest()
+		private static string GenerateRequest(string method, Dictionary<string, object> parameters)
 		{
-			string url = _baseUrl + Method + "?";
-			if (Parameters.Count > 0)
+			string url = _baseUrl + method + "?";
+			if (parameters != null && parameters.Count > 0)
 			{
-				url += ConvertToStringParameters();
+				url += ConvertToStringParameters(parameters);
 			}
 			url += "&" + ApiVersion + "&access_token=" + VkSettings.Token;
 			return url;
 		}
 
 		/// <summary>
-		/// Добавление параметров, параметры = 0 или "" не добавляются
+		/// принимает список параметров, удаляет пустые и возвращает результат
 		/// </summary>
-		/// <param name="parameter"></param>
-		/// <param name="value"></param>
-		private static void AddParameter(string parameter, object value)
+		/// <param name="parameters"></param>
+		/// <returns></returns>
+		private static Dictionary<string, object> ClearEmptyParameters(Dictionary<string, object> parameters)
 		{
-			if (value != null)
-			{
-				if (value is int)
-				{
-					int valInt = (int)value;
-					if (valInt != 0)
-					{
-						Parameters.Add(parameter, value.ToString());
-					}
-				}
+			Dictionary<string, object> param = new Dictionary<string, object>();
 
-				if (value is string)
-				{
-					var valStr = (string)value;
-					if (valStr.Length > 0)
-					{
-						Parameters.Add(parameter, value.ToString());
-					}
-				}
-			}
-		}
-
-		internal static void AddParameters(Dictionary<string, object> parameters)
-		{
-			ClearParameters();
+			if (parameters == null) return null;
 			foreach (var parameter in parameters)
 			{
-				AddParameter(parameter.Key, parameter.Value);
-			}
-		}
+				if (parameter.Value != null)
+				{
+					if (parameter.Value is int)
+					{
+						int valInt = (int) parameter.Value;
+						if (valInt != 0)
+						{
+							param.Add(parameter.Key, parameter.Value);
+						}
+					}
 
-		/// <summary>
-		/// Удаление параметров
-		/// </summary>
-		private static void ClearParameters()
-		{
-			Parameters.Clear();
+					if (parameter.Value is string)
+					{
+						var valStr = (string) parameter.Value;
+						if (!string.IsNullOrEmpty(valStr))
+						{
+							param.Add(parameter.Key, parameter.Value);
+						}
+					}
+				}
+			}
+			return param;
 		}
 
 		/// <summary>
 		/// Преобразование списка параметров в строку
 		/// </summary>
 		/// <returns></returns>
-		private static string ConvertToStringParameters()
+		private static string ConvertToStringParameters(Dictionary<string, object> parameters)
 		{
 			string param = "";
 
-			foreach (var item in Parameters)
+			foreach (var item in parameters)
 			{
 				if (param.Length > 0)
 				{

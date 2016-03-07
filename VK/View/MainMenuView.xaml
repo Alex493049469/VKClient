@@ -6,6 +6,8 @@
              DataContext="{Binding MainMenu,
                                    Source={StaticResource Locator}}"
              mc:Ignorable="d">
+    <UserControl.Resources />
+
     <StackPanel Width="200"
                 HorizontalAlignment="Left"
                 Background="White">
@@ -72,16 +74,31 @@
                 Height="37"
                 Margin="10,3"
                 Command="{Binding OpenDialogsCommand}">
-            <StackPanel Width="174"
-                        HorizontalAlignment="Left"
-                        Orientation="Horizontal">
+            <DockPanel Width="174">
                 <Image Width="24"
                        Height="21"
                        Margin="5"
                        Source="/Images/18envelope.png" />
                 <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Сообщения" />
                 </TextBlock>
-            </StackPanel>
+                <TextBlock Margin="0,0,10,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           FontWeight="Bold"
+                           Text="{Binding UnreadMessages}">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="0">
+                                    <Setter Property="Visibility" Value="Hidden" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+            </DockPanel>
+
         </Button>
         <Button x:Name="AudioButton"
                 Height="37"

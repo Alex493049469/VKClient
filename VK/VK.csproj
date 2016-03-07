@@ -15,7 +15,7 @@
     <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>75efd6a8</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>583ed1d4</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -92,8 +92,10 @@
     <Compile Include="Converters\CountUsersConverter.cs" />
     <Compile Include="DataProvider\DataProvider.cs" />
     <Compile Include="DataTemplateSelectors\MessageDataTemplateSelector.cs" />
+    <Compile Include="Model\Dialogs.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\EventsService.cs" />
+    <Compile Include="Services\ManagerService.cs" />
     <Compile Include="ViewModel\Audios\AudioPlayer.cs" />
     <Compile Include="AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>

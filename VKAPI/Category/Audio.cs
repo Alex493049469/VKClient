@@ -25,8 +25,6 @@ namespace VKAPI.Category
 		/// <returns></returns>
 		public AudioModel Get(int ownerId, int albumId, string audioIds, int offset , int count)
 		{
-			//используемый метод
-			VkRequest.Method = "audio.get";
 			var parameters = new Dictionary<string, object>
 			{
 				{"owner_id=", ownerId},
@@ -35,10 +33,8 @@ namespace VKAPI.Category
 				{"offset=", offset},
 				{"count=", count}
 			};
-			//добавляем параметры
-			VkRequest.AddParameters(parameters);
-			//получаем данные в json
-			string str = VkRequest.GetData();
+
+			string str = VkRequest.GetData("audio.get", parameters);
 			//десериализуем
 			var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
 			return audioModel;
@@ -52,16 +48,12 @@ namespace VKAPI.Category
 
 		public AudioModel GetRecommendations(string targetAudio)
 		{
-			//используемый метод
-			VkRequest.Method = "audio.getRecommendations";
-			//добавляем параметры
 			var parameters = new Dictionary<string, object>
 			{
 				{"target_audio=", targetAudio},
 			};
-			VkRequest.AddParameters(parameters);
-			//получаем данные в json
-			string str = VkRequest.GetData();
+
+			string str = VkRequest.GetData("audio.getRecommendations", parameters);
 			//десериализуем
 			var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
 			return audioModel;
@@ -86,10 +78,6 @@ namespace VKAPI.Category
 		/// <returns></returns>
 		public AudioModel Search(string q, int autoComplete, int lyrics, int performerOnly, int sort, int searchOwn, int offset, int count)
 		{
-			//используемый метод
-			VkRequest.Method = "audio.search";
-			//добавляем параметры
-
 			var parameters = new Dictionary<string, object>
 			{
 				{"q=", q},
@@ -101,9 +89,8 @@ namespace VKAPI.Category
 				{"offset=", offset},
 				{"count=", count}
 			};
-			VkRequest.AddParameters(parameters);
-			//получаем данные в json
-			string str = VkRequest.GetData();
+
+			string str = VkRequest.GetData("audio.search", parameters);
 			//десериализуем
 			var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
 			return audioModel;
@@ -122,19 +109,14 @@ namespace VKAPI.Category
 		/// <param name="ownerId">идентификатор владельца аудиозаписи (пользователь или сообщество). </param>
 		public void Add(int audioId, int ownerId)
 		{
-			//используемый метод
-			VkRequest.Method = "audio.add";
-			//добавляем параметры
-
 			var parameters = new Dictionary<string, object>
 			{
 				{"audio_id=", audioId},
 				{"owner_id=", ownerId}
 			
 			};
-			VkRequest.AddParameters(parameters);
-			//получаем данные в json
-			VkRequest.GetData();
+
+			VkRequest.GetData("audio.add", parameters);
 		}
 
 		public Task AddAsync(int audioId, int ownerId)
@@ -149,19 +131,14 @@ namespace VKAPI.Category
 		/// <param name="ownerId"></param>
 		public void Delete(int audioId, int ownerId)
 		{
-			//используемый метод
-			VkRequest.Method = "audio.delete";
-
 			var parameters = new Dictionary<string, object>
 			{
 				{"audio_id=", audioId},
 				{"owner_id=", ownerId}
-			   
+			
 			};
-			VkRequest.AddParameters(parameters);
-		  
-			//получаем данные в json
-			VkRequest.GetData();
+
+			VkRequest.GetData("audio.delete", parameters);
 		}
 
 		public Task DeleteAsync(int audioId, int ownerId)

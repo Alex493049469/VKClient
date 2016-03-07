@@ -83,7 +83,7 @@ namespace VK.ViewModel
 			}
 		}
 
-		public MainMenuViewModel MainMenu
+		public static MainMenuViewModel MainMenu
 		{
 			get
 			{

@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using Core;
 using Core.Command;
+using VK.Services;
 using VK.View;
 using VK.ViewModel.Main;
 
@@ -8,7 +9,8 @@ namespace VK.ViewModel.MainMenu
 {
 	public class MainMenuViewModel : BaseViewModel
 	{
-		private MainViewModel _content;
+
+		private readonly MainViewModel _content;
 
 		//Views
 		private UserControl _audiosView;
@@ -22,6 +24,19 @@ namespace VK.ViewModel.MainMenu
 		public RelayCommand OpenPageCommand { get; private set; }
 		public RelayCommand OpenFriendsCommand { get; private set; }
 
+		//property
+		public int UnreadMessages
+		{
+			get { return _unreadMessages; }
+			set
+			{
+				_unreadMessages = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		private int _unreadMessages;
+
 		public MainMenuViewModel(MainViewModel content)
 		{
 			_content = content;
@@ -30,6 +45,8 @@ namespace VK.ViewModel.MainMenu
 			OpenAudioCommand = new RelayCommand(OpenAudios);
 			OpenPageCommand = new RelayCommand(OpenMyPage);
 			OpenFriendsCommand = new RelayCommand(OpenFriends);
+
+			_dialogsView = new DialogsView();
 		}
 
 		private void OpenAudios()

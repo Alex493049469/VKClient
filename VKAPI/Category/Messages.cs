@@ -18,26 +18,15 @@ namespace VKAPI.Category
 		/// <returns></returns>
 		public DialogsModel GetDialogs(int count, int offset = 0)
 		{
-			//используемый метод
-			VkRequest.Method = "messages.getDialogs";
-
-			//добавляем параметры если есть
 			var parameters = new Dictionary<string, object>
 			{
 				{"count=", count},
 				{"offset=", offset}
 			};
-			VkRequest.AddParameters(parameters);
-			//получаем данные в json
-			string str = VkRequest.GetData();
-			//десериализуем
-			
-			var dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(str);
-			//if (dialogsModel == null)
-			//{
-			//	var ErrorHandler = new ErrorHandlerRequest(JsonConvert.DeserializeObject<ErrorModel>(str));
-				
-			//}
+
+			string data = VkRequest.GetData("messages.getDialogs", parameters);
+
+			var dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(data);
 
 			return dialogsModel;
 		}
@@ -58,18 +47,13 @@ namespace VKAPI.Category
 
 		public void GetChat(string chatId, string fields)
 		{
-			//используемый метод
-			VkRequest.Method = "messages.getChat";
-
-			//добавляем параметры если есть
 			var parameters = new Dictionary<string, object>
 			{
 				{"chat_id=", chatId},
 				{"fields=", fields}
 			};
-			VkRequest.AddParameters(parameters);
-			//получаем данные в json
-			string str = VkRequest.GetData();
+
+			string str = VkRequest.GetData("messages.getChat", parameters);
 			//десериализуем
 			//DialogsModel dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(str);
 
@@ -78,10 +62,6 @@ namespace VKAPI.Category
 
 		public MessagesModel GetHistoryChat(int IdChat, int count, int offset, int rev = 0)
 		{
-			//используемый метод
-			VkRequest.Method = "messages.getHistory";
-
-			//добавляем параметры если есть
 			var parameters = new Dictionary<string, object>
 			{
 				{"chat_id=", IdChat},
@@ -89,9 +69,9 @@ namespace VKAPI.Category
 				{"rev=", rev},
 				{"offset=", offset}
 			};
-			VkRequest.AddParameters(parameters);
+
 			//получаем данные в json
-			string str = VkRequest.GetData();
+			string str = VkRequest.GetData("messages.getHistory", parameters);
 			//десериализуем
 			MessagesModel messagesModel = JsonConvert.DeserializeObject<MessagesModel>(str);
 
@@ -109,10 +89,6 @@ namespace VKAPI.Category
 
 		public MessagesModel GetHistoryUser(int IdUser, int count, int offset, int rev = 0)
 		{
-			//используемый метод
-			VkRequest.Method = "messages.getHistory";
-
-			//добавляем параметры если есть
 			var parameters = new Dictionary<string, object>
 			{
 				{"user_id=", IdUser},
@@ -120,9 +96,8 @@ namespace VKAPI.Category
 				{"rev=", rev},
 				{"offset=", offset}
 			};
-			VkRequest.AddParameters(parameters);
 			//получаем данные в json
-			string str = VkRequest.GetData();
+			string str = VkRequest.GetData("messages.getHistory", parameters);
 			//десериализуем
 			MessagesModel messagesModel = JsonConvert.DeserializeObject<MessagesModel>(str);
 
@@ -138,20 +113,15 @@ namespace VKAPI.Category
 			});
 		}
 
-		public LongPullModel GetLongPollServer(bool useSsl = false, bool needPts = false)
+		public LongPullModel GetLongPollServer(bool useSsl = false, bool needPts = true)
 		{
-			VkRequest.Method = "messages.getLongPollServer";
-
-			//добавляем параметры если есть
 			var parameters = new Dictionary<string, object>
 			{
 				{"use_ssl=", useSsl},
 				{"need_pts=", needPts}
 			};
 
-			VkRequest.AddParameters(parameters);
-			//получаем данные в json
-			string str = VkRequest.GetData();
+			string str = VkRequest.GetData("messages.getLongPollServer", parameters);
 			LongPullModel longPullModel = JsonConvert.DeserializeObject<LongPullModel>(str);
 			return longPullModel;
 		}
@@ -164,6 +134,45 @@ namespace VKAPI.Category
 				return messageModel;
 			});
 		}
+
+		public LongPullModel GetLongPollHistory(int ts, int pts, int max_msg_id =0, int preview_length =0, int onlines=0)
+		{
+			var parameters = new Dictionary<string, object>
+			{
+				{"ts=", ts},
+				{"pts=", pts},
+				{"max_msg_id=", max_msg_id},
+				{"preview_length=", preview_length},
+				{"onlines=", onlines}
+			};
+
+			string str = VkRequest.GetData("messages.getLongPollHistory", parameters);
+			//заменить на нужную модель данных
+			LongPullModel longPullModel = JsonConvert.DeserializeObject<LongPullModel>(str);
+			return longPullModel;
+		}
+
+		public Task<LongPullModel> GetLongPollHistoryAsynk(int ts, int pts, int max_msg_id, int preview_length, int onlines)
+		{
+			return Task.Run(() =>
+			{
+				LongPullModel messageModel = GetLongPollHistory(ts, pts, max_msg_id, preview_length, onlines);
+				return messageModel;
+			});
+		}
+
+		//public LongPullModel GetById(int message_id)
+		//{
+		//	var parameters = new Dictionary<string, object>
+		//	{
+		//		{"message_id=", message_id}
+		//	};
+
+		//	string str = VkRequest.GetData("messages.getById", parameters);
+
+		//	LongPullModel longPullModel = JsonConvert.DeserializeObject<LongPullModel>(str);
+		//	return longPullModel;
+		//}
 
 	}
 }

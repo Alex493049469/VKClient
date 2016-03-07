@@ -1,5 +1,6 @@
 ﻿using Core;
 using VK.Properties;
+using VK.Services;
 using VKAPI;
 
 namespace VK.ViewModel.AuthorizedUser
@@ -20,16 +21,25 @@ namespace VK.ViewModel.AuthorizedUser
 			if (Settings.Default.token != "")
 			{
 				VkSettings.Token = Settings.Default.token;
+
 			}
 
 			if (!string.IsNullOrEmpty(VkSettings.Token))
 			{
-				var user =  _vkApi.Users.Get();
+				var user = _vkApi.Users.Get();
 				Photo = user.response[0].photo_100;
 				Name = user.response[0].first_name + " " + user.response[0].last_name;
+
+				StartServices();
 			}
 		}
 
+		public void StartServices()
+		{
+			ManagerService.Instance.StartManagerService();
+			//ManagerService.Instance.DialogService.GetDialog();
+			ManagerService.Instance.EventService.LongPool();
+		}
 
 	}
 }
