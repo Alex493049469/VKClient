@@ -10,6 +10,7 @@ namespace VK.View
 		public MainWindow()
 		{
 			InitializeComponent();
+			this.DataContext = MainViewModel.This;
 
 			if (Settings.Default.token == "")
 			{

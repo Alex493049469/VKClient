@@ -9,8 +9,6 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              Background="White"
-             DataContext="{Binding Dialog,
-                                   Source={StaticResource Locator}}"
              d:DesignHeight="387"
              d:DesignWidth="597"
              mc:Ignorable="d">

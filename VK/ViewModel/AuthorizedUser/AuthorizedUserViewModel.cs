@@ -7,6 +7,13 @@ namespace VK.ViewModel.AuthorizedUser
 {
 	public class AuthorizedUserViewModel : BaseViewModel
 	{
+		static AuthorizedUserViewModel _this = new AuthorizedUserViewModel();
+
+		public static AuthorizedUserViewModel This
+		{
+			get { return _this; }
+		}
+
 		VkApi _vkApi = new VkApi();
 		public string Photo { get; set; }
 		public string Name { get; set; }

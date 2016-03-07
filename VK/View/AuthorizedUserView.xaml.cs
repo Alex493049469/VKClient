@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VK.ViewModel.AuthorizedUser;
 
 namespace VK.View
 {
@@ -23,6 +24,7 @@ namespace VK.View
 		public AuthorizedUserView()
 		{
 			InitializeComponent();
+			DataContext = AuthorizedUserViewModel.This;
 		}
 	}
 }

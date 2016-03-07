@@ -13,14 +13,8 @@
 
                 <ResourceDictionary Source="Styles/MoonUICore.xaml" />
 
-                <ResourceDictionary Source="Styles/Templates.xaml">
-                   
-                </ResourceDictionary>
-                <ResourceDictionary>
-                    <viewModel:ViewModelLocator 
-                                         x:Key="Locator"
-                                         d:IsDataSource="True" />
-                </ResourceDictionary>
+                <ResourceDictionary Source="Styles/Templates.xaml" />
+
                 <!--<ResourceDictionary Source="Themes/Core.xaml" />
                 <ResourceDictionary Source="Themes/Brushes.xaml" />
                 <ResourceDictionary Source="Themes/Icons.xaml" />
