@@ -58,7 +58,7 @@ namespace VK.Services
 			set
 			{
 				_unreadMessages = value;
-				ViewModelLocator.MainMenu.UnreadMessages = value;
+				//ViewModelLocator.MainMenu.UnreadMessages = value;
 			}
 		}
 

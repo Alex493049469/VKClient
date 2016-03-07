@@ -1,22 +1,21 @@
-﻿using System.Windows.Controls;
+﻿using System.Linq;
+using System.Windows.Controls;
 using Core;
 using Core.Command;
 using VK.Services;
 using VK.View;
+using VK.ViewModel.Audios;
+using VK.ViewModel.Dialogs;
+using VK.ViewModel.Friends;
 using VK.ViewModel.Main;
+using VK.ViewModel.Page;
 
 namespace VK.ViewModel.MainMenu
 {
 	public class MainMenuViewModel : BaseViewModel
 	{
-
-		private readonly MainViewModel _content;
-
-		//Views
-		private UserControl _audiosView;
-		private UserControl _friendsView;
-		private UserControl _pageView;
-		private UserControl _dialogsView;
+		//вернуть всю эту логику в MainViewModel
+		private readonly MainViewModel _mainViewModel;
 
 		//Commands
 		public RelayCommand OpenDialogsCommand { get; private set; }
@@ -39,38 +38,41 @@ namespace VK.ViewModel.MainMenu
 
 		public MainMenuViewModel(MainViewModel content)
 		{
-			_content = content;
+			_mainViewModel = content;
 
 			OpenDialogsCommand = new RelayCommand(OpenDialogs);
 			OpenAudioCommand = new RelayCommand(OpenAudios);
 			OpenPageCommand = new RelayCommand(OpenMyPage);
 			OpenFriendsCommand = new RelayCommand(OpenFriends);
 
-			_dialogsView = new DialogsView();
 		}
 
 		private void OpenAudios()
 		{
-			if (_audiosView == null) _audiosView = new AudioView();
-			_content.ContentPanel = _audiosView;
+
+			_mainViewModel._files.Add(new AudioListViewModel());
+			_mainViewModel.ActiveDocument = _mainViewModel._files.Last();
 		}
 
 		private void OpenMyPage()
 		{
-			if (_pageView == null) _pageView = new PageView();
-			_content.ContentPanel = _pageView;
+
+			_mainViewModel._files.Add(new PageViewModel());
+			_mainViewModel.ActiveDocument = _mainViewModel._files.Last();
 		}
 
 		private void OpenDialogs()
 		{
-			if (_dialogsView == null) _dialogsView = new DialogsView();
-			_content.ContentPanel = _dialogsView;
+
+			_mainViewModel._files.Add(new DialogListViewModel());
+			_mainViewModel.ActiveDocument = _mainViewModel._files.Last();
 		}
 
 		private void OpenFriends()
 		{
-			if (_friendsView == null) _friendsView = new FriendsView();
-			_content.ContentPanel = _friendsView;
+
+			_mainViewModel._files.Add(new FriendsListViewModel());
+			_mainViewModel.ActiveDocument = _mainViewModel._files.Last();
 		}
 	}
 }

@@ -74,7 +74,7 @@ namespace VK.ViewModel.Dialogs
 			}
 
 			messagesView.DataContext = messageViewModel;
-			ViewModelLocator.Main.ContentPanel = messagesView;
+			//ViewModelLocator.Main.ContentPanel = messagesView;
 
 		}
 

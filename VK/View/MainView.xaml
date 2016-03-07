@@ -1,9 +1,13 @@
 ﻿<Window x:Class="VK.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:VK.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dock="clr-namespace:VK.Dock"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mvvmTestApp="clr-namespace:AvalonDock.MVVMTestApp"
         xmlns:view="clr-namespace:VK.View"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         x:Name="MainView"
         Title="VKClient Alpha 2"
         Width="944"
@@ -15,6 +19,9 @@
         Style="{StaticResource VS2012WindowStyle}"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
+    <Window.Resources>
+        <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
+    </Window.Resources>
     <Grid UseLayoutRounding="True">
         <StatusBar Height="24" VerticalAlignment="Bottom">
             <TextBlock Margin="3,0,0,0"><Run Text="" />
@@ -23,6 +30,75 @@
                 <ResizeGrip Opacity="0.75" />
             </StatusBarItem>
         </StatusBar>
+        <xcad:DockingManager x:Name="dockManager"
+                             Margin="205,0,0,25"
+                             ActiveContent="{Binding ActiveDocument,
+                                                     Mode=TwoWay,
+                                                     Converter={StaticResource ActiveDocumentConverter}}"
+                             DocumentsSource="{Binding Files}">
+            <xcad:DockingManager.LayoutItemTemplateSelector>
+                <dock:PanesTemplateSelector>
+                    <dock:PanesTemplateSelector.AudioViewTemplate>
+                        <DataTemplate>
+                            <view:AudioView />
+                        </DataTemplate>
+                    </dock:PanesTemplateSelector.AudioViewTemplate>
+                    <dock:PanesTemplateSelector.DialogsViewTemplate>
+                        <DataTemplate>
+                            <view:DialogsView />
+                        </DataTemplate>
+                    </dock:PanesTemplateSelector.DialogsViewTemplate>
+                    <dock:PanesTemplateSelector.FriendsViewTemplate>
+                        <DataTemplate>
+                            <view:FriendsView />
+                        </DataTemplate>
+                    </dock:PanesTemplateSelector.FriendsViewTemplate>
+                    <dock:PanesTemplateSelector.MessageViewTemplate>
+                        <DataTemplate>
+                            <view:MessagesView />
+                        </DataTemplate>
+                    </dock:PanesTemplateSelector.MessageViewTemplate>
+                    <dock:PanesTemplateSelector.PageViewTemplate>
+                        <DataTemplate>
+                            <view:PageView />
+                        </DataTemplate>
+                    </dock:PanesTemplateSelector.PageViewTemplate>
+                </dock:PanesTemplateSelector>
+            </xcad:DockingManager.LayoutItemTemplateSelector>
+            <xcad:DockingManager.LayoutItemContainerStyleSelector>
+                <mvvmTestApp:PanesStyleSelector>
+                    <mvvmTestApp:PanesStyleSelector.AudioStyle>
+                        <Style TargetType="{x:Type xcad:LayoutItem}">
+                            <Setter Property="Title" Value="Аудиозаписи" />
+                        </Style>
+                    </mvvmTestApp:PanesStyleSelector.AudioStyle>
+                    <mvvmTestApp:PanesStyleSelector.DialogStyle>
+                        <Style TargetType="{x:Type xcad:LayoutItem}">
+                            <Setter Property="Title" Value="Диалоги" />
+                        </Style>
+                    </mvvmTestApp:PanesStyleSelector.DialogStyle>
+                    <mvvmTestApp:PanesStyleSelector.FriendsStyle>
+                        <Style TargetType="{x:Type xcad:LayoutItem}">
+                            <Setter Property="Title" Value="Друзья" />
+                        </Style>
+                    </mvvmTestApp:PanesStyleSelector.FriendsStyle>
+                    <mvvmTestApp:PanesStyleSelector.MessagesStyle>
+                        <Style TargetType="{x:Type xcad:LayoutItem}">
+                            <Setter Property="Title" Value="Переписка с ..." />
+                        </Style>
+                    </mvvmTestApp:PanesStyleSelector.MessagesStyle>
+                    <mvvmTestApp:PanesStyleSelector.PageStyle>
+                        <Style TargetType="{x:Type xcad:LayoutItem}">
+                            <Setter Property="Title" Value="Моя страница" />
+                        </Style>
+                    </mvvmTestApp:PanesStyleSelector.PageStyle>
+                </mvvmTestApp:PanesStyleSelector>
+            </xcad:DockingManager.LayoutItemContainerStyleSelector>
+            <xcad:DockingManager.Theme>
+                <xcad:MetroTheme />
+            </xcad:DockingManager.Theme>
+
+        </xcad:DockingManager>
         <StackPanel Grid.Row="0"
                     Width="200"
                     Margin="0,0,0,25"
@@ -33,11 +109,6 @@
                                      Margin="5" />
             <view:MainMenuView />
         </StackPanel>
-        <ContentControl x:Name="Content"
-                        Grid.Row="0"
-                        Margin="200,0,0,25"
-                        VerticalAlignment="Stretch"
-                        Content="{Binding ContentPanel}" />
     </Grid>
 
 </Window>
