@@ -13,7 +13,7 @@ using VKAPI.Model.UsersModel;
 
 namespace VK.ViewModel.Messages
 {
-	class MessageListViewModel : BaseViewModel
+	class MessageListViewModel : PaneViewModel
 	{
 		//для доступа к данным диалогов
 		VkApi _vk = new VkApi();
@@ -44,6 +44,7 @@ namespace VK.ViewModel.Messages
 
 		public MessageListViewModel(bool isChat, int id)
 		{
+			Title = "Пепеписка с ...";
 			_isChat = isChat;
 			_id = id;
 			LoadMessage();

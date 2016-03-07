@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
-using VK.ViewModel;
 using VK.ViewModel.Dialogs;
 using VKAPI;
 using VKAPI.Model.DialogsModel;

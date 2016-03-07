@@ -4,7 +4,7 @@ using VKAPI.Model.UsersModel;
 
 namespace VK.ViewModel.Page
 {
-    public class PageViewModel : BaseViewModel
+	public class PageViewModel : PaneViewModel
     {
         //модель данных
         public UsersModel UserModel;
@@ -13,6 +13,7 @@ namespace VK.ViewModel.Page
 
         public PageViewModel()
         {
+			Title = "Моя страница";
             LoadModel();
         }
 

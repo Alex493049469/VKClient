@@ -5,7 +5,7 @@ using VKAPI.Model.FriendsModel;
 
 namespace VK.ViewModel.Friends
 {
-	public class FriendsListViewModel : BaseViewModel
+	public class FriendsListViewModel : PaneViewModel
 	{
 		VkApi _vk = new VkApi();
 		//модель данных друзей
@@ -30,6 +30,7 @@ namespace VK.ViewModel.Friends
 	  
 		public FriendsListViewModel()
 		{
+			Title = "Мои друзья";
 			LoadFriends();
 		}
 

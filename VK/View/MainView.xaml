@@ -9,7 +9,7 @@
         xmlns:view="clr-namespace:VK.View"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         x:Name="MainView"
-        Title="VKClient Alpha 2"
+        Title="Vk Client"
         Width="944"
         Height="624"
         AllowsTransparency="True"
@@ -67,27 +67,37 @@
                 <mvvmTestApp:PanesStyleSelector>
                     <mvvmTestApp:PanesStyleSelector.AudioStyle>
                         <Style TargetType="{x:Type xcad:LayoutItem}">
-                            <Setter Property="Title" Value="Аудиозаписи" />
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="IconSource" Value="../Images/194note2.png" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseTabCommand}" />
                         </Style>
                     </mvvmTestApp:PanesStyleSelector.AudioStyle>
                     <mvvmTestApp:PanesStyleSelector.DialogStyle>
                         <Style TargetType="{x:Type xcad:LayoutItem}">
-                            <Setter Property="Title" Value="Диалоги" />
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="IconSource" Value="../Images/18envelope.png" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseTabCommand}" />
                         </Style>
                     </mvvmTestApp:PanesStyleSelector.DialogStyle>
                     <mvvmTestApp:PanesStyleSelector.FriendsStyle>
                         <Style TargetType="{x:Type xcad:LayoutItem}">
-                            <Setter Property="Title" Value="Друзья" />
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="IconSource" Value="../Images/111user.png" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseTabCommand}" />
                         </Style>
                     </mvvmTestApp:PanesStyleSelector.FriendsStyle>
                     <mvvmTestApp:PanesStyleSelector.MessagesStyle>
                         <Style TargetType="{x:Type xcad:LayoutItem}">
-                            <Setter Property="Title" Value="Переписка с ..." />
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="IconSource" Value="../Images/18envelope.png" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseTabCommand}" />
                         </Style>
                     </mvvmTestApp:PanesStyleSelector.MessagesStyle>
                     <mvvmTestApp:PanesStyleSelector.PageStyle>
                         <Style TargetType="{x:Type xcad:LayoutItem}">
-                            <Setter Property="Title" Value="Моя страница" />
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="IconSource" Value="../Images/53house.png" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseTabCommand}" />
                         </Style>
                     </mvvmTestApp:PanesStyleSelector.PageStyle>
                 </mvvmTestApp:PanesStyleSelector>

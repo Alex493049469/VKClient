@@ -13,13 +13,14 @@ using Core.Command;
 using Microsoft.Win32;
 using NAudio.Gui;
 using NAudio.Wave;
+using VK.ViewModel.Main;
 using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
 
 namespace VK.ViewModel.Audios
 {
-    public class AudioListViewModel : BaseViewModel
+	public class AudioListViewModel : PaneViewModel
     {
         //Модель данных аудиозаписей
         private AudioModel _audioModel;
@@ -34,13 +35,16 @@ namespace VK.ViewModel.Audios
         public RelayCommand PauseAudioButtonClick { get; private set; }
         public RelayCommand StopAudioButtonClick { get; private set; }
         public RelayCommand SaveAudioButtonClick { get; private set; }
+
         public AudioListViewModel()
         {
+	        Title = "Мои аудиозаписи";
             LoadAudio();
             PlayAudioButtonClick = new RelayCommand(PlayAudio);
             PauseAudioButtonClick = new RelayCommand(PauseAudio);
             StopAudioButtonClick = new RelayCommand(StopAudio);
             SaveAudioButtonClick = new RelayCommand(SaveAudio);
+
             AudioPlayer.OnTrackEnd += NextAudioPlay;
         }
 
@@ -358,5 +362,5 @@ namespace VK.ViewModel.Audios
         }
         #endregion
 
-    }
+	}
 }

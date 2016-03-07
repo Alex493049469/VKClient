@@ -12,14 +12,11 @@ namespace VK.ViewModel.Main
 	public class MainViewModel : BaseViewModel
 	{
 		//Коллекция ViewModel
-		private ObservableCollection<BaseViewModel> _viewModels = new ObservableCollection<BaseViewModel>();
-		ReadOnlyObservableCollection<BaseViewModel> _readonyViewModels = null;
-		public ReadOnlyObservableCollection<BaseViewModel> ViewModels
+		private ObservableCollection<PaneViewModel> _viewModels = new ObservableCollection<PaneViewModel>();
+		public ObservableCollection<PaneViewModel> ViewModels
 		{
-			get { return _readonyViewModels ?? (_readonyViewModels = new ReadOnlyObservableCollection<BaseViewModel>(_viewModels)); }
+			get { return _viewModels; }
 		}
-
-		private BaseViewModel _activeViewModel = null;
 
 		//property
 		private int _unreadMessages;
@@ -32,8 +29,9 @@ namespace VK.ViewModel.Main
 				RaisePropertyChanged();
 			}
 		}
-		/// Активная viewModel
-		public BaseViewModel ActiveViewModel
+		// Активная viewModel
+		private PaneViewModel _activeViewModel = null;
+		public PaneViewModel ActiveViewModel
 		{
 			get { return _activeViewModel; }
 			set
@@ -58,6 +56,7 @@ namespace VK.ViewModel.Main
 		public RelayCommand OpenAudioCommand { get; private set; }
 		public RelayCommand OpenPageCommand { get; private set; }
 		public RelayCommand OpenFriendsCommand { get; private set; }
+
 
 		public MainViewModel()
 		{
@@ -89,6 +88,18 @@ namespace VK.ViewModel.Main
 		{
 			_viewModels.Add(new FriendsListViewModel());
 			ActiveViewModel = _viewModels.Last();
+		}
+
+		internal void Close(PaneViewModel fileToClose)
+		{
+			_viewModels.Remove(fileToClose);
+		}
+
+		private PaneViewModel FindViewModel(string title)
+		{
+			if (_viewModels == null) return null;
+
+			return _viewModels.FirstOrDefault(viewModel => viewModel.Title == title);
 		}
 
 	}

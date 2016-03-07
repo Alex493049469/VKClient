@@ -1,18 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using Core;
 using Core.Command;
 using VK.Services;
-using VK.View;
+using VK.ViewModel.Main;
 using VK.ViewModel.Messages;
-using VKAPI;
-using VKAPI.Model.DialogsModel;
-using VKAPI.Model.UsersModel;
 
 namespace VK.ViewModel.Dialogs
 {
-	public class DialogListViewModel : BaseViewModel
+	public class DialogListViewModel : PaneViewModel
 	{
 		//Commands
 		public RelayCommand OpenMessagesCommand { get; private set; }
@@ -40,6 +35,7 @@ namespace VK.ViewModel.Dialogs
 
 		public DialogListViewModel()
 		{
+			Title = "Мои сообщения";
 			CountDialog = 0;
 			OpenMessagesCommand = new RelayCommand(OpenMessages);
 			LoadCommand = new RelayCommand(LoadDialogs);
@@ -52,9 +48,7 @@ namespace VK.ViewModel.Dialogs
 			if (DialogItemsViewModel != null && DialogItemsViewModel.Count == CountDialog) return;
 			DialogItemsViewModel = ManagerService.Instance.DialogService.DialogItemsViewModel;
 			
-			
 			ManagerService.Instance.DialogService.GetDialog();
-
 
 			//ManagerService.Instance.EventService.LongPool();
 			CountDialog = ManagerService.Instance.DialogService.CountDialog;
@@ -62,7 +56,6 @@ namespace VK.ViewModel.Dialogs
 
 		public void OpenMessages()
 		{
-			var messagesView = new MessagesView();
 			MessageListViewModel messageViewModel;
 			if (ItemSelected.ChatId == null)
 			{
@@ -73,8 +66,8 @@ namespace VK.ViewModel.Dialogs
 				messageViewModel = new MessageListViewModel(true, (int)ItemSelected.ChatId);
 			}
 
-			messagesView.DataContext = messageViewModel;
-			//ViewModelLocator.Main.ContentPanel = messagesView;
+			MainViewModel.This.ViewModels.Add(messageViewModel);
+			MainViewModel.This.ActiveViewModel = MainViewModel.This.ViewModels.Last();
 
 		}
 
