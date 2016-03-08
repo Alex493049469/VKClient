@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
+﻿using Core;
 using Core.Command;
 using VK.ViewModel.Main;
 
@@ -34,7 +29,8 @@ namespace VK.ViewModel
 	    }
 
 		#region Закрытие вкладки
-		private void CloseTab()
+
+		public virtual void CloseTab()
 		{
 			MainViewModel.This.Close(this);
 		}

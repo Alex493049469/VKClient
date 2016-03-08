@@ -65,6 +65,7 @@ namespace VK.ViewModel.Dialogs
 			{
 				messageViewModel = new MessageListViewModel(true, (int)ItemSelected.ChatId);
 			}
+			messageViewModel.Title = ItemSelected.Title;
 
 			MainViewModel.This.ViewModels.Add(messageViewModel);
 			MainViewModel.This.ActiveViewModel = MainViewModel.This.ViewModels.Last();

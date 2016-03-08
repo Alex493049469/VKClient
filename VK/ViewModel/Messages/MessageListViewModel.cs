@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
-using Core.Command;
-using VK.ViewModel.Dialogs;
 using VKAPI;
 using VKAPI.Model.MessagesModel;
 using VKAPI.Model.UsersModel;
@@ -44,7 +39,7 @@ namespace VK.ViewModel.Messages
 
 		public MessageListViewModel(bool isChat, int id)
 		{
-			Title = "Пепеписка с ...";
+			Title = "Пепеписка с ";
 			_isChat = isChat;
 			_id = id;
 			LoadMessage();
