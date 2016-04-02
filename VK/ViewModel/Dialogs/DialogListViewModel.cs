@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Core.Command;
+using VK.DataAccess;
 using VK.Services;
 using VK.ViewModel.Main;
 using VK.ViewModel.Messages;
@@ -24,34 +25,32 @@ namespace VK.ViewModel.Dialogs
 			{
 				if (_dialogItemsViewModel == value)
 					return;
-
 				_dialogItemsViewModel = value;
-
 				RaisePropertyChanged();
 			}
 		}
 
 		public DialogItemViewModel ItemSelected { get; set; }
 
-		public DialogListViewModel()
+		private DialogRepository _dialogRepository;
+
+		public DialogListViewModel(DialogRepository dialogRepository)
 		{
+			_dialogRepository = dialogRepository;
 			Title = "Мои сообщения";
 			CountDialog = 0;
 			OpenMessagesCommand = new RelayCommand(OpenMessages);
 			LoadCommand = new RelayCommand(LoadDialogs);
 			LoadDialogs();
-
 		}
 
 		public void LoadDialogs()
 		{
 			if (DialogItemsViewModel != null && DialogItemsViewModel.Count == CountDialog) return;
-			DialogItemsViewModel = ManagerService.Instance.DialogService.DialogItemsViewModel;
-			
-			ManagerService.Instance.DialogService.GetDialog();
+			_dialogRepository.GetDialog();
+			DialogItemsViewModel = _dialogRepository.DialogItemsViewModel;
 
-			//ManagerService.Instance.EventService.LongPool();
-			CountDialog = ManagerService.Instance.DialogService.CountDialog;
+			CountDialog = _dialogRepository.CountDialog;
 		}
 
 		public void OpenMessages()
@@ -69,7 +68,6 @@ namespace VK.ViewModel.Dialogs
 
 			MainViewModel.This.ViewModels.Add(messageViewModel);
 			MainViewModel.This.ActiveViewModel = MainViewModel.This.ViewModels.Last();
-
 		}
 
 

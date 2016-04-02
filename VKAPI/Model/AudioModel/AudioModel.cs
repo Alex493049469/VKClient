@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 
 namespace VKAPI.Model.AudioModel
 {
-    public class Item
-    {
+    public class AudioItem
+    {	
         public int id { get; set; }
         public int owner_id { get; set; }
         public string artist { get; set; }
@@ -21,14 +16,14 @@ namespace VKAPI.Model.AudioModel
         public int? no_search { get; set; }
     }
 
-    public class Response
+	public class AudioResponse
     {
         public int count { get; set; }
-        public ObservableCollection<Item> items { get; set; }
+		public ObservableCollection<AudioItem> items { get; set; }
     }
 
     public class AudioModel
     {
-        public Response response { get; set; }
+		public AudioResponse response { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 using System.Linq;
 using Core;
 using Core.Command;
+using VK.DataAccess;
+using VK.Services;
 using VK.ViewModel.Audios;
 using VK.ViewModel.Dialogs;
 using VK.ViewModel.Friends;
@@ -18,7 +20,7 @@ namespace VK.ViewModel.Main
 			get { return _viewModels; }
 		}
 
-		//property
+		//Количество непрочитанных сообщений
 		private int _unreadMessages;
 		public int UnreadMessages
 		{
@@ -30,7 +32,7 @@ namespace VK.ViewModel.Main
 			}
 		}
 		// Активная viewModel
-		private PaneViewModel _activeViewModel = null;
+		private PaneViewModel _activeViewModel;
 		public PaneViewModel ActiveViewModel
 		{
 			get { return _activeViewModel; }
@@ -45,11 +47,14 @@ namespace VK.ViewModel.Main
 		}
 
 		static MainViewModel _this = new MainViewModel();
-
 		public static MainViewModel This
 		{
 			get { return _this; }
 		}
+
+		//repositories
+		DialogRepository _dialogRepository;
+		EventsService _eventService;
 
 		//Commands
 		public RelayCommand OpenDialogsCommand { get; private set; }
@@ -57,6 +62,8 @@ namespace VK.ViewModel.Main
 		public RelayCommand OpenPageCommand { get; private set; }
 		public RelayCommand OpenFriendsCommand { get; private set; }
 
+		private AudioListViewModel _audioList;
+		private DialogListViewModel _dialogList;
 
 		public MainViewModel()
 		{
@@ -68,8 +75,18 @@ namespace VK.ViewModel.Main
 
 		private void OpenAudios()
 		{
-			_viewModels.Add(new AudioListViewModel());
-			ActiveViewModel = _viewModels.Last();
+			if (_audioList == null)
+				_audioList = new AudioListViewModel();
+
+			if (_viewModels.Contains(_audioList))
+			{
+				ActiveViewModel = _audioList;
+			}
+			else
+			{
+				_viewModels.Add(_audioList);
+				ActiveViewModel = _viewModels.Last();
+			}
 		}
 
 		private void OpenMyPage()
@@ -80,8 +97,23 @@ namespace VK.ViewModel.Main
 
 		private void OpenDialogs()
 		{
-			_viewModels.Add(new DialogListViewModel());
-			ActiveViewModel = _viewModels.Last();
+			if (_dialogList == null)
+			{
+				_eventService = new EventsService();
+				//_eventService.LongPool();
+				_dialogRepository = new DialogRepository(_eventService);
+
+				_dialogList = new DialogListViewModel(_dialogRepository);
+			}
+			if (_viewModels.Contains(_dialogList))
+			{
+				ActiveViewModel = _dialogList;
+			}
+			else
+			{
+				_viewModels.Add(_dialogList);
+				ActiveViewModel = _viewModels.Last();
+			}
 		}
 
 		private void OpenFriends()
@@ -93,13 +125,6 @@ namespace VK.ViewModel.Main
 		internal void Close(PaneViewModel fileToClose)
 		{
 			_viewModels.Remove(fileToClose);
-		}
-
-		private PaneViewModel FindViewModel(string title)
-		{
-			if (_viewModels == null) return null;
-
-			return _viewModels.FirstOrDefault(viewModel => viewModel.Title == title);
 		}
 
 	}

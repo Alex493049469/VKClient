@@ -10,7 +10,7 @@
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
         x:Name="MainView"
         Title="Vk Client"
-        Width="944"
+        Width="950"
         Height="624"
         AllowsTransparency="True"
         Icon="/Images/VkIconBlack.png"

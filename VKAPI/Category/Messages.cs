@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VKAPI.Handlers;
 using VKAPI.Model.DialogsModel;
-using VKAPI.Model.ErrorModel;
+using VKAPI.Model.LongPullMessageModel;
 using VKAPI.Model.LongPullModel;
 using VKAPI.Model.MessagesModel;
 
@@ -135,7 +135,7 @@ namespace VKAPI.Category
 			});
 		}
 
-		public LongPullModel GetLongPollHistory(int ts, int pts, int max_msg_id =0, int preview_length =0, int onlines=0)
+		public LongPullMessageModel GetLongPollHistory(int ts, int pts, int max_msg_id = 0, int preview_length = 0, int onlines = 0)
 		{
 			var parameters = new Dictionary<string, object>
 			{
@@ -148,15 +148,15 @@ namespace VKAPI.Category
 
 			string str = VkRequest.GetData("messages.getLongPollHistory", parameters);
 			//заменить на нужную модель данных
-			LongPullModel longPullModel = JsonConvert.DeserializeObject<LongPullModel>(str);
+			LongPullMessageModel longPullModel = JsonConvert.DeserializeObject<LongPullMessageModel>(str);
 			return longPullModel;
 		}
 
-		public Task<LongPullModel> GetLongPollHistoryAsynk(int ts, int pts, int max_msg_id, int preview_length, int onlines)
+		public Task<LongPullMessageModel> GetLongPollHistoryAsynk(int ts, int pts, int max_msg_id=0, int preview_length=0, int onlines=0)
 		{
 			return Task.Run(() =>
 			{
-				LongPullModel messageModel = GetLongPollHistory(ts, pts, max_msg_id, preview_length, onlines);
+				LongPullMessageModel messageModel = GetLongPollHistory(ts, pts, max_msg_id, preview_length, onlines);
 				return messageModel;
 			});
 		}

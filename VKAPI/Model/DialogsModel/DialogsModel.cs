@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace VKAPI.Model.DialogsModel
 {
@@ -137,11 +138,12 @@ namespace VKAPI.Model.DialogsModel
         public int sound { get; set; }
         public int disabled_until { get; set; }
     }
-
+	//[JsonObject(MemberSerialization.OptIn)]
     public class Message
     {
         //идентификатор сообщения (не возвращается для пересланных сообщений).
-        public int id { get; set; }
+		[JsonProperty("id")]
+        public int Id { get; set; }
         //дата отправки сообщения в формате unixtime.
         public int date { get; set; }
         //тип сообщения (0 — полученное, 1 — отправленное, не возвращается для пересланных сообщений).

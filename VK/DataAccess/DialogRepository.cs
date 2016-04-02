@@ -1,21 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using VK.Services;
 using VK.ViewModel.Dialogs;
 using VKAPI;
 using VKAPI.Model.DialogsModel;
+using VKAPI.Model.LongPullMessageModel;
 using VKAPI.Model.UsersModel;
 
-namespace VK.Services
+namespace VK.DataAccess
 {
 	/// <summary>
-	/// отвечает за получение диалогов и их обновление, оповещает об изменении диалогов VM
+	/// Отвечает за загрузку данных через VKAPI и временное хранение подгруженных данных 
 	/// </summary>
-	public class DialogService
+	public class DialogRepository
 	{
 		private EventsService _eventService;
 
-		public  DialogService(EventsService eventService)
+		public DialogRepository(EventsService eventService)
 		{
 			_eventService = eventService;
 			_eventService.NewMessage += InstanceOnNewMessage;
@@ -37,13 +42,11 @@ namespace VK.Services
 			{
 				if (_dialogsViewModel == value)
 					return;
-
 				_dialogsViewModel = value;
-
 			}
 		}
 
-		public int CountDialog { get; set; }
+		public int CountDialog = 0;
 
 		public int UnreadMessages
 		{
@@ -99,15 +102,9 @@ namespace VK.Services
 			CountDialog = _dialogModel.response.count;
 			//UnreadMessages = _dialogModel.response.unread_dialogs;
 
-			var qwe = from item in _dialogModel.response.items
-				where item.unread > 0
-				let ert =+ item.unread
-				select ert;
-
-
-			//UnreadDialogs = _dialogModel.response.items
-			//если несколько пользователей то берем их из ChatActive если 1 то userId
-			//собираем все их id 
+				//UnreadDialogs = _dialogModel.response.items
+				//если несколько пользователей то берем их из ChatActive если 1 то userId
+				//собираем все их id 
 			List<int> userIdList = new List<int>();
 			foreach (var item in itemsDialog)
 			{
@@ -137,7 +134,7 @@ namespace VK.Services
 				{
 					UserIds += id;
 				}
-				else
+					else
 				{
 					UserIds += "," + id;
 				}
@@ -155,7 +152,7 @@ namespace VK.Services
 				{
 					switch (item.Attachment[0].type)
 					{
-						case "photo":
+						case "Photo":
 							item.Body = "Фотография";
 							break;
 						case "audio":
@@ -241,25 +238,43 @@ namespace VK.Services
 
 		}
 
-		private void InstanceOnNewMessage(EventsService.MessageNew message)
-		{
+		private void InstanceOnNewMessage(LongPullMessageModel message)
+			{
+				var messageTest = message.response.messages.items[0];
 
-			//for (int i = 0; i < DialogItemsViewModel.Count; i++)
-			//{
-			//	var item = DialogItemsViewModel[i];
-			//	if (item.UserId == message.FromId || item.ChatId == message.FromId)
-			//	{
-			//		DialogItemsViewModel.RemoveAt(i);
-			//		item.Body = message.Text;
-			//		item.Date = message.Timestamp;
-			//		DialogItemsViewModel.Insert(0, item);
-			//	}
-			//}
-		}
+				for (int i = 0; i < DialogItemsViewModel.Count; i++)
+				{
+					var item = DialogItemsViewModel[i];
+					//если чат
+					if (item.ChatId == null)
+					{
+						if (item.UserId == messageTest.user_id)
+						{
+							DialogItemsViewModel.RemoveAt(i);
+							item.Body = messageTest.body;
+							item.Date = messageTest.date;
+							DialogItemsViewModel.Insert(0, item);
+						}
+					}
+					else
+					{
+						if (item.ChatId == messageTest.chat_id)
+						{
+							DialogItemsViewModel.RemoveAt(i);
+							item.Body = messageTest.body;
+							item.Date = messageTest.date;
+							DialogItemsViewModel.Insert(0, item);
+						}
+					}
 
 
-		//класс так же получает ссылку на сервис messageService который будет оповещать о приходе нового сообщения
-		//В ответ на это диалоги тоже должны будут отбновлены(Диалог в который пришло сообщение)
+				}
+			}
 
+
+			//класс так же получает ссылку на сервис messageService который будет оповещать о приходе нового сообщения
+			//В ответ на это диалоги тоже должны будут отбновлены(Диалог в который пришло сообщение)
+
+		
 	}
 }

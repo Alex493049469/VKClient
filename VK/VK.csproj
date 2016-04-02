@@ -112,6 +112,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ActiveDocumentConverter.cs" />
     <Compile Include="Converters\CountUsersConverter.cs" />
+    <Compile Include="DataAccess\DialogRepository.cs" />
     <Compile Include="DataProvider\DataProvider.cs" />
     <Compile Include="DataTemplateSelectors\MessageDataTemplateSelector.cs" />
     <Compile Include="Dock\PanesStyleSelector.cs">
@@ -119,9 +120,8 @@
     </Compile>
     <Compile Include="Dock\PanesTemplateSelector.cs" />
     <Compile Include="Model\Dialogs.cs" />
-    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\EventsService.cs" />
-    <Compile Include="Services\ManagerService.cs" />
+    <Compile Include="Utils\TrayPos.cs" />
     <Compile Include="ViewModel\Audios\AudioPlayer.cs" />
     <Compile Include="AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
@@ -159,6 +159,9 @@
     </Compile>
     <Compile Include="View\MessagesView.xaml.cs">
       <DependentUpon>MessagesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewMessageWindow.xaml.cs">
+      <DependentUpon>NewMessageWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PageView.xaml.cs">
       <DependentUpon>PageView.xaml</DependentUpon>
@@ -230,6 +233,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="NewMessageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\PageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,6 +275,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Desktop\PhotoLoader\PhotoLoader\PhotoLoader.csproj">
+      <Project>{7c68c43b-0e5c-4b9f-9f49-045caa39d8b3}</Project>
+      <Name>PhotoLoader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{77e3e7e1-3665-4947-b370-85156522f4bb}</Project>
       <Name>Core</Name>
@@ -322,7 +333,6 @@
   <ItemGroup>
     <Resource Include="maly2.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

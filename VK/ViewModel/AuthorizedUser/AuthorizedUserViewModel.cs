@@ -1,7 +1,10 @@
-﻿using Core;
+﻿using System.Windows;
+using Core;
 using VK.Properties;
 using VK.Services;
+using VK.View;
 using VKAPI;
+using System.Collections.ObjectModel;
 
 namespace VK.ViewModel.AuthorizedUser
 {
@@ -43,9 +46,9 @@ namespace VK.ViewModel.AuthorizedUser
 
 		public void StartServices()
 		{
-			ManagerService.Instance.StartManagerService();
+			//ManagerService.Instance.StartManagerService();
 			//ManagerService.Instance.DialogService.GetDialog();
-			ManagerService.Instance.EventService.LongPool();
+			//ManagerService.Instance.EventService.LongPool();
 		}
 
 	}

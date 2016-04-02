@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:photoLoader="clr-namespace:PhotoLoader;assembly=PhotoLoader"
              Width="181"
              Height="115"
              Background="#FFeeeeee"
@@ -10,8 +11,9 @@
     <Grid Margin="0,0,96,33">
 
         <Image Margin="1,1,-1,1"
-               Source="{Binding Photo}"
-               Stretch="Uniform" />
+               Stretch="Uniform"
+               photoLoader:Loader.DisplayOption="FullResolution"
+               photoLoader:Loader.Source="{Binding Path=Photo}" />
 
         <TextBlock Width="84"
                    Margin="0,11,-90,5"

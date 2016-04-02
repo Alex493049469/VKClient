@@ -32,7 +32,7 @@ namespace VK.DataTemplateSelectors
 				{
 					return element.FindResource("MessagesSticker") as DataTemplate;
 				}
-				if (message.Attachments[0].type == "photo")
+				if (message.Attachments[0].type == "Photo")
 				{
 					return element.FindResource("MessagesPhoto") as DataTemplate;
 				}

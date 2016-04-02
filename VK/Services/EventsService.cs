@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Forms;
-using Core;
 using Newtonsoft.Json;
 using VKAPI;
+using VKAPI.Model.LongPullMessageModel;
 using VKAPI.Model.LongPullModel;
 
 namespace VK.Services
@@ -24,7 +22,7 @@ namespace VK.Services
 		int pts;
 
 		//событие на которое надо подписаться для оповещения что пришло новое сообщение
-		public delegate void MethodContainer(MessageNew message);
+		public delegate void MethodContainer(LongPullMessageModel message);
 		public event MethodContainer NewMessage;
 
 		public async void LongPool(Updates updates = null)
@@ -64,7 +62,7 @@ namespace VK.Services
 			LongPool(updateModel);
 		}
 
-		private void DetectTypeEvent(Updates updates)
+		private async void DetectTypeEvent(Updates updates)
 		{
 			foreach (var update in updates.updates)
 			{
@@ -79,7 +77,7 @@ namespace VK.Services
 				if (codeTypeEvent == 4)
 				{
 					//получаем новые сообщения
-					var qwe = _vk.Messages.GetLongPollHistory(ts, pts);
+					LongPullMessageModel longPullMessageModel = await _vk.Messages.GetLongPollHistoryAsynk(ts, pts);
 
 					var message = new MessageNew
 					{
@@ -92,12 +90,13 @@ namespace VK.Services
 						Text = Convert.ToString(update[6])
 					};
 
-					if (NewMessage != null) NewMessage(message);
+					NewMessageWindow newMessage = new NewMessageWindow(longPullMessageModel);
+					newMessage.Show();
+
+					if (NewMessage != null) NewMessage(longPullMessageModel);
 				}
 			}
 		}
-
-
 
 		public class MessageNew
 		{

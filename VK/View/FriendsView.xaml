@@ -4,6 +4,7 @@
              xmlns:converters="clr-namespace:VK.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:photoLoader="clr-namespace:PhotoLoader;assembly=PhotoLoader"
              Background="White"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -22,7 +23,8 @@
                 <Image Width="100"
                        Height="100"
                        Margin="5"
-                       Source="{Binding Photo100}" />
+                       photoLoader:Loader.DisplayOption="Preview"
+                       photoLoader:Loader.Source="{Binding Path=Photo100}" />
                 <StackPanel Grid.Column="1"
                             Margin="5"
                             Orientation="Horizontal">

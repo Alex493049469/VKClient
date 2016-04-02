@@ -86,7 +86,7 @@ namespace VK.ViewModel.Messages
 					{
 						itemMessage.StickerPhoto_128 = item.attachments[0].sticker.photo_128;
 					}
-					if (item.attachments[0].type == "photo")
+					if (item.attachments[0].type == "Photo")
 					{
 						itemMessage.Photo = item.attachments[0].photo.photo_604;
 						itemMessage.PhotoHeight = Convert.ToInt32(item.attachments[0].photo.height*0.7);

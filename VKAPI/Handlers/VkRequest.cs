@@ -17,7 +17,7 @@ namespace VKAPI.Handlers
 		private static string _baseUrl = @"https://api.vk.com/method/";
 
 		//версия Api
-		private static string ApiVersion = "v=5.29";
+		private static string ApiVersion = "v=5.45";
 
 		/// <summary>
 		/// Отправка запроса и получение ответа в строку
