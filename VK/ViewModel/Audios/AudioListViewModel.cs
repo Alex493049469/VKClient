@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,6 +21,8 @@ namespace VK.ViewModel.Audios
 		private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
 		//для проигрывания аудио в фоне
 		private AudioPlayer _audioPlayer = new AudioPlayer();
+		//состояние проигрывания
+		private bool _isPaysed = false;
 
 		public RelayCommand PlayAudioButtonClick { get; private set; }
 		public RelayCommand PauseAudioButtonClick { get; private set; }
@@ -44,9 +46,7 @@ namespace VK.ViewModel.Audios
 		/// </summary>
 		public async void LoadAudio()
 		{
-			AudioItemsViewModel = null;
-			AudioModel audioModel = await _vk.Audio.GetAsync();
-			Add(audioModel);
+			await MyAudio(null);
 		}
 
 		private void Add(AudioModel audioModel)
@@ -68,26 +68,6 @@ namespace VK.ViewModel.Audios
 				_item.Add(itemAudio);
 			}
 			AudioItemsViewModel = _item;
-		}
-
-		/// <summary>
-		/// ищет проигрываемую аудиозапись и выделяет ее цветом
-		/// </summary>
-		private void FingPlayingAudio()
-		{
-			for (int i = 0; i < AudioItemsViewModel.Count; i++)
-			{
-				if (AudioItemsViewModel[i].Url == AudioPlayer.LastPlayed)
-				{
-					AudioItemsViewModel[i].IsPlay = true;
-					ItemPlaying = AudioItemsViewModel[i];
-				}
-				else
-				{
-					AudioItemsViewModel[i].IsPlay = false;
-				}
-			}
-		   
 		}
 
 		#region Свойства
@@ -127,9 +107,19 @@ namespace VK.ViewModel.Audios
 		{
 			 if (ItemSelected != null)
 			 {
-				 AudioPlayer.Play(ItemSelected.Url);
-				 FingPlayingAudio();
-			 }
+				AudioPlayer.Play(ItemSelected.Url);
+
+				if (_isPaysed != true)
+				{
+					if (ItemPlaying != null)
+					{
+						ItemPlaying.IsPlay = false;
+					}
+					ItemSelected.IsPlay = true;
+					ItemPlaying = ItemSelected;
+				}
+				_isPaysed = false;
+			}
 		}
 
 		#endregion;
@@ -138,6 +128,7 @@ namespace VK.ViewModel.Audios
 		private void PauseAudio()
 		{
 			AudioPlayer.Pause();
+			_isPaysed = true;
 		}
 		#endregion;
 
@@ -148,7 +139,7 @@ namespace VK.ViewModel.Audios
 		}
 		#endregion;
 
-		#region Отвечает за  переключение песен
+		#region Переключение песен
 
 		public void NextAudioPlay()
 		{
@@ -180,19 +171,9 @@ namespace VK.ViewModel.Audios
 		}
 		#endregion;
 
-		#region Клик по кнопке поиск аудиозаписей
+		#region Поиск аудиозаписей
 		private AsyncDelegateCommand _searchAudio;
-		public ICommand SearchAudioButtonClick
-		{
-			get
-			{
-				if (_searchAudio == null)
-				{
-					_searchAudio = new AsyncDelegateCommand(SearchAudio);
-				}
-				return _searchAudio;
-			}
-		}
+		public ICommand SearchAudioButtonClick => _searchAudio ?? (_searchAudio = new AsyncDelegateCommand(SearchAudio));
 
 		private async Task SearchAudio(object o)
 		{
@@ -202,39 +183,21 @@ namespace VK.ViewModel.Audios
 		}
 		#endregion;
 
-		#region Клик по кнопке мои аудиозаписи
+		#region Мои аудиозаписи
 		private AsyncDelegateCommand _myAudioAudio;
-		public ICommand MyAudioButtonClick
-		{
-			get
-			{
-				if (_myAudioAudio == null)
-				{
-					_myAudioAudio = new AsyncDelegateCommand(MyAudio);
-				}
-				return _myAudioAudio;
-			}
-		}
+		public ICommand MyAudioButtonClick => _myAudioAudio ?? (_myAudioAudio = new AsyncDelegateCommand(MyAudio));
 
 		private async Task MyAudio(object o)
 		{
-			LoadAudio();
+			AudioItemsViewModel = null;
+			AudioModel audioModel = await _vk.Audio.GetAsync();
+			Add(audioModel);
 		}
 		#endregion;
 
-		#region Клик по кнопке рекомендуемые
+		#region Рекомендуемые
 		private AsyncDelegateCommand _audioRecommended;
-		public ICommand AudioRecommendedButtonClick
-		{
-			get
-			{
-				if (_audioRecommended == null)
-				{
-					_audioRecommended = new AsyncDelegateCommand(AudioRecommended);
-				}
-				return _audioRecommended;
-			}
-		}
+		public ICommand AudioRecommendedButtonClick => _audioRecommended ?? (_audioRecommended = new AsyncDelegateCommand(AudioRecommended));
 
 		private async Task AudioRecommended(object o)
 		{
@@ -248,19 +211,17 @@ namespace VK.ViewModel.Audios
 		}
 		#endregion;
 
-		#region Клик по кнопке сохранить аудиозапись
+		#region Сохранение аудиозаписи
 
 		private void SaveAudio()
 		{
-			var sfd = new SaveFileDialog();
-			sfd.DefaultExt = ".mp3";
+			var sfd = new SaveFileDialog {DefaultExt = ".mp3"};
 			sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
 			if (sfd.ShowDialog() == true)
 			{
 				WebClient webClient = new WebClient();
 				webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
-				webClient.DownloadFileCompleted += delegate(object sender, AsyncCompletedEventArgs args)
-				{
+				webClient.DownloadFileCompleted += delegate {
 					MessageBox.Show("Файл успешно сохранен!");
 				};
 			}
@@ -269,17 +230,7 @@ namespace VK.ViewModel.Audios
 
 		#region Добавление аудиозаписи
 		private AsyncDelegateCommand _addAudio;
-		public ICommand AddAudioButtonClick
-		{
-			get
-			{
-				if (_addAudio == null)
-				{
-					_addAudio = new AsyncDelegateCommand(AddAudio);
-				}
-				return _addAudio;
-			}
-		}
+		public ICommand AddAudioButtonClick => _addAudio ?? (_addAudio = new AsyncDelegateCommand(AddAudio));
 
 		private async Task AddAudio(object o)
 		{
@@ -297,17 +248,8 @@ namespace VK.ViewModel.Audios
 
 		#region Удаление аудиозаписи
 		private AsyncDelegateCommand _deleteAudio;
-		public ICommand DeleteAudioButtonClick
-		{
-			get
-			{
-				if (_deleteAudio == null)
-				{
-					_deleteAudio = new AsyncDelegateCommand(DeleteAudio);
-				}
-				return _deleteAudio;
-			}
-		}
+		public ICommand DeleteAudioButtonClick => _deleteAudio ?? (_deleteAudio = new AsyncDelegateCommand(DeleteAudio));
+
 		private async Task DeleteAudio(object o)
 		{
 			for (int i = 0; i < AudioItemsViewModel.Count; i++)
