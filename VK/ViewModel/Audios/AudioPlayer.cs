@@ -1,174 +1,164 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using Core;
 using NAudio.Wave;
 using VK.Properties;
+using VKAPI.Model.AudioModel;
 
 namespace VK.ViewModel.Audios
 {
-    public class AudioPlayer : BaseViewModel, IDisposable
-    {
-        private IWavePlayer wavePlayer;
-        private AudioFileReader reader;
-        private DispatcherTimer timer = new DispatcherTimer();
-        private double sliderPosition;
-        private string lastPlayed;
-        private static float volimePosition;
-        const double sliderMax = 10.0;
+	public class AudioPlayer : BaseViewModel, IDisposable
+	{
+		private IWavePlayer _wavePlayer;
+		private AudioFileReader _reader;
+		private readonly DispatcherTimer _timer = new DispatcherTimer();
+		private double _sliderPosition;
+		private static float _volimePosition;
+		const double SliderMax = 10.0;
 
-        public delegate void MethodContainer();
-        public event MethodContainer OnTrackEnd;
+		private Task<AudioFileReader> Reader;
 
-        //сохранение настроек
-        private void SaveSettings()
-        {
-            Settings.Default.volime = volimePosition;
-            Settings.Default.Save();
-        }
+		public delegate void MethodContainer();
+		public event MethodContainer OnTrackEnd;
 
-        private void LoadSettings()
-        {
-             //загрузка положения бегунка громкости
-            VolimePosition = Settings.Default.volime;
-        }
+		//сохранение настроек
+		private void SaveSettings()
+		{
+			Settings.Default.volime = _volimePosition;
+			Settings.Default.Save();
+		}
 
-        public AudioPlayer()
-        {
-            timer.Interval = TimeSpan.FromMilliseconds(100);
-            timer.Tick += TimerOnTick;
-            LoadSettings();
-        }
+		private void LoadSettings()
+		{
+			 //загрузка положения бегунка громкости
+			VolimePosition = Settings.Default.volime;
+		}
 
-        public string LastPlayed
-        {
-            get { return lastPlayed; }
-        }
+		public AudioPlayer()
+		{
+			_timer.Interval = TimeSpan.FromMilliseconds(100);
+			_timer.Tick += TimerOnTick;
+			LoadSettings();
+		}
 
-        public float VolimePosition
-        {
-            get { return volimePosition; }
-            set
-            {
-                volimePosition = value;
-                if(reader != null)
-                reader.Volume = volimePosition;
-                SaveSettings();
-                RaisePropertyChanged();
-            }
-        }
+		public float VolimePosition
+		{
+			get { return _volimePosition; }
+			set
+			{
+				_volimePosition = value;
+				if(_reader != null)
+				_reader.Volume = _volimePosition;
+				SaveSettings();
+				RaisePropertyChanged();
+			}
+		}
 
-        private void TimerOnTick(object sender, EventArgs eventArgs)
-        {
-            if (reader != null)
-            {
-                sliderPosition = Math.Min(sliderMax, reader.Position * sliderMax / reader.Length);
-                if (reader.Position >= (reader.Length-30000) && wavePlayer.PlaybackState != PlaybackState.Stopped)
-                {
-                    timer.Stop();
-                    if (OnTrackEnd != null) OnTrackEnd();
-                    //Thread.Sleep(100);
-                }
-                RaisePropertyChanged("SliderPosition");
-            }
-        }
+		private void TimerOnTick(object sender, EventArgs eventArgs)
+		{
+			if (_reader != null)
+			{
+				_sliderPosition = Math.Min(SliderMax, _reader.Position * SliderMax / _reader.Length);
+				if (_reader.Position >= (_reader.Length-30000) && _wavePlayer.PlaybackState != PlaybackState.Stopped)
+				{
+					_timer.Stop();
+					OnTrackEnd?.Invoke();
+				}
+				RaisePropertyChanged("SliderPosition");
+			}
+		}
 
-        public double SliderPosition
-        {
-            get { return sliderPosition; }
-            set
-            {
-                if (sliderPosition != value)
-                {
-                    sliderPosition = value;
-                    if (reader != null)
-                    {
-                        var pos = (long)(reader.Length * sliderPosition / sliderMax);
-                        reader.Position = pos; // media foundation will worry about block align for us
-                    }
-                    RaisePropertyChanged();
-                }
-            }
-        }
+		public double SliderPosition
+		{
+			get { return _sliderPosition; }
+			set
+			{
+				if (_sliderPosition != value)
+				{
+					_sliderPosition = value;
+					if (_reader != null)
+					{
+						var pos = (long)(_reader.Length * _sliderPosition / SliderMax);
+						_reader.Position = pos; // media foundation will worry about block align for us
+					}
+					RaisePropertyChanged();
+				}
+			}
+		}
 
-        public void Stop()
-        {
-            if (wavePlayer != null)
-            {
-                wavePlayer.Stop();
-            }
-        }
+		public void Stop()
+		{
+			_wavePlayer?.Stop();
+		}
 
-        public void Pause()
-        {
-            if (wavePlayer != null)
-            {
-                wavePlayer.Pause();
-            }
-        }
+		public void Pause()
+		{
+			_wavePlayer?.Pause();
+		}
 
-        public void Play(string path)
-        {
-            if (wavePlayer == null)
-            {
-                CreatePlayer();
-            }
-            if (wavePlayer.PlaybackState == PlaybackState.Paused)
-            {
-                wavePlayer.Play();
-                return;
-            }
-            if (lastPlayed != path && reader != null)
-            {
-                Stop();
-                reader.Dispose();
-                reader = null;
-            }
-            if (reader == null)
-            {
-                reader = new AudioFileReader(path);
-                lastPlayed = path;
-                wavePlayer.Init(reader);
-            }
-            if (wavePlayer.PlaybackState == PlaybackState.Playing)
-            {
-                Stop();
+		public void Play(string path)
+		{
+			if (_wavePlayer == null)
+			{
+				CreatePlayer();
+			}
+			if (_wavePlayer.PlaybackState == PlaybackState.Paused)
+			{
+				_wavePlayer.Play();
+				return;
+			}
+			if (_reader != null)
+			{
+				Stop();
+				_reader.Dispose();
+				_reader = null;
+			}
+			if (_reader == null)
+			{
+				//здесь происходит зависание если трек не доступен
+				Reader = GetReader(path);
 
-            }
-            reader.Volume = volimePosition;
-            wavePlayer.Play();
+				_reader = Reader.Result; 
+				//_reader = new AudioFileReader(path);
+				_wavePlayer.Init(_reader);
+			}
+			if (_wavePlayer.PlaybackState == PlaybackState.Playing)
+			{
+				Stop();
 
-            timer.Start();
-        }
+			}
+			_reader.Volume = _volimePosition;
+			_wavePlayer.Play();
 
-        private void CreatePlayer()
-        {
-            wavePlayer = new WaveOutEvent();
-            wavePlayer.PlaybackStopped += WavePlayerOnPlaybackStopped;
-        }
+			_timer.Start();
+		}
 
-        private void WavePlayerOnPlaybackStopped(object sender, StoppedEventArgs stoppedEventArgs)
-        {
-            if (reader != null)
-            {
-                SliderPosition = 0;
-            }
-        }
+		public Task<AudioFileReader> GetReader(string path)
+		{
+			return Task.Run(() => new AudioFileReader(path));
+		}
 
-        public void Dispose()
-        {
-            if (wavePlayer != null)
-            {
-                wavePlayer.Dispose();
-            }
-            if (reader != null)
-            {
-                reader.Dispose();
-            }
-        }
-       
-    }
+
+		private void CreatePlayer()
+		{
+			_wavePlayer = new WaveOutEvent();
+			_wavePlayer.PlaybackStopped += WavePlayerOnPlaybackStopped;
+		}
+
+		private void WavePlayerOnPlaybackStopped(object sender, StoppedEventArgs stoppedEventArgs)
+		{
+			if (_reader != null)
+			{
+				SliderPosition = 0;
+			}
+		}
+
+		public void Dispose()
+		{
+			_wavePlayer?.Dispose();
+			_reader?.Dispose();
+		}
+	   
+	}
 }
