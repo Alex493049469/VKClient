@@ -14,11 +14,8 @@ namespace VK.ViewModel.Main
 	public class MainViewModel : BaseViewModel
 	{
 		//Коллекция ViewModel
-		private ObservableCollection<PaneViewModel> _viewModels = new ObservableCollection<PaneViewModel>();
-		public ObservableCollection<PaneViewModel> ViewModels
-		{
-			get { return _viewModels; }
-		}
+		private readonly ObservableCollection<PaneViewModel> _viewModels = new ObservableCollection<PaneViewModel>();
+		public ObservableCollection<PaneViewModel> ViewModels => _viewModels;
 
 		//Количество непрочитанных сообщений
 		private int _unreadMessages;
@@ -46,11 +43,7 @@ namespace VK.ViewModel.Main
 			}
 		}
 
-		static MainViewModel _this = new MainViewModel();
-		public static MainViewModel This
-		{
-			get { return _this; }
-		}
+		public static MainViewModel This { get; } = new MainViewModel();
 
 		//repositories
 		DialogRepository _dialogRepository;

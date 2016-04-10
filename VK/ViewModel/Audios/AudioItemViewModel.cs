@@ -17,12 +17,9 @@ namespace VK.ViewModel.Audios
 
         public string Url { get; set; }
 
-        public string FullNameAudio
-        {
-            get { return Artist + " - " + Title; }
-        }
+        public string FullNameAudio => Artist + " - " + Title;
 
-        //проигрывается ли в данный момент
+	    //проигрывается ли в данный момент
         public bool IsPlay { get; set; }
 
         //флаг мои аудиозаписи или нет

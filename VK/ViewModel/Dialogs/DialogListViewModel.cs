@@ -2,7 +2,6 @@
 using System.Linq;
 using Core.Command;
 using VK.DataAccess;
-using VK.Services;
 using VK.ViewModel.Main;
 using VK.ViewModel.Messages;
 
@@ -32,7 +31,7 @@ namespace VK.ViewModel.Dialogs
 
 		public DialogItemViewModel ItemSelected { get; set; }
 
-		private DialogRepository _dialogRepository;
+		private readonly DialogRepository _dialogRepository;
 
 		public DialogListViewModel(DialogRepository dialogRepository)
 		{

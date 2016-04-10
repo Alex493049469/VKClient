@@ -20,7 +20,7 @@ namespace VK.ViewModel.Audios
 		//ViewModel Аудиозапсей
 		private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
 		//для проигрывания аудио в фоне
-		private AudioPlayer _audioPlayer = new AudioPlayer();
+		private IAudioPlayer _audioPlayer = new AudioPlayer();
 		//состояние проигрывания
 		private bool _isPaysed = false;
 
@@ -38,7 +38,9 @@ namespace VK.ViewModel.Audios
 			StopAudioButtonClick = new RelayCommand(StopAudio);
 			SaveAudioButtonClick = new RelayCommand(SaveAudio);
 
-			AudioPlayer.OnTrackEnd += NextAudioPlay;
+			_audioPlayer.OnEndAudio += NextAudioPlay;
+			_audioPlayer.OnAudioPositionChanged += (sender, args) => RaisePropertyChanged("AudioPosition");
+
 		}
 
 		/// <summary>
@@ -49,7 +51,7 @@ namespace VK.ViewModel.Audios
 			await MyAudio(null);
 		}
 
-		private void Add(AudioModel audioModel)
+		private void Add(AudioModel audioModel, bool isMyAudio)
 		{
 			ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
 			foreach (var item in audioModel.response.items)
@@ -58,7 +60,7 @@ namespace VK.ViewModel.Audios
 				{
 					Id = item.id,
 					OwnerId = item.owner_id,
-					IsMyItem = true,
+					IsMyItem = isMyAudio,
 					Url = item.url,
 					Title = item.title,
 					Duration = item.duration,
@@ -89,12 +91,22 @@ namespace VK.ViewModel.Audios
 			}
 		}
 
-		public AudioPlayer AudioPlayer
+		public float VolimePosition
 		{
-			get { return _audioPlayer; }
+			get { return _audioPlayer.VolimePosition; }
 			set
 			{
-				_audioPlayer = value;
+				_audioPlayer.VolimePosition = value;
+				RaisePropertyChanged();
+			}
+		}
+
+		public double AudioPosition
+		{
+			get { return _audioPlayer.AudioPosition; }
+			set
+			{
+				_audioPlayer.AudioPosition = value;
 				RaisePropertyChanged();
 			}
 		}
@@ -107,7 +119,7 @@ namespace VK.ViewModel.Audios
 		{
 			 if (ItemSelected != null)
 			 {
-				AudioPlayer.Play(ItemSelected.Url);
+				_audioPlayer.Play(ItemSelected.Url);
 
 				if (_isPaysed != true)
 				{
@@ -127,7 +139,7 @@ namespace VK.ViewModel.Audios
 		#region Пауза
 		private void PauseAudio()
 		{
-			AudioPlayer.Pause();
+			_audioPlayer.Pause();
 			_isPaysed = true;
 		}
 		#endregion;
@@ -135,13 +147,13 @@ namespace VK.ViewModel.Audios
 		#region Стоп
 		private void StopAudio()
 		{
-			AudioPlayer.Stop();
+			_audioPlayer.Stop();
 		}
 		#endregion;
 
 		#region Переключение песен
 
-		public void NextAudioPlay()
+		public void NextAudioPlay(object sender, EventArgs eventArgs)
 		{
 			for (int i = 0; i < AudioItemsViewModel.Count; i++)
 			{
@@ -153,7 +165,7 @@ namespace VK.ViewModel.Audios
 					if (i + 1 < AudioItemsViewModel.Count)
 					{
 						AudioItemsViewModel[i + 1].IsPlay = true;
-						AudioPlayer.Play(AudioItemsViewModel[i + 1].Url);
+						_audioPlayer.Play(AudioItemsViewModel[i + 1].Url);
 						ItemPlaying = AudioItemsViewModel[i + 1];
 						break;
 					}
@@ -161,7 +173,7 @@ namespace VK.ViewModel.Audios
 					{
 						i = -1;
 						AudioItemsViewModel[i + 1].IsPlay = true;
-						AudioPlayer.Play(AudioItemsViewModel[i + 1].Url);
+						_audioPlayer.Play(AudioItemsViewModel[i + 1].Url);
 						ItemPlaying = AudioItemsViewModel[i + 1];
 						break;
 					}
@@ -179,7 +191,7 @@ namespace VK.ViewModel.Audios
 		{
 			AudioItemsViewModel = null;
 			AudioModel audioModel = await _vk.Audio.SearchAsync(SearchString);
-			Add(audioModel);
+			Add(audioModel, false);
 		}
 		#endregion;
 
@@ -191,7 +203,7 @@ namespace VK.ViewModel.Audios
 		{
 			AudioItemsViewModel = null;
 			AudioModel audioModel = await _vk.Audio.GetAsync();
-			Add(audioModel);
+			Add(audioModel, true);
 		}
 		#endregion;
 
@@ -206,7 +218,7 @@ namespace VK.ViewModel.Audios
 				string targetAudio = ItemSelected.OwnerId + "_" + ItemSelected.Id;
 				AudioItemsViewModel = null;
 				AudioModel audioModel = await _vk.Audio.GetRecommendationsAsync(targetAudio);
-				Add(audioModel);
+				Add(audioModel, false);
 			}
 		}
 		#endregion;

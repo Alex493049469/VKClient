@@ -6,7 +6,7 @@ using Core.Command;
 namespace Core
 {   
     [Magic]
-    public class BaseViewModel : INotifyPropertyChanged
+    public abstract class BaseViewModel : INotifyPropertyChanged
     {
         #region MVVM related
         protected void RaisePropertyChanged([CallerMemberName]string propertyName = "") // волшебство .NET 4.5

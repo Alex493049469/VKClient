@@ -166,7 +166,7 @@
                 IsSelectionRangeEnabled="false"
                 SelectionEnd="0"
                 SelectionStart="0"
-                Value="{Binding AudioPlayer.SliderPosition,
+                Value="{Binding AudioPosition,
                                 Mode=TwoWay}" />
         <Slider x:Name="Volime"
                 Width="60"
@@ -177,7 +177,7 @@
                 Maximum="1.0"
                 Minimum="0.0"
                 Orientation="Horizontal"
-                Value="{Binding AudioPlayer.VolimePosition,
+                Value="{Binding VolimePosition,
                                 Mode=TwoWay}" />
 
         <Button Name="PlayButton"

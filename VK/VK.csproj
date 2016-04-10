@@ -135,6 +135,7 @@
     <Compile Include="ViewModel\Audios\AudioItemViewModel.cs" />
     <Compile Include="ViewModel\Audios\AudioListViewModel.cs" />
     <Compile Include="DataTemplateSelectors\DialogDataTemplateSelector.cs" />
+    <Compile Include="ViewModel\Audios\IAudioPlayer.cs" />
     <Compile Include="ViewModel\AuthorizedUser\AuthorizedUserViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\DialogListViewModel.cs" />
     <Compile Include="ViewModel\Dialogs\DialogItemViewModel.cs" />

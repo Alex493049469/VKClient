@@ -4,25 +4,23 @@ using System.Windows.Threading;
 using Core;
 using NAudio.Wave;
 using VK.Properties;
-using VKAPI.Model.AudioModel;
 
 namespace VK.ViewModel.Audios
 {
-	public class AudioPlayer : BaseViewModel, IDisposable
+	public class AudioPlayer : IAudioPlayer, IDisposable
 	{
 		private IWavePlayer _wavePlayer;
 		private AudioFileReader _reader;
 		private readonly DispatcherTimer _timer = new DispatcherTimer();
-		private double _sliderPosition;
+		private double _audioPosition;
 		private static float _volimePosition;
-		const double SliderMax = 10.0;
+		private const double SliderMax = 10.0;
 
 		private Task<AudioFileReader> Reader;
 
-		public delegate void MethodContainer();
-		public event MethodContainer OnTrackEnd;
+		public event EventHandler OnEndAudio;
+		public event EventHandler OnAudioPositionChanged;
 
-		//сохранение настроек
 		private void SaveSettings()
 		{
 			Settings.Default.volime = _volimePosition;
@@ -31,7 +29,6 @@ namespace VK.ViewModel.Audios
 
 		private void LoadSettings()
 		{
-			 //загрузка положения бегунка громкости
 			VolimePosition = Settings.Default.volime;
 		}
 
@@ -51,7 +48,6 @@ namespace VK.ViewModel.Audios
 				if(_reader != null)
 				_reader.Volume = _volimePosition;
 				SaveSettings();
-				RaisePropertyChanged();
 			}
 		}
 
@@ -59,30 +55,29 @@ namespace VK.ViewModel.Audios
 		{
 			if (_reader != null)
 			{
-				_sliderPosition = Math.Min(SliderMax, _reader.Position * SliderMax / _reader.Length);
+				OnAudioPositionChanged?.Invoke(this, null);
+				_audioPosition = Math.Min(SliderMax, _reader.Position * SliderMax / _reader.Length);
 				if (_reader.Position >= (_reader.Length-30000) && _wavePlayer.PlaybackState != PlaybackState.Stopped)
 				{
 					_timer.Stop();
-					OnTrackEnd?.Invoke();
+					OnEndAudio?.Invoke(this, null);
 				}
-				RaisePropertyChanged("SliderPosition");
 			}
 		}
 
-		public double SliderPosition
+		public double AudioPosition
 		{
-			get { return _sliderPosition; }
+			get { return _audioPosition; }
 			set
 			{
-				if (_sliderPosition != value)
+				if (_audioPosition != value)
 				{
-					_sliderPosition = value;
+					_audioPosition = value;
 					if (_reader != null)
 					{
-						var pos = (long)(_reader.Length * _sliderPosition / SliderMax);
+						var pos = (long)(_reader.Length * _audioPosition / SliderMax);
 						_reader.Position = pos; // media foundation will worry about block align for us
 					}
-					RaisePropertyChanged();
 				}
 			}
 		}
@@ -134,7 +129,7 @@ namespace VK.ViewModel.Audios
 			_timer.Start();
 		}
 
-		public Task<AudioFileReader> GetReader(string path)
+		private Task<AudioFileReader> GetReader(string path)
 		{
 			return Task.Run(() => new AudioFileReader(path));
 		}
@@ -150,7 +145,7 @@ namespace VK.ViewModel.Audios
 		{
 			if (_reader != null)
 			{
-				SliderPosition = 0;
+				AudioPosition = 0;
 			}
 		}
 
