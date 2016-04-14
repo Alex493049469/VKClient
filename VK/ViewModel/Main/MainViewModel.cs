@@ -93,7 +93,7 @@ namespace VK.ViewModel.Main
 			if (_dialogList == null)
 			{
 				_eventService = new EventsService();
-				//_eventService.LongPool();
+				_eventService.LongPool();
 				_dialogRepository = new DialogRepository(_eventService);
 
 				_dialogList = new DialogListViewModel(_dialogRepository);

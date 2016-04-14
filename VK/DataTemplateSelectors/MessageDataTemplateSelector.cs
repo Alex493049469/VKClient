@@ -36,7 +36,11 @@ namespace VK.DataTemplateSelectors
 				{
 					return element.FindResource("MessagesPhoto") as DataTemplate;
 				}
-				
+				if (message.Attachments[0].type == "video")
+				{
+					return element.FindResource("MessagesVideo") as DataTemplate;
+				}
+
 			}
 
 			return null;

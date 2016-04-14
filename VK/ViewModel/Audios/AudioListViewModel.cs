@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,11 +19,11 @@ namespace VK.ViewModel.Audios
 		//ViewModel Аудиозапсей
 		private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
 		//для проигрывания аудио в фоне
-		private IAudioPlayer _audioPlayer = new AudioPlayer();
+		private readonly IAudioPlayer _audioPlayer = new AudioPlayer();
 		//состояние проигрывания
 		private bool _isPaysed = false;
 
-		public RelayCommand PlayAudioButtonClick { get; private set; }
+		//public RelayCommand PlayAudioButtonClick { get; private set; }
 		public RelayCommand PauseAudioButtonClick { get; private set; }
 		public RelayCommand StopAudioButtonClick { get; private set; }
 		public RelayCommand SaveAudioButtonClick { get; private set; }
@@ -33,7 +32,7 @@ namespace VK.ViewModel.Audios
 		{
 			Title = "Мои аудиозаписи";
 			LoadAudio();
-			PlayAudioButtonClick = new RelayCommand(PlayAudio);
+			//PlayAudioButtonClick = new RelayCommand(PlayAudio);
 			PauseAudioButtonClick = new RelayCommand(PauseAudio);
 			StopAudioButtonClick = new RelayCommand(StopAudio);
 			SaveAudioButtonClick = new RelayCommand(SaveAudio);
@@ -115,23 +114,29 @@ namespace VK.ViewModel.Audios
 		#endregion;
 
 		#region Плей
-		private void PlayAudio()
-		{
-			 if (ItemSelected != null)
-			 {
-				_audioPlayer.Play(ItemSelected.Url);
+		private AsyncDelegateCommand _playAudioButtonClick;
+		public ICommand PlayAudioButtonClick => _playAudioButtonClick ?? (_playAudioButtonClick = new AsyncDelegateCommand(PlayAudio));
 
-				if (_isPaysed != true)
+		private async Task PlayAudio(object o)
+		{
+			//await Task.Run(() =>
+			//{
+				if (ItemSelected != null)
 				{
-					if (ItemPlaying != null)
+					_audioPlayer.Play(ItemSelected.Url);
+
+					if (_isPaysed != true)
 					{
-						ItemPlaying.IsPlay = false;
+						if (ItemPlaying != null)
+						{
+							ItemPlaying.IsPlay = false;
+						}
+						ItemSelected.IsPlay = true;
+						ItemPlaying = ItemSelected;
 					}
-					ItemSelected.IsPlay = true;
-					ItemPlaying = ItemSelected;
+					_isPaysed = false;
 				}
-				_isPaysed = false;
-			}
+			//});
 		}
 
 		#endregion;

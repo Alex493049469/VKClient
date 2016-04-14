@@ -100,7 +100,7 @@ namespace VK.ViewModel.Messages
 
 			//если несколько пользователей то берем их из ChatActive если 1 то userId
 			//собираем все их id 
-			List<int> userIdList = new List<int>();
+			HashSet<int> userIdList = new HashSet<int>();
 
 			foreach (var item in itemsMessages)
 			{
@@ -114,18 +114,8 @@ namespace VK.ViewModel.Messages
 				}
 			}
 
-			string UserIds = "";
-			foreach (var userId in userIdList)
-			{
-				if (UserIds == "")
-				{
-					UserIds += userId;
-				}
-				else
-				{
-					UserIds += ","+ userId;
-				}
-			}
+			string UserIds = String.Join(",", userIdList);
+			
 			//получаем всю необходимую информацию о пользовалелях кто в диалогах 
 			UsersModel users = await _vk.Users.GetPhotoAsync(UserIds);
 

@@ -112,10 +112,10 @@ namespace VK.ViewModel.Audios
 			if (_reader == null)
 			{
 				//здесь происходит зависание если трек не доступен
-				Reader = GetReader(path);
+				//Reader = GetReader(path);
 
-				_reader = Reader.Result; 
-				//_reader = new AudioFileReader(path);
+				//_reader = Reader.Result; 
+				_reader = new AudioFileReader(path);
 				_wavePlayer.Init(_reader);
 			}
 			if (_wavePlayer.PlaybackState == PlaybackState.Playing)

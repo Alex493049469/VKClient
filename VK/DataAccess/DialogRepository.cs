@@ -100,12 +100,10 @@ namespace VK.DataAccess
 				itemsDialog.Add(itemDialog);
 			}
 			CountDialog = _dialogModel.response.count;
-			//UnreadMessages = _dialogModel.response.unread_dialogs;
 
-				//UnreadDialogs = _dialogModel.response.items
-				//если несколько пользователей то берем их из ChatActive если 1 то userId
-				//собираем все их id 
-			List<int> userIdList = new List<int>();
+			//если несколько пользователей то берем их из ChatActive если 1 то userId
+			//собираем все их id 
+			HashSet<int> userIdList = new HashSet<int>();
 			foreach (var item in itemsDialog)
 			{
 				if (item.UserCount == 1 || item.UserCount == null)
@@ -127,21 +125,10 @@ namespace VK.DataAccess
 				}
 			}
 
-			string UserIds = "";
-			foreach (var id in userIdList)
-			{
-				if (UserIds == "")
-				{
-					UserIds += id;
-				}
-					else
-				{
-					UserIds += "," + id;
-				}
-			}
+			string userIds = String.Join(",", userIdList);
 
 			//получаем всю необходимую информацию о пользовалелях кто в диалогах 
-			UsersModel users = await _vkApi.Users.GetPhotoAsync(UserIds);
+			UsersModel users = await _vkApi.Users.GetPhotoAsync(userIds);
 			UsersModel thisUser = await _vkApi.Users.GetAsync();
 			//здесь в зависимости от количества собеседников подгружаем фотки
 			foreach (var item in itemsDialog)

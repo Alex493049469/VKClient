@@ -61,6 +61,7 @@ namespace VKAPI.Model.MessagesModel
 		public Gift gift { get; set; }
 		public Link link { get; set; }
 		public Wall wall { get; set; }
+		public Video video { get; set; }
 	}
 
 	public class Wall

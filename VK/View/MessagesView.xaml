@@ -11,8 +11,6 @@
              MinWidth="450"
              MinHeight="500"
              Background="White"
-             d:DesignHeight="500"
-             d:DesignWidth="450"
              mc:Ignorable="d">
     <UserControl.Resources>
 
@@ -135,11 +133,42 @@
 
         </DataTemplate>
 
+        <DataTemplate x:Key="MessagesVideo">
+            <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                <Image MaxWidth="40"
+                       MaxHeight="40"
+                       Margin="5"
+                       VerticalAlignment="Top"
+                       Source="{Binding UserIdPhoto}">
+                    <Image.Clip>
+                        <RectangleGeometry RadiusX="5"
+                                           RadiusY="5"
+                                           Rect="0,0,40,40" />
+                    </Image.Clip>
+                </Image>
+                <StackPanel HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
+
+                    <Image Width="300"
+                           Height="300"
+                           Margin="5"
+                           Source="{Binding Photo}" />
+                </StackPanel>
+            </StackPanel>
+
+        </DataTemplate>
+
     </UserControl.Resources>
     <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="97*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="26*" />
+        </Grid.RowDefinitions>
         <baseControl:LazyLoadListBox Name="ListMessages"
-                                     MinHeight="400"
-                                     Margin="0,0,0,103"
+                                     Grid.Row="0"
+                                     Margin="0,0,0,5"
                                      VerticalAlignment="Stretch"
                                      ItemTemplateSelector="{StaticResource MessageDataTemplateSelector}"
                                      ItemsSource="{Binding MessageItemsViewModel,
@@ -191,22 +220,31 @@
                 </Style>
             </baseControl:LazyLoadListBox.Style>
         </baseControl:LazyLoadListBox>
-        <RichTextBox Height="auto"
-                     MinHeight="54"
-                     Margin="10,0,10,42"
-                     VerticalAlignment="Bottom">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="" />
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
-        <Button Width="75"
-                Height="28"
-                Margin="10,0,0,4"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Content="Отправить"
-                Style="{DynamicResource ButtonBlue}" />
+
+        <GridSplitter x:Name="gridSplitter"
+                      Grid.Row="1"
+                      Height="4"
+                      Margin="10,2"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Center"
+                      ShowsPreview="False" />
+        <Grid Grid.Row="2" Margin="0,2,0,0">
+            <TextBox Height="auto"
+                     MinHeight="60"
+                     Margin="0,0,0,33"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     Language="ru-ru"
+                     SpellCheck.IsEnabled="True"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
+            <Button Width="75"
+                    Height="28"
+                    Margin="0,0,1,2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Content="Отправить"
+                    Style="{DynamicResource ButtonBlue}" />
+        </Grid>
     </Grid>
 </UserControl>
