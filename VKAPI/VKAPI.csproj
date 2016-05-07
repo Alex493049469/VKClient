@@ -49,6 +49,7 @@
     <Compile Include="Model\ErrorModel\ErrorModel.cs" />
     <Compile Include="Model\LongPullMessageModel\LongPullMessageModel.cs" />
     <Compile Include="Model\LongPullModel\LongPullModel.cs" />
+    <Compile Include="Model\LyricsModel.cs" />
     <Compile Include="Model\MessagesModel\MessagesModel.cs" />
     <Compile Include="VkApi.cs" />
     <Compile Include="Handlers\VkRequest.cs" />

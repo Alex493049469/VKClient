@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using VKAPI.Handlers;
+using VKAPI.Model;
 using VKAPI.Model.AudioModel;
 
 namespace VKAPI.Category
@@ -144,6 +145,45 @@ namespace VKAPI.Category
 		public Task DeleteAsync(int audioId, int ownerId)
 		{
 			return Task.Run(() => { Delete(audioId, ownerId); });
+		}
+
+		public void Edit(int ownerId, int audioId, string artist, string title, string text, int genre_id, int? no_search)
+		{
+			var parameters = new Dictionary<string, object>
+			{
+				{"owner_id=", ownerId},
+				{"audio_id=", audioId},
+				{"artist=", artist},
+				{"title=", title},
+				{"text=", text},
+				{"genre_id=", genre_id},
+				{"no_search=", no_search},
+			};
+
+			 var qwe =VkRequest.GetData("audio.edit", parameters);
+		}
+
+		public Task EditAsync(int ownerId, int audioId, string artist, string title, string text, int genre_id, int? no_search)
+		{
+			return Task.Run(() => Edit(ownerId, audioId, artist, title, text, genre_id, no_search));
+		}
+
+		public LyricsModel GetLyrics(int lyrics_id)
+		{
+			var parameters = new Dictionary<string, object>
+			{
+				{"lyrics_id=", lyrics_id}
+			};
+
+			string str = VkRequest.GetData("audio.getLyrics", parameters);
+			//десериализуем
+			var audioModel = JsonConvert.DeserializeObject<LyricsModel>(str);
+			return audioModel;
+		}
+
+		public Task<LyricsModel> GetLyricsAsync(int lyrics_id)
+		{
+			return Task.Run(() => GetLyrics(lyrics_id));
 		}
 	}
 }

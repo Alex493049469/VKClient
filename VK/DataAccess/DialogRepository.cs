@@ -139,7 +139,7 @@ namespace VK.DataAccess
 				{
 					switch (item.Attachment[0].type)
 					{
-						case "Photo":
+						case "photo":
 							item.Body = "Фотография";
 							break;
 						case "audio":

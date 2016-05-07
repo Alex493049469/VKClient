@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,7 +56,7 @@ namespace VK.ViewModel.Audios
 			ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
 			foreach (var item in audioModel.response.items)
 			{
-				AudioItemViewModel itemAudio = new AudioItemViewModel()
+				var itemAudio = new AudioItemViewModel()
 				{
 					Id = item.id,
 					OwnerId = item.owner_id,
@@ -63,7 +64,10 @@ namespace VK.ViewModel.Audios
 					Url = item.url,
 					Title = item.title,
 					Duration = item.duration,
-					Artist = item.artist
+					Artist = item.artist,
+					LyricsId = item.lyrics_id,
+					GenreId = item.genre_id,
+					NoSearch = item.no_search
 				};
 
 				_item.Add(itemAudio);
@@ -115,7 +119,10 @@ namespace VK.ViewModel.Audios
 
 		#region Плей
 		private AsyncDelegateCommand _playAudioButtonClick;
-		public ICommand PlayAudioButtonClick => _playAudioButtonClick ?? (_playAudioButtonClick = new AsyncDelegateCommand(PlayAudio));
+		public ICommand PlayAudioButtonClick
+		{
+			get { return _playAudioButtonClick ?? (_playAudioButtonClick = new AsyncDelegateCommand(PlayAudio)); }
+		}
 
 		private async Task PlayAudio(object o)
 		{
@@ -238,9 +245,7 @@ namespace VK.ViewModel.Audios
 			{
 				WebClient webClient = new WebClient();
 				webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
-				webClient.DownloadFileCompleted += delegate {
-					MessageBox.Show("Файл успешно сохранен!");
-				};
+				webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
 			}
 		}
 		#endregion
@@ -253,7 +258,7 @@ namespace VK.ViewModel.Audios
 		{
 			for (int i = 0; i < AudioItemsViewModel.Count; i++)
 			{
-				if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
+				if (AudioItemsViewModel[i].Id == (int)o)
 				{
 					await _vk.Audio.AddAsync(AudioItemsViewModel[i].Id, AudioItemsViewModel[i].OwnerId);
 					MessageBox.Show("Аудиозапись успешно добавлена!");
@@ -271,7 +276,7 @@ namespace VK.ViewModel.Audios
 		{
 			for (int i = 0; i < AudioItemsViewModel.Count; i++)
 			{
-				if (AudioItemsViewModel[i].FullNameAudio == o.ToString())
+				if (AudioItemsViewModel[i].Id == (int)o)
 				{
 					await _vk.Audio.DeleteAsync(AudioItemsViewModel[i].Id, AudioItemsViewModel[i].OwnerId);
 					if (AudioItemsViewModel.Remove(AudioItemsViewModel[i]))

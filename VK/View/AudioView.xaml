@@ -7,9 +7,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              MinWidth="450"
              MinHeight="500"
-             Background="White"
              d:DesignHeight="600"
              d:DesignWidth="600"
+             Background="White"
              mc:Ignorable="d">
     <UserControl.Resources>
 
@@ -65,12 +65,19 @@
                                FontWeight="Bold"
                                Text="{Binding Duration,
                                               Converter={StaticResource TimeConverter}}" />
+                    <Button Name="EditButton"
+                            Width="30"
+                            Height="30"
+                            Command="{Binding EditAudioButtonClick}"
+                            CommandParameter="{Binding Id}"
+                            Content="Edit"
+                            Style="{DynamicResource ButtonOrange}" />
                     <Button Name="DeleteButton"
                             Width="30"
                             Height="30"
                             Command="{Binding ElementName=root,
                                               Path=DataContext.DeleteAudioButtonClick}"
-                            CommandParameter="{Binding FullNameAudio}"
+                            CommandParameter="{Binding Id}"
                             Content="-"
                             Style="{DynamicResource ButtonBlue}" />
                     <Button Name="AddButton"
@@ -78,7 +85,7 @@
                             Height="30"
                             Command="{Binding ElementName=root,
                                               Path=DataContext.AddAudioButtonClick}"
-                            CommandParameter="{Binding FullNameAudio}"
+                            CommandParameter="{Binding Id}"
                             Content="+"
                             Style="{DynamicResource ButtonBlue}" />
                 </StackPanel>
