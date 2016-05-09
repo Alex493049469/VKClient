@@ -42,13 +42,6 @@
         </controls:WindowCommands>
 
     </controls:MetroWindow.RightWindowCommands>
-    <controls:MetroWindow.Flyouts>
-        <controls:FlyoutsControl>
-            <controls:Flyout x:Name="yourMahAppFlyout" />
-        </controls:FlyoutsControl>
-    </controls:MetroWindow.Flyouts>
-
-
 
     <Grid UseLayoutRounding="True">
         <xcad:DockingManager x:Name="dockManager"
