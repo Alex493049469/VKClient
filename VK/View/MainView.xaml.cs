@@ -5,7 +5,7 @@ using VKAPI;
 
 namespace VK.View
 {
-	public partial class MainWindow : Window
+	public partial class MainWindow 
 	{
 		public MainWindow()
 		{

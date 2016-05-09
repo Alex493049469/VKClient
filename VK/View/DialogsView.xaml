@@ -8,9 +8,9 @@
              xmlns:dataTemplateSelectors="clr-namespace:VK.DataTemplateSelectors"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Background="White"
              d:DesignHeight="387"
              d:DesignWidth="597"
+             Background="White"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters1:DateConverter x:Key="DateConverter" x:Shared="false" />
@@ -356,10 +356,9 @@
             <baseControl:LazyLoadListBox.Style>
                 <Style TargetType="{x:Type baseControl:LazyLoadListBox}">
                     <Setter Property="IsLazyLoad" Value="True" />
-                    <Setter Property="Background" Value="{DynamicResource TextBox_fill_}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CheckBox_stroke_color_}" />
+
                     <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="Foreground" Value="{DynamicResource Text_dark_}" />
+
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />

@@ -1,35 +1,58 @@
-﻿<Window x:Class="VK.View.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:converters="clr-namespace:VK.Converters"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:dock="clr-namespace:VK.Dock"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:mvvmTestApp="clr-namespace:AvalonDock.MVVMTestApp"
-        xmlns:view="clr-namespace:VK.View"
-        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-        x:Name="MainView"
-        Title="Vk Client"
-        Width="950"
-        Height="624"
-        AllowsTransparency="True"
-        Icon="/Images/VkIconBlack.png"
-        Style="{StaticResource VS2012WindowStyle}"
-        WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d">
+﻿<controls:MetroWindow x:Class="VK.View.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converters="clr-namespace:VK.Converters"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dock="clr-namespace:VK.Dock"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:mvvmTestApp="clr-namespace:AvalonDock.MVVMTestApp"
+                      xmlns:view="clr-namespace:VK.View"
+                      xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+                      x:Name="MainView"
+                      Title="Vk Client"
+                      Width="950"
+                      Height="624"
+                      Background="#FFeeeeee"
+                      WindowStartupLocation="CenterScreen"
+                      mc:Ignorable="d">
     <Window.Resources>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
     </Window.Resources>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Content="settings" />
+
+            <Button>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20"
+                               Height="20"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button},
+                                              Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4 0 0 0"
+                               VerticalAlignment="Center"
+                               Text="deploy cupcakes" />
+                </StackPanel>
+            </Button>
+           
+        </controls:WindowCommands>
+
+    </controls:MetroWindow.RightWindowCommands>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout x:Name="yourMahAppFlyout" />
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+
+
+
     <Grid UseLayoutRounding="True">
-        <StatusBar Height="24" VerticalAlignment="Bottom">
-            <TextBlock Margin="3,0,0,0"><Run Text="" />
-            </TextBlock>
-            <StatusBarItem HorizontalAlignment="Right">
-                <ResizeGrip Opacity="0.75" />
-            </StatusBarItem>
-        </StatusBar>
         <xcad:DockingManager x:Name="dockManager"
-                             Margin="205,0,0,25"
+                             Margin="205,0,0,0"
                              ActiveContent="{Binding ActiveViewModel,
                                                      Mode=TwoWay,
                                                      Converter={StaticResource ActiveDocumentConverter}}"
@@ -109,146 +132,141 @@
         </xcad:DockingManager>
         <StackPanel Grid.Row="0"
                     Width="200"
-                    Margin="0,0,0,25"
+                    Margin="0"
                     HorizontalAlignment="Left"
                     Background="White">
             <view:AuthorizedUserView Width="Auto"
-                                     Height="116"
+                                     Height="127"
                                      Margin="5" />
             <StackPanel Width="200"
                         HorizontalAlignment="Left"
                         Background="White">
                 <Button x:Name="MyPageButton"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         Command="{Binding OpenPageCommand}">
-                    <StackPanel Width="174"
-                                HorizontalAlignment="Left"
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Image Width="24"
-                               Height="21"
-                               Margin="5"
-                               Source="/Images/53house.png" />
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="Home" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Моя страница" />
                         </TextBlock>
                     </StackPanel>
                 </Button>
                 <Button x:Name="MyFriendsButton"
-                        Height="37"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         Command="{Binding OpenFriendsCommand}">
-                    <StackPanel Width="174"
-                                HorizontalAlignment="Left"
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Image Width="24"
-                               Height="21"
-                               Margin="5"
-                               Source="/Images/111user.png" />
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="Account" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Друзья" />
                         </TextBlock>
                     </StackPanel>
                 </Button>
                 <Button x:Name="MyPhotoButton"
-                        Height="37"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         IsEnabled="False">
-                    <StackPanel Width="174"
-                                HorizontalAlignment="Left"
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Image Width="24"
-                               Height="21"
-                               Margin="5"
-                               Source="/Images/121landscape.png" />
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="Image" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Фотографии" />
                         </TextBlock>
                     </StackPanel>
                 </Button>
                 <Button x:Name="MyVideoButton"
-                        Height="37"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         IsEnabled="False">
-                    <StackPanel Width="174"
-                                HorizontalAlignment="Left"
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Image Width="26"
-                               Height="23"
-                               Margin="5"
-                               Source="/Images/videos2.png" />
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="Video" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Видеозаписи" />
                         </TextBlock>
                     </StackPanel>
                 </Button>
                 <Button x:Name="MyMessageButton"
-                        Height="37"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         Command="{Binding OpenDialogsCommand}">
-                    <DockPanel Width="174">
-                        <Image Width="24"
-                               Height="21"
-                               Margin="5"
-                               Source="/Images/18envelope.png" />
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="Message" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Сообщения" />
                         </TextBlock>
-                        <TextBlock Margin="0,0,10,0"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Center"
-                                   FontWeight="Bold"
-                                   Text="{Binding UnreadMessages}">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Style.Triggers>
-                                        <Trigger Property="Text" Value="0">
-                                            <Setter Property="Visibility" Value="Hidden" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-
-                    </DockPanel>
+                    </StackPanel>
 
                 </Button>
                 <Button x:Name="AudioButton"
-                        Height="37"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         Command="{Binding OpenAudioCommand}">
-                    <StackPanel Width="174"
-                                HorizontalAlignment="Left"
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Image Width="24"
-                               Height="21"
-                               Margin="5"
-                               Source="/Images/194note2.png" />
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="MusicBox" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Аудиозаписи" />
                         </TextBlock>
                     </StackPanel>
                 </Button>
                 <Button x:Name="GroupButton"
-                        Height="37"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         IsEnabled="False">
-                    <StackPanel Width="174"
-                                HorizontalAlignment="Left"
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Image Width="24"
-                               Height="21"
-                               Margin="5"
-                               Source="/Images/112group.png" />
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="AccountMultiple" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Группы" />
                         </TextBlock>
                     </StackPanel>
                 </Button>
                 <Button x:Name="SettingsButton"
-                        Height="37"
+                        Width="175"
+                        Height="35"
                         Margin="10,3"
+                        HorizontalContentAlignment="Left"
                         IsEnabled="True"
                         UseLayoutRounding="True">
-                    <StackPanel Width="174"
-                                HorizontalAlignment="Left"
+                    <StackPanel Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
                                 Orientation="Horizontal">
-                        <Image Width="24"
-                               Height="21"
-                               Margin="5"
-                               Source="/Images/19gear.png" />
+                        <controls:PackIconMaterial Width="20"
+                                                   Height="20"
+                                                   Kind="Settings" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Настройки" />
                         </TextBlock>
                     </StackPanel>
@@ -258,4 +276,4 @@
         </StackPanel>
     </Grid>
 
-</Window>
+</controls:MetroWindow>

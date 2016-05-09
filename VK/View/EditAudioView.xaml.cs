@@ -17,7 +17,7 @@ namespace VK.View
 	/// <summary>
 	/// Логика взаимодействия для EditAudioView.xaml
 	/// </summary>
-	public partial class EditAudioView : Window
+	public partial class EditAudioView 
 	{
 		public EditAudioView()
 		{

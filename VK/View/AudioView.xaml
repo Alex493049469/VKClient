@@ -1,13 +1,13 @@
 ﻿<UserControl x:Class="VK.View.AudioView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters1="clr-namespace:VK.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             MinWidth="450"
+             MinWidth="500"
              MinHeight="500"
-             d:DesignHeight="600"
              d:DesignWidth="600"
              Background="White"
              mc:Ignorable="d">
@@ -24,21 +24,23 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button Width="30"
-                        Height="30"
-                        Margin="5"
-                        Style="{DynamicResource ButtonBlue}">
-                    <Canvas Width="12" Height="12">
-                        <Path Width="12"
-                              Height="12"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              Data="M462,157.04 L461.5,193.53999 491.5,174.53999 z"
-                              Fill="#FFF4F4F5"
-                              Stretch="Fill"
-                              Stroke="#FFFBF5F5" />
-                    </Canvas>
-                </Button>
+                <StackPanel Orientation="Horizontal">
+                    <controls:PackIconMaterial Name="IconPlay"
+                                               Width="30"
+                                               Height="30"
+                                               Margin="5"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               Kind="PlayCircle" />
+                    <controls:PackIconMaterial Name="IconPause"
+                                               Width="30"
+                                               Height="30"
+                                               Margin="5"
+                                               HorizontalAlignment="Left"
+                                               VerticalAlignment="Center"
+                                               controls:VisibilityHelper.IsCollapsed="True"
+                                               Kind="PauseCircle" />
+                </StackPanel>
                 <StackPanel Grid.Column="1"
                             Margin="5"
                             Orientation="Horizontal">
@@ -59,7 +61,6 @@
                             Margin="5"
                             Orientation="Horizontal">
                     <TextBlock Name="DurationText"
-                               Grid.Column="2"
                                Margin="5"
                                VerticalAlignment="Center"
                                FontWeight="Bold"
@@ -70,33 +71,54 @@
                             Height="30"
                             Command="{Binding EditAudioButtonClick}"
                             CommandParameter="{Binding Id}"
-                            Content="Edit"
-                            Style="{DynamicResource ButtonOrange}" />
+                            Style="{DynamicResource MetroCircleButtonStyle}"
+                            ToolTip="Редактировать">
+                        <controls:PackIconModern Width="10"
+                                                 Height="10"
+                                                 Margin="5"
+                                                 HorizontalAlignment="Left"
+                                                 VerticalAlignment="Center"
+                                                 Kind="Edit" />
+                    </Button>
                     <Button Name="DeleteButton"
                             Width="30"
                             Height="30"
                             Command="{Binding ElementName=root,
                                               Path=DataContext.DeleteAudioButtonClick}"
                             CommandParameter="{Binding Id}"
-                            Content="-"
-                            Style="{DynamicResource ButtonBlue}" />
+                            Style="{DynamicResource MetroCircleButtonStyle}">
+                        <controls:PackIconMaterial Width="10"
+                                                   Height="10"
+                                                   Margin="5"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Kind="Minus" />
+                    </Button>
                     <Button Name="AddButton"
                             Width="30"
                             Height="30"
                             Command="{Binding ElementName=root,
                                               Path=DataContext.AddAudioButtonClick}"
                             CommandParameter="{Binding Id}"
-                            Content="+"
-                            Style="{DynamicResource ButtonBlue}" />
+                            Style="{DynamicResource MetroCircleButtonStyle}">
+                        <controls:PackIconMaterial Width="10"
+                                                   Height="10"
+                                                   Margin="5"
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Center"
+                                                   Kind="Plus" />
+                    </Button>
                 </StackPanel>
             </Grid>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsPlay}" Value="true">
-                    <Setter TargetName="GridItems" Property="Background" Value="#FFbababa" />
+                    <Setter TargetName="GridItems" Property="Background" Value="#FF41b1e1" />
                     <Setter TargetName="ArtistText" Property="Foreground" Value="#FFF9F9F9" />
                     <Setter TargetName="TitleText" Property="Foreground" Value="#FFF9F9F9" />
                     <Setter TargetName="DurationText" Property="Foreground" Value="#FFF9F9F9" />
                     <Setter TargetName="DashText" Property="Foreground" Value="#FFF9F9F9" />
+                    <Setter TargetName="IconPlay" Property="controls:VisibilityHelper.IsCollapsed" Value="True" />
+                    <Setter TargetName="IconPause" Property="controls:VisibilityHelper.IsCollapsed" Value="False" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding IsMyItem}" Value="false">
                     <Setter TargetName="AddButton" Property="Visibility" Value="Visible" />
@@ -110,14 +132,42 @@
                     <Setter TargetName="DeleteButton" Property="Visibility" Value="Visible" />
                     <Setter TargetName="DeleteButton" Property="Width" Value="30" />
                 </DataTrigger>
+
             </DataTemplate.Triggers>
         </DataTemplate>
+
+        <SolidColorBrush x:Key="SelectedColor" Color="#FF7f7f7f" />
+        <Style TargetType="ListBoxItem">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="brd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{StaticResource SelectedColor}" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="BorderBrush" Value="Black" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </UserControl.Resources>
 
     <Grid x:Name="root" UseLayoutRounding="True">
         <ListBox x:Name="ListAudio"
-                 Margin="10,159,10,26"
+                 Margin="10,118,10,31"
                  ItemTemplate="{StaticResource AudioTemplate}"
                  ItemsSource="{Binding AudioItemsViewModel,
                                        IsAsync=True}"
@@ -134,10 +184,7 @@
 
             <ListBox.Style>
                 <Style TargetType="{x:Type ListBox}">
-                    <Setter Property="Background" Value="{DynamicResource TextBox_fill_}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CheckBox_stroke_color_}" />
                     <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="Foreground" Value="{DynamicResource Text_dark_}" />
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
@@ -151,34 +198,30 @@
                     <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
                     <Setter Property="VirtualizingPanel.CacheLength" Value="2.2" />
                     <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
-
-
                     <Style.Triggers>
                         <Trigger Property="ItemsSource" Value="{x:Null}">
                             <Setter Property="Template" Value="{StaticResource WaitControlTemplate}" />
-
                         </Trigger>
-
                     </Style.Triggers>
                 </Style>
             </ListBox.Style>
+
         </ListBox>
 
         <Slider Name="AudioPosition"
                 Width="336"
-                Height="26"
-                Margin="10,90,0,0"
+                Height="13"
+                Margin="10,69,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                IsSelectionRangeEnabled="false"
-                SelectionEnd="0"
-                SelectionStart="0"
+                Maximum="10"
+                Style="{DynamicResource FlatSlider}"
                 Value="{Binding AudioPosition,
                                 Mode=TwoWay}" />
         <Slider x:Name="Volime"
                 Width="60"
-                Height="26"
-                Margin="355,90,0,0"
+                Height="20"
+                Margin="286,44,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Maximum="1.0"
@@ -188,113 +231,80 @@
                                 Mode=TwoWay}" />
 
         <Button Name="PlayButton"
-                Width="43"
-                Height="36"
-                Margin="10,10,0,0"
+                Width="35"
+                Height="30"
+                Margin="12,34,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Command="{Binding PlayAudioButtonClick}"
-                Style="{DynamicResource ButtonBlue}">
-            <Canvas Width="12" Height="12">
-                <Path Width="12"
-                      Height="12"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      Data="M462,157.04 L461.5,193.53999 491.5,174.53999 z"
-                      Fill="#FFF4F4F5"
-                      Stretch="Fill"
-                      Stroke="#FFFBF5F5" />
-            </Canvas>
+                Command="{Binding PlayAudioButtonClick}">
+            <controls:PackIconMaterial Width="15"
+                                       Height="15"
+                                       Kind="Play" />
         </Button>
         <Button Name="PauseButton"
-                Width="43"
-                Height="36"
-                Margin="56,10,0,0"
+                Width="35"
+                Height="30"
+                Margin="52,34,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Command="{Binding PauseAudioButtonClick}"
-                Style="{DynamicResource ButtonBlue}">
-            <Canvas Width="12" Height="12">
-                <Rectangle Width="3"
-                           Height="12"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Fill="#FFF4F4F5"
-                           Stroke="#FFFBF5F5" />
-                <Rectangle Canvas.Left="7.5"
-                           Width="3"
-                           Height="12"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Top"
-                           Fill="#FFF4F4F5"
-                           Stroke="#FFFBF5F5" />
-            </Canvas>
+                Command="{Binding PauseAudioButtonClick}">
+            <controls:PackIconMaterial Width="15"
+                                       Height="15"
+                                       Kind="Pause" />
         </Button>
         <Button Name="StopButton"
-                Width="43"
-                Height="36"
-                Margin="102,10,0,0"
+                Width="35"
+                Height="30"
+                Margin="92,34,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Command="{Binding StopAudioButtonClick}"
-                Style="{DynamicResource ButtonBlue}">
-            <Canvas Width="12" Height="12">
-                <Rectangle Width="12"
-                           Height="12"
-                           Fill="#FFF4F4F5"
-                           Stroke="#FFFBF5F5" />
-
-            </Canvas>
+                Command="{Binding StopAudioButtonClick}">
+            <controls:PackIconMaterial Width="15"
+                                       Height="15"
+                                       Kind="Stop" />
         </Button>
         <TextBox Name="TextAudio"
                  Height="26"
-                 Margin="10,121,75,0"
+                 Margin="10,87,75,0"
                  VerticalAlignment="Top"
+                 controls:TextBoxHelper.ClearTextButton="True"
                  Text="{Binding SearchString}"
                  TextWrapping="Wrap" />
         <Button Name="FindAudioButton"
-                Width="50"
-                Height="30"
+                Width="60"
+                Height="26"
                 MinWidth="50"
-                Margin="0,121,10,0"
+                Margin="0,87,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding SearchAudioButtonClick}"
                 Content="Поиск" />
         <Button Name="DownloadButton"
-                Width="43"
-                Height="36"
-                Margin="148,10,0,0"
+                Width="35"
+                Height="30"
+                Margin="132,34,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Command="{Binding SaveAudioButtonClick}"
-                Style="{DynamicResource ButtonBlue}">
-            <Canvas Width="12" Height="14">
-                <Path Width="12"
-                      Height="14"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      Data="M443.5,144.66499 L453.74968,144.78999 453.5,159.66499 457.99957,159.66499 448.62481,167.16499 438.87506,159.53999 443.37495,159.53999 z"
-                      Fill="#FFF4F4F5"
-                      Stretch="Fill"
-                      Stroke="#FFFBF5F5" />
-            </Canvas>
+                Command="{Binding SaveAudioButtonClick}">
+            <controls:PackIconMaterial Width="15"
+                                       Height="15"
+                                       Kind="Download" />
         </Button>
         <Button Name="MyAudioButton"
-                Width="108"
-                Height="30"
-                Margin="0,10,128,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Command="{Binding MyAudioButtonClick}"
-                Content="Мои аудиозаписи" />
-        <Button Width="108"
+                Width="117"
                 Height="30"
                 Margin="0,10,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
+                Command="{Binding MyAudioButtonClick}"
+                Content="Мои аудиозаписи" />
+        <Button Width="117"
+                Height="30"
+                Margin="0,45,10,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
                 Command="{Binding AudioRecommendedButtonClick}"
-                Content="Рекомендуемое" />
+                Content="Рекомендации" />
         <Label Margin="10,0,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Bottom"
@@ -303,7 +313,9 @@
                HorizontalAlignment="Left"
                VerticalAlignment="Bottom"
                Content="{Binding AudioItemsViewModel.Count}" />
-        <Label Margin="10,59,0,0"
+        <Label Width="336"
+               Height="23"
+               Margin="10,5,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Content="{Binding ItemPlaying.FullNameAudio}" />

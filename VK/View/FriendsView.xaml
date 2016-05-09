@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:photoLoader="clr-namespace:PhotoLoader;assembly=PhotoLoader"
-             Background="White"
              d:DesignHeight="300"
              d:DesignWidth="300"
+             Background="White"
              mc:Ignorable="d">
     <UserControl.Resources>
 
@@ -72,10 +72,8 @@
                  SelectedItem="{Binding ItemSelected}">
             <ListBox.Style>
                 <Style TargetType="{x:Type ListBox}">
-                    <Setter Property="Background" Value="{DynamicResource TextBox_fill_}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CheckBox_stroke_color_}" />
+
                     <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="Foreground" Value="{DynamicResource Text_dark_}" />
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.CanContentScroll" Value="True" />

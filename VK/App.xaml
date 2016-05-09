@@ -4,21 +4,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:d1P1="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModel="clr-namespace:VK.ViewModel"
-             StartupUri="View/MainView.xaml"
-             d1P1:Ignorable="d">
+             d1P1:Ignorable="d"
+             StartupUri="View/MainView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/VS2012/VS2012WindowStyle.xaml" />
-
-                <ResourceDictionary Source="Styles/MoonUICore.xaml" />
-
                 <ResourceDictionary Source="Styles/Templates.xaml" />
 
-                <!--<ResourceDictionary Source="Themes/Core.xaml" />
-                <ResourceDictionary Source="Themes/Brushes.xaml" />
-                <ResourceDictionary Source="Themes/Icons.xaml" />
-                <ResourceDictionary Source="IconApp.xaml" />-->
+                <!--  MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive!  -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <!--  Accent and AppTheme setting  -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

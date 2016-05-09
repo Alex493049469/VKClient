@@ -170,18 +170,16 @@
                                      Grid.Row="0"
                                      Margin="0,0,0,5"
                                      VerticalAlignment="Stretch"
+                                     listBoxBehavior:ListBoxBehavior.AutoScroll="True"
                                      ItemTemplateSelector="{StaticResource MessageDataTemplateSelector}"
                                      ItemsSource="{Binding MessageItemsViewModel,
                                                            IsAsync=True}"
                                      LoadCommand="{Binding LoadCommand}"
-                                     SelectedItem="{Binding ItemSelected}"
-                                     listBoxBehavior:ListBoxBehavior.AutoScroll="True">
+                                     SelectedItem="{Binding ItemSelected}">
             <baseControl:LazyLoadListBox.Style>
                 <Style TargetType="{x:Type baseControl:LazyLoadListBox}">
-                    <Setter Property="Background" Value="{DynamicResource TextBox_fill_}" />
-                    <Setter Property="BorderBrush" Value="{StaticResource CheckBox_stroke_color_}" />
+
                     <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="Foreground" Value="{DynamicResource Text_dark_}" />
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
