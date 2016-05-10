@@ -12,8 +12,11 @@
                       x:Name="MainView"
                       Title="Vk Client"
                       Width="950"
-                      Height="624"
+                      Height="625"
+                      BorderBrush="{DynamicResource AccentColorBrush}"
+                      BorderThickness="1"
                       Background="#FFeeeeee"
+                      Icon="../Images/vkontakte.png"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
     <Window.Resources>
@@ -38,7 +41,7 @@
                                Text="deploy cupcakes" />
                 </StackPanel>
             </Button>
-           
+
         </controls:WindowCommands>
 
     </controls:MetroWindow.RightWindowCommands>

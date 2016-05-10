@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Core;
 using Core.Command;
+using Microsoft.Win32;
 using VK.View;
 using VKAPI;
 using VKAPI.Core;
@@ -33,7 +36,6 @@ namespace VK.ViewModel.Audios
 		}
 
 		public Genre SelectedGenre { get; set; }
-
 
 		public string FullNameAudio => Artist + " - " + Title;
 
@@ -68,7 +70,6 @@ namespace VK.ViewModel.Audios
 				new Genre() {Id = 18, Value = "Other"}
 			};
 
-		private AsyncDelegateCommand _editAudioButtonClick;
 		public RelayCommand SaveAudioButtonClick { get; private set; }
 
 		readonly VkApi _vk = new VkApi();
@@ -83,7 +84,9 @@ namespace VK.ViewModel.Audios
 			_vk.Audio.EditAsync(OwnerId, Id, Artist, Title, Text, GenreId, NoSearch);
 		}
 
+		private AsyncDelegateCommand _editAudioButtonClick;
 		public ICommand EditAudioButtonClick => _editAudioButtonClick ?? (_editAudioButtonClick = new AsyncDelegateCommand(EditAudio));
+
 		private async Task EditAudio(object o)
 		{
 			if(LyricsId != 0 && string.IsNullOrEmpty(Text))
@@ -95,6 +98,21 @@ namespace VK.ViewModel.Audios
 
 			EditAudioView eav = new EditAudioView {DataContext = this};
 			eav.Show();
+		}
+
+		private AsyncDelegateCommand _downloadAudioButtonClick;
+		public ICommand DownloadAudioButtonClick => _downloadAudioButtonClick ?? (_downloadAudioButtonClick = new AsyncDelegateCommand(DownloadAudio));
+
+		private async Task DownloadAudio(object arg)
+		{
+			var sfd = new SaveFileDialog { DefaultExt = ".mp3" };
+			sfd.FileName = FullNameAudio + "." + sfd.DefaultExt;
+			if (sfd.ShowDialog() == true)
+			{
+				WebClient webClient = new WebClient();
+				webClient.DownloadFileAsync(new Uri(Url), sfd.FileName);
+				webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
+			}
 		}
 
 		public class Genre

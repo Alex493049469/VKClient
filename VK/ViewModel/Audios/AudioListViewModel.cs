@@ -119,10 +119,7 @@ namespace VK.ViewModel.Audios
 
 		#region Плей
 		private AsyncDelegateCommand _playAudioButtonClick;
-		public ICommand PlayAudioButtonClick
-		{
-			get { return _playAudioButtonClick ?? (_playAudioButtonClick = new AsyncDelegateCommand(PlayAudio)); }
-		}
+		public ICommand PlayAudioButtonClick => _playAudioButtonClick ?? (_playAudioButtonClick = new AsyncDelegateCommand(PlayAudio));
 
 		private async Task PlayAudio(object o)
 		{
@@ -235,18 +232,20 @@ namespace VK.ViewModel.Audios
 		}
 		#endregion;
 
-		#region Сохранение аудиозаписи
+		#region Сохранение аудиозаписей
 
 		private void SaveAudio()
 		{
-			var sfd = new SaveFileDialog {DefaultExt = ".mp3"};
-			sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
-			if (sfd.ShowDialog() == true)
-			{
-				WebClient webClient = new WebClient();
-				webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
-				webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
-			}
+			//сделать вьюшку в которой будут все аудиозаписи и в которых можно галочками выбрать нужные и сохранить
+			//не забыть сделать кнопки снять выделения и выделить все
+			//var sfd = new SaveFileDialog {DefaultExt = ".mp3"};
+			//sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
+			//if (sfd.ShowDialog() == true)
+			//{
+			//	WebClient webClient = new WebClient();
+			//	webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
+			//	webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
+			//}
 		}
 		#endregion
 

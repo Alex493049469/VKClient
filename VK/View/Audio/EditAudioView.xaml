@@ -7,7 +7,7 @@
         Title="Редактирование аудиозаписи"
         Width="292.273"
         Height="351.128"
-        Icon="../Images/65note.png"
+        Icon="../../Images/65note.png"
         ResizeMode="CanResize"
         ShowInTaskbar="False"
         Topmost="True"
