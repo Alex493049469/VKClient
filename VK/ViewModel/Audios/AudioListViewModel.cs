@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using Core.Command;
 using Microsoft.Win32;
+using VK.ViewModel.Main;
 using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
@@ -23,14 +24,17 @@ namespace VK.ViewModel.Audios
 		private readonly IAudioPlayer _audioPlayer = new AudioPlayer();
 		//состояние проигрывания
 		private bool _isPaysed = false;
+		//
+		private readonly FlyoutViewModel _flyout;
 
 		//public RelayCommand PlayAudioButtonClick { get; private set; }
 		public RelayCommand PauseAudioButtonClick { get; private set; }
 		public RelayCommand StopAudioButtonClick { get; private set; }
 		public RelayCommand SaveAudioButtonClick { get; private set; }
 
-		public AudioListViewModel()
+		public AudioListViewModel(FlyoutViewModel flyout)
 		{
+			_flyout = flyout;
 			Title = "Мои аудиозаписи";
 			LoadAudio();
 			//PlayAudioButtonClick = new RelayCommand(PlayAudio);
@@ -40,7 +44,6 @@ namespace VK.ViewModel.Audios
 
 			_audioPlayer.OnEndAudio += NextAudioPlay;
 			_audioPlayer.OnAudioPositionChanged += (sender, args) => RaisePropertyChanged("AudioPosition");
-
 		}
 
 		/// <summary>
@@ -56,7 +59,7 @@ namespace VK.ViewModel.Audios
 			ObservableCollection<AudioItemViewModel> _item = new ObservableCollection<AudioItemViewModel>();
 			foreach (var item in audioModel.response.items)
 			{
-				var itemAudio = new AudioItemViewModel()
+				var itemAudio = new AudioItemViewModel(_flyout)
 				{
 					Id = item.id,
 					OwnerId = item.owner_id,
@@ -238,14 +241,14 @@ namespace VK.ViewModel.Audios
 		{
 			//сделать вьюшку в которой будут все аудиозаписи и в которых можно галочками выбрать нужные и сохранить
 			//не забыть сделать кнопки снять выделения и выделить все
-			//var sfd = new SaveFileDialog {DefaultExt = ".mp3"};
-			//sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
-			//if (sfd.ShowDialog() == true)
-			//{
-			//	WebClient webClient = new WebClient();
-			//	webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
-			//	webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
-			//}
+			var sfd = new SaveFileDialog { DefaultExt = ".mp3" };
+			sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
+			if (sfd.ShowDialog() == true)
+			{
+				WebClient webClient = new WebClient();
+				webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
+				webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
+			}
 		}
 		#endregion
 

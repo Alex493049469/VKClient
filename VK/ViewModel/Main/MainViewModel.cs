@@ -1,9 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Controls;
 using Core;
 using Core.Command;
+using MahApps.Metro.Controls.Dialogs;
 using VK.DataAccess;
 using VK.Services;
+using VK.View;
 using VK.ViewModel.Audios;
 using VK.ViewModel.Dialogs;
 using VK.ViewModel.Friends;
@@ -43,8 +47,20 @@ namespace VK.ViewModel.Main
 			}
 		}
 
-		public static MainViewModel This { get; } = new MainViewModel();
+		//выезжающая панелька
+		//прокидывается во вью модели для вызова своих окон
+		private FlyoutViewModel _flyout = new FlyoutViewModel();
+		public FlyoutViewModel Flyout
+		{
+			get { return _flyout; }
+			set
+			{
+				_flyout = value;
+				RaisePropertyChanged();
+			}
+		}
 
+		public static MainViewModel This { get; } = new MainViewModel();
 		//repositories
 		DialogRepository _dialogRepository;
 		EventsService _eventService;
@@ -69,7 +85,7 @@ namespace VK.ViewModel.Main
 		private void OpenAudios()
 		{
 			if (_audioList == null)
-				_audioList = new AudioListViewModel();
+				_audioList = new AudioListViewModel(Flyout);
 
 			if (_viewModels.Contains(_audioList))
 			{
@@ -113,6 +129,7 @@ namespace VK.ViewModel.Main
 		{
 			_viewModels.Add(new FriendsListViewModel());
 			ActiveViewModel = _viewModels.Last();
+
 		}
 
 		internal void Close(PaneViewModel fileToClose)

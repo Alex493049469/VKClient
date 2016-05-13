@@ -124,6 +124,7 @@
     <Compile Include="ViewModel\Dialogs\DialogItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendItemViewModel.cs" />
     <Compile Include="ViewModel\Friends\FriendsListViewModel.cs" />
+    <Compile Include="ViewModel\Main\FlyoutViewModel.cs" />
     <Compile Include="ViewModel\Main\MainViewModel.cs" />
     <Compile Include="ViewModel\Messages\MessageItemViewModel.cs" />
     <Compile Include="ViewModel\Messages\MessageListViewModel.cs" />

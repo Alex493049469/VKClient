@@ -13,38 +13,28 @@
                       Title="Vk Client"
                       Width="950"
                       Height="625"
+                      Background="#FFeeeeee"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
-                      Background="#FFeeeeee"
                       Icon="../Images/vkontakte.png"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
     <Window.Resources>
         <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
     </Window.Resources>
-    <controls:MetroWindow.RightWindowCommands>
-        <controls:WindowCommands>
-            <Button Content="settings" />
 
-            <Button>
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20"
-                               Height="20"
-                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button},
-                                              Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Margin="4 0 0 0"
-                               VerticalAlignment="Center"
-                               Text="deploy cupcakes" />
-                </StackPanel>
-            </Button>
-
-        </controls:WindowCommands>
-
-    </controls:MetroWindow.RightWindowCommands>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl>
+            <controls:Flyout Header="{Binding Flyout.Header}"
+                             IsModal="{Binding Flyout.IsModal}"
+                             IsOpen="{Binding Flyout.IsOpen}"
+                             Position="{Binding Flyout.Position}">
+                <Grid>
+                    <ContentControl Content="{Binding Flyout.CustomView}" />
+                </Grid>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
 
     <Grid UseLayoutRounding="True">
         <xcad:DockingManager x:Name="dockManager"
@@ -206,13 +196,15 @@
                         Height="35"
                         Margin="10,3"
                         HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
                         Command="{Binding OpenDialogsCommand}">
                     <StackPanel Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
                                 Orientation="Horizontal">
-                        <controls:PackIconMaterial Width="20"
-                                                   Height="20"
-                                                   Kind="Message" />
+                        <controls:PackIconModern Width="20"
+                                                 Height="20"
+                                                 Kind="Message" />
                         <TextBlock Margin="5" VerticalAlignment="Center"><Run Text="Сообщения" />
                         </TextBlock>
                     </StackPanel>
@@ -255,6 +247,7 @@
                         Height="35"
                         Margin="10,3"
                         HorizontalContentAlignment="Left"
+                        Click="SettingsButton_Click"
                         IsEnabled="True"
                         UseLayoutRounding="True">
                     <StackPanel Margin="5,0,0,0"

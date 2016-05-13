@@ -8,8 +8,10 @@ using System.Windows;
 using System.Windows.Input;
 using Core;
 using Core.Command;
+using MahApps.Metro.Controls;
 using Microsoft.Win32;
 using VK.View;
+using VK.ViewModel.Main;
 using VKAPI;
 using VKAPI.Core;
 
@@ -74,14 +76,18 @@ namespace VK.ViewModel.Audios
 
 		readonly VkApi _vk = new VkApi();
 
-		public AudioItemViewModel()
+		private readonly FlyoutViewModel _flyout;
+
+		public AudioItemViewModel(FlyoutViewModel flyout)
 		{
+			_flyout = flyout;
 			SaveAudioButtonClick = new RelayCommand(SaveAudio);
 		}
 
 		private void SaveAudio()
 		{
 			_vk.Audio.EditAsync(OwnerId, Id, Artist, Title, Text, GenreId, NoSearch);
+			_flyout.Hide();
 		}
 
 		private AsyncDelegateCommand _editAudioButtonClick;
@@ -94,10 +100,15 @@ namespace VK.ViewModel.Audios
 				var lyricsModel = await _vk.Audio.GetLyricsAsync(LyricsId);
 				Text = lyricsModel.response.text;
 			}
+
+			if (GenreId == 0) GenreId = 18;
 			SelectedGenre = _genres.First(genre => genre.Id == GenreId);
 
-			EditAudioView eav = new EditAudioView {DataContext = this};
-			eav.Show();
+			_flyout.CustomView = new EditAudioView() { DataContext = this};
+			_flyout.Header = "Редактирование аудиозаписи";
+			_flyout.Position = Position.Right;
+			_flyout.IsModal = true;
+			_flyout.Show();
 		}
 
 		private AsyncDelegateCommand _downloadAudioButtonClick;

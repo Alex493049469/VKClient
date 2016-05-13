@@ -147,7 +147,7 @@ namespace VKAPI.Category
 			return Task.Run(() => { Delete(audioId, ownerId); });
 		}
 
-		public void Edit(int ownerId, int audioId, string artist, string title, string text, int genre_id, int? no_search)
+		public void Edit(int ownerId, int audioId, string artist, string title, string text, int genre_id, int? no_search=0)
 		{
 			var parameters = new Dictionary<string, object>
 			{
