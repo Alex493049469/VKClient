@@ -13,7 +13,7 @@
                       Title="Vk Client"
                       Width="950"
                       Height="625"
-                      Background="#FFeeeeee"
+
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
                       Icon="../Images/vkontakte.png"
@@ -120,13 +120,13 @@
                     Width="200"
                     Margin="0"
                     HorizontalAlignment="Left"
-                    Background="White">
+                    Background="#FFf1f2f4">
             <view:AuthorizedUserView Width="Auto"
                                      Height="127"
                                      Margin="5" />
             <StackPanel Width="200"
                         HorizontalAlignment="Left"
-                        Background="White">
+                        >
                 <Button x:Name="MyPageButton"
                         Width="175"
                         Height="35"
