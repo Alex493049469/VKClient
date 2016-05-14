@@ -72,7 +72,6 @@ namespace VK.ViewModel.Audios
 				new Genre() {Id = 18, Value = "Other"}
 			};
 
-
 		private double _progressLoading;
 		public double ProgressLoading
 		{
@@ -99,8 +98,9 @@ namespace VK.ViewModel.Audios
 
 		readonly VkApi _vk = new VkApi();
 
-		private readonly FlyoutViewModel _flyout;
+		public bool Check { get; set; }
 
+		private readonly FlyoutViewModel _flyout;
 		public AudioItemViewModel(FlyoutViewModel flyout)
 		{
 			_flyout = flyout;
@@ -143,12 +143,18 @@ namespace VK.ViewModel.Audios
 			sfd.FileName = FullNameAudio + "." + sfd.DefaultExt;
 			if (sfd.ShowDialog() == true)
 			{
-				ProgressVisibility = Visibility.Visible;
-				WebClient webClient = new WebClient();
-				webClient.DownloadProgressChanged += (sender, args) => { ProgressLoading = (double) args.ProgressPercentage; };
-				webClient.DownloadFileCompleted += (sender, args) => { MessageBox.Show("Файл успешно сохранен!"); ProgressVisibility = Visibility.Collapsed;};
-				webClient.DownloadFileAsync(new Uri(Url), sfd.FileName);
+				SaveCheckAudio(sfd.FileName);
 			}
+		}
+
+		public void SaveCheckAudio(string Path)
+		{
+			ProgressVisibility = Visibility.Visible;
+			WebClient webClient = new WebClient();
+			webClient.DownloadProgressChanged += (sender, args) => { ProgressLoading = (double)args.ProgressPercentage; };
+			//MessageBox.Show("Файл успешно сохранен!"); 
+			webClient.DownloadFileCompleted += (sender, args) => { ProgressVisibility = Visibility.Collapsed; };
+			webClient.DownloadFileAsync(new Uri(Url), Path);
 		}
 
 		public class Genre

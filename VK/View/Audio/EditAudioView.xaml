@@ -4,8 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VK.View"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             Width="292.273"
-             Height="500"
+             MinWidth="300"
+             MinHeight="500"
              VerticalAlignment="Top"
              mc:Ignorable="d">
     <Grid>
@@ -42,6 +42,9 @@
         <TextBox x:Name="textBox"
                  Height="Auto"
                  Margin="10,191,10,46"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 SpellCheck.IsEnabled="True"
                  Text="{Binding Text}"
                  TextWrapping="Wrap"
                  VerticalScrollBarVisibility="Auto" />

@@ -3,14 +3,18 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Core.Command;
+using MahApps.Metro.Controls;
 using Microsoft.Win32;
+using VK.View;
+using VK.View.Audio;
 using VK.ViewModel.Main;
 using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
+using MessageBox = System.Windows.MessageBox;
 
 namespace VK.ViewModel.Audios
 {
@@ -32,15 +36,23 @@ namespace VK.ViewModel.Audios
 		public RelayCommand StopAudioButtonClick { get; private set; }
 		public RelayCommand SaveAudioButtonClick { get; private set; }
 
+		public RelayCommand CheckAllAudioButtonClick { get; private set; }
+		public RelayCommand UnCheckAllAudioButtonClick { get; private set; }
+		public RelayCommand SaveCheckedAudioButtonClick { get; private set; }
+
 		public AudioListViewModel(FlyoutViewModel flyout)
 		{
 			_flyout = flyout;
 			Title = "Мои аудиозаписи";
 			LoadAudio();
-			//PlayAudioButtonClick = new RelayCommand(PlayAudio);
+
 			PauseAudioButtonClick = new RelayCommand(PauseAudio);
 			StopAudioButtonClick = new RelayCommand(StopAudio);
 			SaveAudioButtonClick = new RelayCommand(SaveAudio);
+
+			CheckAllAudioButtonClick = new RelayCommand(CheckAll);
+			UnCheckAllAudioButtonClick = new RelayCommand(UnCheckAll);
+			SaveCheckedAudioButtonClick = new RelayCommand(SaveChecked);
 
 			_audioPlayer.OnEndAudio += NextAudioPlay;
 			_audioPlayer.OnAudioPositionChanged += (sender, args) => RaisePropertyChanged("AudioPosition");
@@ -76,6 +88,22 @@ namespace VK.ViewModel.Audios
 				_item.Add(itemAudio);
 			}
 			AudioItemsViewModel = _item;
+		}
+
+		private void CheckAll()
+		{
+			foreach (var item in AudioItemsViewModel)
+			{
+				item.Check = true;
+			}
+		}
+
+		private void UnCheckAll()
+		{
+			foreach (var item in AudioItemsViewModel)
+			{
+				item.Check = false;
+			}
 		}
 
 		#region Свойства
@@ -239,17 +267,27 @@ namespace VK.ViewModel.Audios
 
 		private void SaveAudio()
 		{
-			//сделать вьюшку в которой будут все аудиозаписи и в которых можно галочками выбрать нужные и сохранить
-			//не забыть сделать кнопки снять выделения и выделить все
-			//var sfd = new SaveFileDialog { DefaultExt = ".mp3" };
-			//sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
-			//if (sfd.ShowDialog() == true)
-			//{
-			//	WebClient webClient = new WebClient();
-			//	webClient.DownloadProgressChanged += (sender, args) => ProgressLoading = (double)args.ProgressPercentage;
-			//	webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
-			//	webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
-			//}
+			_flyout.CustomView = new SaveMultipleAudio() { DataContext = this };
+			_flyout.Header = "Сохранение аудиозаписей";
+			_flyout.Position = Position.Right;
+			_flyout.IsModal = true;
+			_flyout.Show();
+		}
+
+		private void SaveChecked()
+		{
+			var fbd = new FolderBrowserDialog {Description = "Выберите папку"};
+			if (fbd.ShowDialog() == DialogResult.OK)
+			{
+				_flyout.Hide();
+				foreach (var item in AudioItemsViewModel)
+				{
+					if (item.Check)
+					{
+						item.SaveCheckAudio(fbd.SelectedPath +"\\"+item.FullNameAudio + ".mp3");
+					}
+				}
+			}
 		}
 
 		#endregion

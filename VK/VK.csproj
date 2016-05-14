@@ -133,6 +133,9 @@
     <Compile Include="View\Audio\AudioView.xaml.cs">
       <DependentUpon>AudioView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Audio\SaveMultipleAudio.xaml.cs">
+      <DependentUpon>SaveMultipleAudio.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AuthorizedUserView.xaml.cs">
       <DependentUpon>AuthorizedUserView.xaml</DependentUpon>
     </Compile>
@@ -172,6 +175,10 @@
     <Page Include="Resources\IconsNonShared.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Audio\SaveMultipleAudio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AuthorizedUserView.xaml">
       <SubType>Designer</SubType>

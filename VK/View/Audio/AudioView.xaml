@@ -20,9 +20,9 @@
                   Margin="0"
                   UseLayoutRounding="True">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="155" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <controls:PackIconMaterial Name="IconPlay"
