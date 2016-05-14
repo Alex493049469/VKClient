@@ -52,7 +52,7 @@ namespace VK.ViewModel.Audios
 
 			CheckAllAudioButtonClick = new RelayCommand(CheckAll);
 			UnCheckAllAudioButtonClick = new RelayCommand(UnCheckAll);
-			SaveCheckedAudioButtonClick = new RelayCommand(SaveChecked);
+			SaveCheckedAudioButtonClick = new RelayCommand(SaveCheckedAudio);
 
 			_audioPlayer.OnEndAudio += NextAudioPlay;
 			_audioPlayer.OnAudioPositionChanged += (sender, args) => RaisePropertyChanged("AudioPosition");
@@ -274,7 +274,7 @@ namespace VK.ViewModel.Audios
 			_flyout.Show();
 		}
 
-		private void SaveChecked()
+		private void SaveCheckedAudio()
 		{
 			var fbd = new FolderBrowserDialog {Description = "Выберите папку"};
 			if (fbd.ShowDialog() == DialogResult.OK)

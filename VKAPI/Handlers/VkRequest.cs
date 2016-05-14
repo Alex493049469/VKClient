@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading;
+using System.Windows.Markup;
 using System.Windows.Threading;
 
 namespace VKAPI.Handlers
@@ -34,7 +37,39 @@ namespace VKAPI.Handlers
 			var sr = new StreamReader(stream);
 			var data = sr.ReadToEnd();
 
+			response.Close();
+			stream.Close();
+			sr.Close();
+
 			return data;
+		}
+
+		internal static string PostData(string method, Dictionary<string, object> parameters, string data)
+		{
+			string url = GenerateRequest(method, ClearEmptyParameters(parameters));
+			WebRequest request = WebRequest.Create(url);
+			request.Method = "POST";
+			request.Timeout = 100000;
+			request.ContentType = "application/x-www-form-urlencoded";
+			byte[] sentData = Encoding.GetEncoding(1251).GetBytes(data);
+			request.ContentLength = sentData.Length;
+			System.IO.Stream sendStream = request.GetRequestStream();
+			sendStream.Write(sentData, 0, sentData.Length);
+			sendStream.Close();
+
+			HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+			// Получить содержимое потока, возвращаемого сервером
+			Stream dataStream = response.GetResponseStream();
+			// Открыть поток, используя StreamReader для легкого доступа
+			StreamReader reader = new StreamReader(dataStream);
+			// Прочитать содержимое
+			string responseFromServer = reader.ReadToEnd();
+			// Закрыть все
+			reader.Close();
+			dataStream.Close();
+			response.Close();
+
+			return responseFromServer;
 		}
 
 		/// <summary>

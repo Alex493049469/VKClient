@@ -155,12 +155,11 @@ namespace VKAPI.Category
 				{"audio_id=", audioId},
 				{"artist=", artist},
 				{"title=", title},
-				{"text=", text},
 				{"genre_id=", genre_id},
 				{"no_search=", no_search},
 			};
 
-			 var qwe =VkRequest.GetData("audio.edit", parameters);
+			 var qwe = VkRequest.PostData("audio.edit", parameters, "&text = " + text);
 		}
 
 		public Task EditAsync(int ownerId, int audioId, string artist, string title, string text, int genre_id, int? no_search)
