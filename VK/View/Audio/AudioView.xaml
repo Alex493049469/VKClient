@@ -41,21 +41,26 @@
                                                controls:VisibilityHelper.IsCollapsed="True"
                                                Kind="PauseCircle" />
                 </StackPanel>
-                <StackPanel Grid.Column="1"
-                            Margin="5"
-                            Orientation="Horizontal">
-                    <TextBlock Name="ArtistText"
-                               MaxWidth="100"
-                               VerticalAlignment="Center"
-                               FontWeight="Bold"
-                               Text="{Binding Artist}" />
-                    <TextBlock Name="DashText"
-                               VerticalAlignment="Center"
-                               Text=" - " />
-                    <TextBlock Name="TitleText"
-                               MaxWidth="200"
-                               VerticalAlignment="Center"
-                               Text="{Binding Title}" />
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <TextBlock Name="ArtistText"
+                                   MaxWidth="100"
+                                   VerticalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Text="{Binding Artist}" />
+                        <TextBlock Name="DashText"
+                                   VerticalAlignment="Center"
+                                   Text=" - " />
+                        <TextBlock Name="TitleText"
+                                   MaxWidth="200"
+                                   VerticalAlignment="Center"
+                                   Text="{Binding Title}" />
+                    </StackPanel>
+                    <ProgressBar Height="5"
+                                 Maximum="100"
+                                 Minimum="0"
+                                 Visibility="{Binding ProgressVisibility}"
+                                 Value="{Binding ProgressLoading}" />
                 </StackPanel>
                 <StackPanel Grid.Column="2"
                             Margin="5"
@@ -336,5 +341,6 @@
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
                Content="{Binding ItemPlaying.FullNameAudio}" />
+
     </Grid>
 </UserControl>

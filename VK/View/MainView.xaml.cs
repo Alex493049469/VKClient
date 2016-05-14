@@ -14,7 +14,6 @@ namespace VK.View
 
 			this.DataContext = MainViewModel.This;
 
-
 			if (Settings.Default.token == "")
 			{
 				//скрываем главную форму если нет токена 

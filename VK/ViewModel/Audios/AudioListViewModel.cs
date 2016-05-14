@@ -241,15 +241,17 @@ namespace VK.ViewModel.Audios
 		{
 			//сделать вьюшку в которой будут все аудиозаписи и в которых можно галочками выбрать нужные и сохранить
 			//не забыть сделать кнопки снять выделения и выделить все
-			var sfd = new SaveFileDialog { DefaultExt = ".mp3" };
-			sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
-			if (sfd.ShowDialog() == true)
-			{
-				WebClient webClient = new WebClient();
-				webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
-				webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
-			}
+			//var sfd = new SaveFileDialog { DefaultExt = ".mp3" };
+			//sfd.FileName = ItemSelected.FullNameAudio + "." + sfd.DefaultExt;
+			//if (sfd.ShowDialog() == true)
+			//{
+			//	WebClient webClient = new WebClient();
+			//	webClient.DownloadProgressChanged += (sender, args) => ProgressLoading = (double)args.ProgressPercentage;
+			//	webClient.DownloadFileCompleted += (sender, args) => MessageBox.Show("Файл успешно сохранен!");
+			//	webClient.DownloadFileAsync(new Uri(ItemSelected.Url), sfd.FileName);
+			//}
 		}
+
 		#endregion
 
 		#region Добавление аудиозаписи
