@@ -21,17 +21,6 @@ namespace VK.ViewModel.Main
 		private readonly ObservableCollection<PaneViewModel> _viewModels = new ObservableCollection<PaneViewModel>();
 		public ObservableCollection<PaneViewModel> ViewModels => _viewModels;
 
-		//Количество непрочитанных сообщений
-		private int _unreadMessages;
-		public int UnreadMessages
-		{
-			get { return _unreadMessages; }
-			set
-			{
-				_unreadMessages = value;
-				RaisePropertyChanged();
-			}
-		}
 		// Активная viewModel
 		private PaneViewModel _activeViewModel;
 		public PaneViewModel ActiveViewModel
@@ -49,6 +38,7 @@ namespace VK.ViewModel.Main
 
 		//выезжающая панелька
 		//прокидывается во вью модели для вызова своих окон
+		//в идеале должна вызываться через сервис
 		private FlyoutViewModel _flyout = new FlyoutViewModel();
 		public FlyoutViewModel Flyout
 		{

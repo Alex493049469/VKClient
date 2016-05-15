@@ -123,7 +123,7 @@
                                                        Height="10"
                                                        HorizontalAlignment="Left"
                                                        VerticalAlignment="Center"
-                                                       Kind="Minus" />
+                                                       Kind="Close" />
                         </Button>
 
                     </StackPanel>
