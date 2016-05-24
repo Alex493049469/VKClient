@@ -4,6 +4,7 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:converters="clr-namespace:VK.Converters"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       xmlns:dock="clr-namespace:VK.Dock"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:mvvmTestApp="clr-namespace:AvalonDock.MVVMTestApp"
@@ -13,7 +14,7 @@
                       Title="Vk Client"
                       Width="950"
                       Height="625"
-
+                      dialogs:DialogParticipation.Register="{Binding}"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       BorderThickness="1"
                       Icon="../Images/vkontakte.png"
@@ -124,9 +125,7 @@
             <view:AuthorizedUserView Width="Auto"
                                      Height="127"
                                      Margin="5" />
-            <StackPanel Width="200"
-                        HorizontalAlignment="Left"
-                        >
+            <StackPanel Width="200" HorizontalAlignment="Left">
                 <Button x:Name="MyPageButton"
                         Width="175"
                         Height="35"

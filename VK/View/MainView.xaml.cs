@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using VK.Properties;
+using VK.Services;
 using VK.ViewModel.Main;
 using VKAPI;
 
@@ -33,6 +34,7 @@ namespace VK.View
 		{
 			//testFlyout.IsOpen = true;
 			//this.ShowMessageAsync("This is the title", "Some message");
+
 		}
 	}
 }

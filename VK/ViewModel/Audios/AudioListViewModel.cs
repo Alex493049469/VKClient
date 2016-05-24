@@ -7,14 +7,15 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using Core.Command;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using VK.Services;
 using VK.View;
 using VK.View.Audio;
 using VK.ViewModel.Main;
 using VKAPI;
 using VKAPI.Core;
 using VKAPI.Model.AudioModel;
-using MessageBox = System.Windows.MessageBox;
 
 namespace VK.ViewModel.Audios
 {
@@ -303,7 +304,7 @@ namespace VK.ViewModel.Audios
 				if (AudioItemsViewModel[i].Id == (int)o)
 				{
 					await _vk.Audio.AddAsync(AudioItemsViewModel[i].Id, AudioItemsViewModel[i].OwnerId);
-					MessageBox.Show("Аудиозапись успешно добавлена!");
+					DialogService.ShowMessage("Оповещение", "Аудиозапись успешно добавлена!");
 					break;
 				}
 			}
@@ -320,11 +321,22 @@ namespace VK.ViewModel.Audios
 			{
 				if (AudioItemsViewModel[i].Id == (int)o)
 				{
-					await _vk.Audio.DeleteAsync(AudioItemsViewModel[i].Id, AudioItemsViewModel[i].OwnerId);
-					if (AudioItemsViewModel.Remove(AudioItemsViewModel[i]))
+					var mySettings = new MetroDialogSettings()
 					{
-						MessageBox.Show("Аудиозапись успешно удалена!");
+						AffirmativeButtonText = "Да",
+						NegativeButtonText = "Нет"
+					};
+
+					var result = await DialogService.ShowMessage("Оповещение!", "Вы действительно хотите удалить аудиозапись: "+ AudioItemsViewModel[i].FullNameAudio + "?",
+						MessageDialogStyle.AffirmativeAndNegative, mySettings);
+
+					if (result == MessageDialogResult.Affirmative)
+					{
+						await _vk.Audio.DeleteAsync(AudioItemsViewModel[i].Id, AudioItemsViewModel[i].OwnerId);
+						AudioItemsViewModel.Remove(AudioItemsViewModel[i]);
+						DialogService.ShowMessage("Оповещение", "Аудиозапись успешно удалена!");
 					}
+
 					break;
 				}
 			}

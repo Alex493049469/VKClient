@@ -152,7 +152,6 @@ namespace VK.ViewModel.Audios
 			ProgressVisibility = Visibility.Visible;
 			WebClient webClient = new WebClient();
 			webClient.DownloadProgressChanged += (sender, args) => { ProgressLoading = (double)args.ProgressPercentage; };
-			//MessageBox.Show("Файл успешно сохранен!"); 
 			webClient.DownloadFileCompleted += (sender, args) => { ProgressVisibility = Visibility.Collapsed; };
 			webClient.DownloadFileAsync(new Uri(Url), Path);
 		}

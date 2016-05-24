@@ -51,6 +51,7 @@ namespace VK.ViewModel.Main
 		}
 
 		public static MainViewModel This { get; } = new MainViewModel();
+
 		//repositories
 		DialogRepository _dialogRepository;
 		EventsService _eventService;
@@ -119,7 +120,6 @@ namespace VK.ViewModel.Main
 		{
 			_viewModels.Add(new FriendsListViewModel());
 			ActiveViewModel = _viewModels.Last();
-
 		}
 
 		internal void Close(PaneViewModel fileToClose)
