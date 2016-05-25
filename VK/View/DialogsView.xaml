@@ -343,6 +343,7 @@
 
     <Grid>
         <baseControl:LazyLoadListBox Margin="0,10,0,25"
+                                     IsLazyLoad="True"
                                      ItemTemplateSelector="{StaticResource DialogDataTemplateSelector}"
                                      ItemsSource="{Binding DialogItemsViewModel,
                                                            IsAsync=True}"
@@ -355,10 +356,7 @@
             </i:Interaction.Triggers>
             <baseControl:LazyLoadListBox.Style>
                 <Style TargetType="{x:Type baseControl:LazyLoadListBox}">
-                    <Setter Property="IsLazyLoad" Value="True" />
-
                     <Setter Property="BorderThickness" Value="1" />
-
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />

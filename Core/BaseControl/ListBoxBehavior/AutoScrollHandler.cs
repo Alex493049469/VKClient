@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace Core.BaseControl.ListBoxBehavior
@@ -72,7 +67,6 @@ namespace Core.BaseControl.ListBoxBehavior
 				return;
 			}
 
-
 			if (e.NewItems != null)
 			{
 				this.target.SelectedIndex = e.NewStartingIndex;
@@ -82,8 +76,6 @@ namespace Core.BaseControl.ListBoxBehavior
 				this.target.ScrollIntoView(e.NewItems[e.NewItems.Count - 1]);
 			}
 
-			
-			
 		}
 	}
 }

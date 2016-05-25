@@ -30,7 +30,7 @@ namespace VKAPI.Handlers
 		{
 			string url = GenerateRequest(method, ClearEmptyParameters(parameters));
 			//чтоб не превычать максимальную частоту запросов к VK api (3 раза в секунду)
-			Thread.Sleep(200);
+			//Thread.Sleep(200);
 			var webRequest = WebRequest.Create(url);
 			var response = webRequest.GetResponse();
 			var stream = response.GetResponseStream();

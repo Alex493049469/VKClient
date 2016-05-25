@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Core;
 using MahApps.Metro.Controls;
@@ -12,7 +13,7 @@ namespace VK.ViewModel.Main
 	public class FlyoutViewModel : BaseViewModel
 	{
 		public string Header { get; set; }
-		public bool Visible { get; set; }
+		public Visibility Visible { get; set; } = Visibility.Hidden;
 		public Position Position { get; set; }
 		public bool IsModal { get; set; }
 		public bool IsOpen { get; set; }

@@ -171,6 +171,8 @@
                                      Margin="0,0,0,5"
                                      VerticalAlignment="Stretch"
                                      listBoxBehavior:ListBoxBehavior.AutoScroll="True"
+                                     IsLazyLoad="{Binding IsLazyLoad}"
+                                     IsLoadingUp="True"
                                      ItemTemplateSelector="{StaticResource MessageDataTemplateSelector}"
                                      ItemsSource="{Binding MessageItemsViewModel,
                                                            IsAsync=True}"
@@ -182,7 +184,7 @@
                     <Setter Property="BorderThickness" Value="1" />
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-                    <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
                     <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
                     <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
                     <Setter Property="ScrollViewer.PanningMode" Value="Both" />

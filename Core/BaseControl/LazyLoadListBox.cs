@@ -19,13 +19,13 @@ namespace Core.BaseControl
 		public static readonly DependencyProperty LoadCommandProperty = DependencyProperty.Register(
 			"LoadCommand", typeof(ICommand), typeof(LazyLoadListBox), new PropertyMetadata(default(ICommand)));
 
-		public static readonly DependencyProperty IsLoadingProperty = DependencyProperty.Register(
-			"IsLoading", typeof(bool), typeof(LazyLoadListBox), new PropertyMetadata(false));
+		public static readonly DependencyProperty IsLoadingUpProperty = DependencyProperty.Register(
+			"IsLoadingUp", typeof(bool), typeof(LazyLoadListBox), new PropertyMetadata(false));
 
-		public bool IsLoading
+		public bool IsLoadingUp
 		{
-			get { return (bool)GetValue(IsLoadingProperty); }
-			set { SetValue(IsLoadingProperty, value); }
+			get { return (bool)GetValue(IsLoadingUpProperty); }
+			set { SetValue(IsLoadingUpProperty, value); }
 		}
 
 		/// <summary>
@@ -72,10 +72,15 @@ namespace Core.BaseControl
 			if (scrollViewer == null)
 				return;
 
-			if (scrollViewer.ScrollableHeight != 0 && scrollViewer.ScrollableHeight == scrollViewer.VerticalOffset)
+			if (IsLoadingUp != true && scrollViewer.ScrollableHeight != 0 && scrollViewer.ScrollableHeight == scrollViewer.VerticalOffset)
 			{
 				LoadCommand.Execute(null);
 			}
+			if (IsLoadingUp && scrollViewer.VerticalOffset == 0)
+			{
+				LoadCommand.Execute(null);
+			}
+
 		}
 
 		#endregion

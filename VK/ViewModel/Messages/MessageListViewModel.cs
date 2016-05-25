@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Core.Command;
 using VKAPI;
 using VKAPI.Model.MessagesModel;
 using VKAPI.Model.UsersModel;
@@ -17,6 +18,8 @@ namespace VK.ViewModel.Messages
 		private int _index;
 		//размер страницы
 		private int _count = 25;
+
+		public RelayCommand LoadCommand { get; set; }
 
 		//Properties
 		private ObservableCollection<MessageItemViewModel> _messageItemsViewModel = new ObservableCollection<MessageItemViewModel>();
@@ -34,6 +37,17 @@ namespace VK.ViewModel.Messages
 			}
 		}
 
+		private bool _isLazyLoad = false;
+		public bool IsLazyLoad
+		{
+			get { return _isLazyLoad; }
+			set
+			{
+				_isLazyLoad = value;
+				RaisePropertyChanged();
+			}
+		}
+
 		private bool _isChat;
 		private int _id;
 
@@ -42,6 +56,7 @@ namespace VK.ViewModel.Messages
 			Title = "Пепеписка с ";
 			_isChat = isChat;
 			_id = id;
+			LoadCommand = new RelayCommand(LoadMessage);
 			LoadMessage();
 		}
 
@@ -135,11 +150,25 @@ namespace VK.ViewModel.Messages
 					item.UserName = userTemp.first_name + " " + userTemp.last_name;
 					item.LastMessageUserName = userTemp.first_name + " отправил подарок ";
 				}
-
-				
 			}
 
-			itemsMessages.ToList().ForEach(MessageItemsViewModel.Add);
+		
+
+			if (IsLazyLoad == false)
+			{
+				itemsMessages.ToList().ForEach(MessageItemsViewModel.Add);
+			}
+			else
+			{
+				IsLazyLoad = false;
+				for (int i = itemsMessages.Count-1; i > -1; i--)
+				{
+					MessageItemsViewModel.Insert(0, itemsMessages[i]);
+				}
+			}
+		
+
+			IsLazyLoad = true;
 			_index += _count;
 		}
 
