@@ -7,7 +7,7 @@ namespace VK.ViewModel.Friends
 {
 	public class FriendsListViewModel : PaneViewModel
 	{
-		VkApi _vk = new VkApi();
+		private readonly VkApi _vkApi;
 		//модель данных друзей
 		private FriendsModel _friendViewModel;
 		//ViewModel друзей
@@ -28,8 +28,9 @@ namespace VK.ViewModel.Friends
 			}
 		}
 	  
-		public FriendsListViewModel()
+		public FriendsListViewModel(VkApi vkApi)
 		{
+			_vkApi = vkApi;
 			Title = "Мои друзья";
 			LoadFriends();
 		}
@@ -41,7 +42,7 @@ namespace VK.ViewModel.Friends
 		{
 			FriendsItemsViewModel = null;
 			ObservableCollection<FriendItemViewModel> _item = new ObservableCollection<FriendItemViewModel>();
-			_friendViewModel = await _vk.Friends.GetAsync();
+			_friendViewModel = await _vkApi.Friends.GetAsync();
 			foreach (var item in _friendViewModel.response.items)
 			{
 				FriendItemViewModel itemAudio = new FriendItemViewModel() { Item = item };

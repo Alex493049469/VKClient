@@ -4,6 +4,7 @@ using Core.Command;
 using VK.DataAccess;
 using VK.ViewModel.Main;
 using VK.ViewModel.Messages;
+using VKAPI;
 
 namespace VK.ViewModel.Dialogs
 {
@@ -12,7 +13,9 @@ namespace VK.ViewModel.Dialogs
 		//Commands
 		public RelayCommand OpenMessagesCommand { get; private set; }
 		public RelayCommand LoadCommand { get; set; }
-		
+
+		private readonly VkApi _vkApi;
+
 		//Общее количество диалогов
 		public int CountDialog { get; set; }
 
@@ -33,8 +36,9 @@ namespace VK.ViewModel.Dialogs
 
 		private readonly DialogRepository _dialogRepository;
 
-		public DialogListViewModel(DialogRepository dialogRepository)
+		public DialogListViewModel(VkApi vkApi, DialogRepository dialogRepository)
 		{
+			_vkApi = vkApi;
 			_dialogRepository = dialogRepository;
 			Title = "Мои сообщения";
 			CountDialog = 0;
@@ -57,11 +61,11 @@ namespace VK.ViewModel.Dialogs
 			MessageListViewModel messageViewModel;
 			if (ItemSelected.ChatId == null)
 			{
-				messageViewModel = new MessageListViewModel(false, (int)ItemSelected.UserId);
+				messageViewModel = new MessageListViewModel(_vkApi, false, (int)ItemSelected.UserId);
 			}
 			else
 			{
-				messageViewModel = new MessageListViewModel(true, (int)ItemSelected.ChatId);
+				messageViewModel = new MessageListViewModel(_vkApi, true, (int)ItemSelected.ChatId);
 			}
 			messageViewModel.Title = ItemSelected.Title;
 

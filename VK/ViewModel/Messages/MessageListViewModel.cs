@@ -12,7 +12,7 @@ namespace VK.ViewModel.Messages
 	class MessageListViewModel : PaneViewModel
 	{
 		//для доступа к данным диалогов
-		VkApi _vk = new VkApi();
+		private readonly VkApi _vkApi;
 
 		//индекс начала
 		private int _index;
@@ -51,8 +51,9 @@ namespace VK.ViewModel.Messages
 		private bool _isChat;
 		private int _id;
 
-		public MessageListViewModel(bool isChat, int id)
+		public MessageListViewModel(VkApi vkApi, bool isChat, int id)
 		{
+			_vkApi = vkApi;
 			Title = "Пепеписка с ";
 			_isChat = isChat;
 			_id = id;
@@ -65,11 +66,11 @@ namespace VK.ViewModel.Messages
 			MessagesModel _messageModel;
 			if (_isChat)
 			{
-				_messageModel = await _vk.Messages.GetHistoryChatAsync(_id, _count, _index);
+				_messageModel = await _vkApi.Messages.GetHistoryChatAsync(_id, _count, _index);
 			}
 			else
 			{
-				_messageModel = await _vk.Messages.GetHistoryUserAsync(_id, _count, _index);
+				_messageModel = await _vkApi.Messages.GetHistoryUserAsync(_id, _count, _index);
 			}
 
 			_messageModel.response.items.Reverse();
@@ -132,7 +133,7 @@ namespace VK.ViewModel.Messages
 			string UserIds = String.Join(",", userIdList);
 			
 			//получаем всю необходимую информацию о пользовалелях кто в диалогах 
-			UsersModel users = await _vk.Users.GetPhotoAsync(UserIds);
+			UsersModel users = await _vkApi.Users.GetPhotoAsync(UserIds);
 
 			foreach (var item in itemsMessages)
 			{

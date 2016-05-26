@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VKAPI.Category;
+﻿using VKAPI.Category;
+using VKAPI.Handlers;
 
 namespace VKAPI
 {
@@ -12,13 +8,16 @@ namespace VKAPI
 	/// </summary>
 	public class VkApi
 	{
-		public VkApi()
+		private readonly IVkRequest _vkRequest;
+
+		public VkApi(IVkRequest vkRequest)
 		{
-			Audio = new Audio();
-			Friends = new Friends();
-			Messages = new Messages();
-			Users = new Users();
-			Account = new Account();
+			_vkRequest = vkRequest;
+			Audio = new Audio(_vkRequest);
+			Friends = new Friends(_vkRequest);
+			Messages = new Messages(_vkRequest);
+			Users = new Users(_vkRequest);
+			Account = new Account(_vkRequest);
 		}
 
 		public Account Account { get; set; }
@@ -26,7 +25,6 @@ namespace VKAPI
 		public Friends Friends{ get; private set; }
 		public Messages Messages{ get; private set; }
 		public Users Users{ get; private set; }
-
 
 	}
 }

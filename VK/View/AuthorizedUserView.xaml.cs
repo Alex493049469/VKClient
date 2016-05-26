@@ -24,7 +24,7 @@ namespace VK.View
 		public AuthorizedUserView()
 		{
 			InitializeComponent();
-			DataContext = AuthorizedUserViewModel.This;
+			//DataContext = AuthorizedUserViewModel.This;
 		}
 	}
 }

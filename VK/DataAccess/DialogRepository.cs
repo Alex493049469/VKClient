@@ -20,8 +20,12 @@ namespace VK.DataAccess
 	{
 		private EventsService _eventService;
 
-		public DialogRepository(EventsService eventService)
+		//для доступа к данным диалогов
+		private readonly VkApi _vkApi;
+
+		public DialogRepository(VkApi vkApi, EventsService eventService)
 		{
+			_vkApi = vkApi;
 			_eventService = eventService;
 			_eventService.NewMessage += InstanceOnNewMessage;
 		}
@@ -59,10 +63,6 @@ namespace VK.DataAccess
 		}
 
 		private int _unreadMessages;
-
-
-		//для доступа к данным диалогов
-		VkApi _vkApi = new VkApi();
 
 		//событие на которое надо подписаться для оповещения что диалоги изменились и их нужно обновить в UI
 		public delegate void MethodContainer();

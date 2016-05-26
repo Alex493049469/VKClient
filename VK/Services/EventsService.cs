@@ -14,7 +14,12 @@ namespace VK.Services
 	/// </summary>
 	public class EventsService
 	{
-		private VkApi _vk = new VkApi();
+		private readonly VkApi _vkApi;
+
+		public EventsService(VkApi vkApi)
+		{
+			_vkApi = vkApi;
+		}
 
 		LongPullModel lpm;
 
@@ -29,7 +34,7 @@ namespace VK.Services
 		{
 			if (updates == null)
 			{
-				lpm = await _vk.Messages.GetLongPollServerAsync();
+				lpm = await _vkApi.Messages.GetLongPollServerAsync();
 			}
 			else
 			{
@@ -77,7 +82,7 @@ namespace VK.Services
 				if (codeTypeEvent == 4)
 				{
 					//получаем новые сообщения
-					LongPullMessageModel longPullMessageModel = await _vk.Messages.GetLongPollHistoryAsynk(ts, pts);
+					LongPullMessageModel longPullMessageModel = await _vkApi.Messages.GetLongPollHistoryAsynk(ts, pts);
 
 					var message = new MessageNew
 					{

@@ -1,4 +1,5 @@
 ﻿using Core;
+using VKAPI;
 using VKAPI.Category;
 using VKAPI.Model.UsersModel;
 
@@ -8,11 +9,12 @@ namespace VK.ViewModel.Page
     {
         //модель данных
         public UsersModel UserModel;
-        //для доступа к пользователям
-        Users vkusers = new Users();
+		//для доступа к пользователям
+		private readonly VkApi _vkApi;
 
-        public PageViewModel()
-        {
+		public PageViewModel(VkApi vkApi)
+		{
+			_vkApi = vkApi;
 			Title = "Моя страница";
             LoadModel();
         }
@@ -20,7 +22,7 @@ namespace VK.ViewModel.Page
         public async void LoadModel()
         {
             //грузим данные в модель
-            UserModel = vkusers.Get("", "", Users.nameCase.nom);
+            UserModel = _vkApi.Users.Get("", "", Users.nameCase.nom);
         }
 
  

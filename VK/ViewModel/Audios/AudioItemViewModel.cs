@@ -96,20 +96,21 @@ namespace VK.ViewModel.Audios
 
 		public RelayCommand SaveAudioButtonClick { get; private set; }
 
-		readonly VkApi _vk = new VkApi();
+		private readonly VkApi _vkApi;
 
 		public bool Check { get; set; }
 
 		private readonly FlyoutViewModel _flyout;
-		public AudioItemViewModel(FlyoutViewModel flyout)
+		public AudioItemViewModel(VkApi vkApi, FlyoutViewModel flyout)
 		{
+			_vkApi = vkApi;
 			_flyout = flyout;
 			SaveAudioButtonClick = new RelayCommand(SaveAudio);
 		}
 
 		private void SaveAudio()
 		{
-			_vk.Audio.EditAsync(OwnerId, Id, Artist, Title, Text, GenreId, NoSearch);
+			_vkApi.Audio.EditAsync(OwnerId, Id, Artist, Title, Text, GenreId, NoSearch);
 			_flyout.Hide();
 		}
 
@@ -120,7 +121,7 @@ namespace VK.ViewModel.Audios
 		{
 			if(LyricsId != 0 && string.IsNullOrEmpty(Text))
 			{
-				var lyricsModel = await _vk.Audio.GetLyricsAsync(LyricsId);
+				var lyricsModel = await _vkApi.Audio.GetLyricsAsync(LyricsId);
 				Text = lyricsModel.response.text;
 			}
 

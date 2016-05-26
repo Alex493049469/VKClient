@@ -124,7 +124,8 @@
                     Background="#FFf1f2f4">
             <view:AuthorizedUserView Width="Auto"
                                      Height="127"
-                                     Margin="5" />
+                                     Margin="5"
+                                     DataContext="{Binding AuthorizedUserViewModel}" />
             <StackPanel Width="200" HorizontalAlignment="Left">
                 <Button x:Name="MyPageButton"
                         Width="175"

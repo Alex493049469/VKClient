@@ -12,6 +12,13 @@ namespace VKAPI.Category
 	/// </summary>
 	public class Audio
 	{
+		private readonly IVkRequest _vkRequest;
+
+		public Audio(IVkRequest vkRequest)
+		{
+			_vkRequest = vkRequest;
+		}
+
 		///<summary>
 		///    Возвращает список аудиозаписей пользователя или сообщества
 		/// </summary>
@@ -24,7 +31,7 @@ namespace VKAPI.Category
 		/// <param name="offset">смещение, необходимое для выборки определенного количества аудиозаписей. По умолчанию — 0. </param>
 		/// <param name="count">количество аудиозаписей, информацию о которых необходимо вернуть. Максимальное значение — 6000</param>
 		/// <returns></returns>
-		public AudioModel Get(int ownerId, int albumId, string audioIds, int offset , int count)
+		public AudioModel Get(int ownerId = 0, int albumId = 0, string audioIds = "", int offset = 0, int count = 1000)
 		{
 			var parameters = new Dictionary<string, object>
 			{
@@ -35,7 +42,7 @@ namespace VKAPI.Category
 				{"count=", count}
 			};
 
-			string str = VkRequest.GetData("audio.get", parameters);
+			string str = _vkRequest.GetData("audio.get", parameters);
 			//десериализуем
 			var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
 			return audioModel;
@@ -54,7 +61,7 @@ namespace VKAPI.Category
 				{"target_audio=", targetAudio},
 			};
 
-			string str = VkRequest.GetData("audio.getRecommendations", parameters);
+			string str = _vkRequest.GetData("audio.getRecommendations", parameters);
 			//десериализуем
 			var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
 			return audioModel;
@@ -91,7 +98,7 @@ namespace VKAPI.Category
 				{"count=", count}
 			};
 
-			string str = VkRequest.GetData("audio.search", parameters);
+			string str = _vkRequest.GetData("audio.search", parameters);
 			//десериализуем
 			var audioModel = JsonConvert.DeserializeObject<AudioModel>(str);
 			return audioModel;
@@ -117,7 +124,7 @@ namespace VKAPI.Category
 			
 			};
 
-			VkRequest.GetData("audio.add", parameters);
+			_vkRequest.GetData("audio.add", parameters);
 		}
 
 		public Task AddAsync(int audioId, int ownerId)
@@ -139,7 +146,7 @@ namespace VKAPI.Category
 			
 			};
 
-			VkRequest.GetData("audio.delete", parameters);
+			_vkRequest.GetData("audio.delete", parameters);
 		}
 
 		public Task DeleteAsync(int audioId, int ownerId)
@@ -159,7 +166,7 @@ namespace VKAPI.Category
 				{"no_search=", no_search},
 			};
 
-			 var qwe = VkRequest.PostData("audio.edit", parameters, "&text = " + text);
+			 var qwe = _vkRequest.PostData("audio.edit", parameters, "&text = " + text);
 		}
 
 		public Task EditAsync(int ownerId, int audioId, string artist, string title, string text, int genre_id, int? no_search)
@@ -174,7 +181,7 @@ namespace VKAPI.Category
 				{"lyrics_id=", lyrics_id}
 			};
 
-			string str = VkRequest.GetData("audio.getLyrics", parameters);
+			string str = _vkRequest.GetData("audio.getLyrics", parameters);
 			//десериализуем
 			var audioModel = JsonConvert.DeserializeObject<LyricsModel>(str);
 			return audioModel;

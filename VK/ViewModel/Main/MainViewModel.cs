@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Controls;
 using Core;
 using Core.Command;
-using MahApps.Metro.Controls.Dialogs;
 using VK.DataAccess;
 using VK.Services;
-using VK.View;
 using VK.ViewModel.Audios;
+using VK.ViewModel.AuthorizedUser;
 using VK.ViewModel.Dialogs;
 using VK.ViewModel.Friends;
 using VK.ViewModel.Page;
+using VKAPI;
+using VKAPI.Handlers;
 
 namespace VK.ViewModel.Main
 {
 	public class MainViewModel : BaseViewModel
 	{
+		//для доступа к данным диалогов
+		private readonly VkApi _vkApi = new VkApi(new VkRequest());
+
 		//Коллекция ViewModel
 		private readonly ObservableCollection<PaneViewModel> _viewModels = new ObservableCollection<PaneViewModel>();
 		public ObservableCollection<PaneViewModel> ViewModels => _viewModels;
@@ -31,6 +33,20 @@ namespace VK.ViewModel.Main
 				if (_activeViewModel != value)
 				{
 					_activeViewModel = value;
+					RaisePropertyChanged();
+				}
+			}
+		}
+
+		private AuthorizedUserViewModel _authorizedUserViewModel;
+		public AuthorizedUserViewModel AuthorizedUserViewModel
+		{
+			get { return _authorizedUserViewModel; }
+			set
+			{
+				if (_authorizedUserViewModel != value)
+				{
+					_authorizedUserViewModel = value;
 					RaisePropertyChanged();
 				}
 			}
@@ -54,6 +70,7 @@ namespace VK.ViewModel.Main
 
 		//repositories
 		DialogRepository _dialogRepository;
+		//service
 		EventsService _eventService;
 
 		//Commands
@@ -71,12 +88,14 @@ namespace VK.ViewModel.Main
 			OpenAudioCommand = new RelayCommand(OpenAudios);
 			OpenPageCommand = new RelayCommand(OpenMyPage);
 			OpenFriendsCommand = new RelayCommand(OpenFriends);
+
+			AuthorizedUserViewModel = new AuthorizedUserViewModel(_vkApi);
 		}
 
 		private void OpenAudios()
 		{
 			if (_audioList == null)
-				_audioList = new AudioListViewModel(Flyout);
+				_audioList = new AudioListViewModel(_vkApi, Flyout);
 
 			if (_viewModels.Contains(_audioList))
 			{
@@ -91,7 +110,7 @@ namespace VK.ViewModel.Main
 
 		private void OpenMyPage()
 		{
-			_viewModels.Add(new PageViewModel());
+			_viewModels.Add(new PageViewModel(_vkApi));
 			ActiveViewModel = _viewModels.Last();
 		}
 
@@ -99,11 +118,11 @@ namespace VK.ViewModel.Main
 		{
 			if (_dialogList == null)
 			{
-				_eventService = new EventsService();
+				_eventService = new EventsService(_vkApi);
 				_eventService.LongPool();
-				_dialogRepository = new DialogRepository(_eventService);
+				_dialogRepository = new DialogRepository(_vkApi, _eventService);
 
-				_dialogList = new DialogListViewModel(_dialogRepository);
+				_dialogList = new DialogListViewModel(_vkApi,_dialogRepository);
 			}
 			if (_viewModels.Contains(_dialogList))
 			{
@@ -118,7 +137,7 @@ namespace VK.ViewModel.Main
 
 		private void OpenFriends()
 		{
-			_viewModels.Add(new FriendsListViewModel());
+			_viewModels.Add(new FriendsListViewModel(_vkApi));
 			ActiveViewModel = _viewModels.Last();
 		}
 

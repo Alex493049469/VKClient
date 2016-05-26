@@ -1,32 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Threading;
-using System.Windows.Markup;
-using System.Windows.Threading;
 
 namespace VKAPI.Handlers
 {
 	/// <summary>
 	/// Отвечает за формирование и отправку запроса Vk Api
 	/// </summary>
-	internal static class VkRequest
+	public class VkRequest : IVkRequest
 	{
 		//Так же необходимо реализовать таймер который будет контроллировать чтоб не уходило более 3 запросов в секунду
 
 		//базовый Url
-		private static string _baseUrl = @"https://api.vk.com/method/";
+		private  string _baseUrl = @"https://api.vk.com/method/";
 
 		//версия Api
-		private static string ApiVersion = "v=5.45";
+		private  string ApiVersion = "v=5.45";
 
 		/// <summary>
 		/// Отправка запроса и получение ответа в строку
 		/// </summary>
 		/// <returns></returns>
-		internal static string GetData(string method, Dictionary<string, object> parameters = null)
+		public string GetData(string method, Dictionary<string, object> parameters = null)
 		{
 			string url = GenerateRequest(method, ClearEmptyParameters(parameters));
 			//чтоб не превычать максимальную частоту запросов к VK api (3 раза в секунду)
@@ -44,7 +40,7 @@ namespace VKAPI.Handlers
 			return data;
 		}
 
-		internal static string PostData(string method, Dictionary<string, object> parameters, string data)
+		public string PostData(string method, Dictionary<string, object> parameters, string data)
 		{
 			string url = GenerateRequest(method, ClearEmptyParameters(parameters));
 			WebRequest request = WebRequest.Create(url);
@@ -76,7 +72,7 @@ namespace VKAPI.Handlers
 		/// склеивание всех параметров в строку запроса
 		/// </summary>
 		/// <returns></returns>
-		private static string GenerateRequest(string method, Dictionary<string, object> parameters)
+		private string GenerateRequest(string method, Dictionary<string, object> parameters)
 		{
 			string url = _baseUrl + method + "?";
 			if (parameters != null && parameters.Count > 0)
@@ -92,7 +88,7 @@ namespace VKAPI.Handlers
 		/// </summary>
 		/// <param name="parameters"></param>
 		/// <returns></returns>
-		private static Dictionary<string, object> ClearEmptyParameters(Dictionary<string, object> parameters)
+		private Dictionary<string, object> ClearEmptyParameters(Dictionary<string, object> parameters)
 		{
 			Dictionary<string, object> param = new Dictionary<string, object>();
 
@@ -127,7 +123,7 @@ namespace VKAPI.Handlers
 		/// Преобразование списка параметров в строку
 		/// </summary>
 		/// <returns></returns>
-		private static string ConvertToStringParameters(Dictionary<string, object> parameters)
+		private string ConvertToStringParameters(Dictionary<string, object> parameters)
 		{
 			string param = "";
 
