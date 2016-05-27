@@ -118,7 +118,7 @@ namespace VK.ViewModel.Audios
 				}
 				catch
 				{
-					throw new Exception("Неудалось загрузить аудиозапись!");
+					throw new Exception("Не удалось загрузить аудиозапись!");
 				}
 
 				//_reader = new AudioFileReader(path);

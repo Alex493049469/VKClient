@@ -28,8 +28,6 @@ namespace VK.ViewModel.Audios
 		private ObservableCollection<AudioItemViewModel> _audioItemsViewModel;
 		//для проигрывания аудио в фоне
 		private readonly IAudioPlayer _audioPlayer = new AudioPlayer();
-		//состояние проигрывания
-		private bool _isPaysed = false;
 		//
 		private readonly FlyoutViewModel _flyout;
 
