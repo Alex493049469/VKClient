@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Core;
@@ -92,7 +93,7 @@ namespace VK.ViewModel.Audios
 			_wavePlayer?.Pause();
 		}
 
-		public void Play(string path)
+		public async Task Play(string path)
 		{
 			if (_wavePlayer == null)
 			{
@@ -111,11 +112,16 @@ namespace VK.ViewModel.Audios
 			}
 			if (_reader == null)
 			{
-				//здесь происходит зависание если трек не доступен
-				//Reader = GetReader(path);
+				try
+				{
+					_reader = await Task.Run(() => new AudioFileReader(path));
+				}
+				catch
+				{
+					throw new Exception("Неудалось загрузить аудиозапись!");
+				}
 
-				//_reader = Reader.Result; 
-				_reader = new AudioFileReader(path);
+				//_reader = new AudioFileReader(path);
 				_wavePlayer.Init(_reader);
 			}
 			if (_wavePlayer.PlaybackState == PlaybackState.Playing)
@@ -128,12 +134,6 @@ namespace VK.ViewModel.Audios
 
 			_timer.Start();
 		}
-
-		private Task<AudioFileReader> GetReader(string path)
-		{
-			return Task.Run(() => new AudioFileReader(path));
-		}
-
 
 		private void CreatePlayer()
 		{

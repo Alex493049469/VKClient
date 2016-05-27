@@ -20,6 +20,15 @@ namespace VK.ViewModel.Audios
 
 	public class AudioItemViewModel : BaseViewModel
 	{
+
+		public enum StatePlay
+		{
+			Playing,
+			Paused,
+			Stopped,
+			None
+		}
+
 		public int Id { get; set; }
 		public int OwnerId { get; set; }
 		public string Artist { get; set; }
@@ -42,7 +51,7 @@ namespace VK.ViewModel.Audios
 		public string FullNameAudio => Artist + " - " + Title;
 
 		//проигрывается ли в данный момент
-		public bool IsPlay { get; set; }
+		public StatePlay StatePlaying { get; set; } = StatePlay.None;
 
 		//флаг мои аудиозаписи или нет
 		public bool IsMyItem { get; set; }

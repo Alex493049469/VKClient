@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -156,24 +157,36 @@ namespace VK.ViewModel.Audios
 
 		private async Task PlayAudio(object o)
 		{
-			//await Task.Run(() =>
-			//{
+			try
+			{
 				if (ItemSelected != null)
 				{
-					_audioPlayer.Play(ItemSelected.Url);
-
-					if (_isPaysed != true)
+					await _audioPlayer.Play(ItemSelected.Url);
+					if (ItemPlaying == null)
 					{
-						if (ItemPlaying != null)
-						{
-							ItemPlaying.IsPlay = false;
-						}
-						ItemSelected.IsPlay = true;
+						ItemSelected.StatePlaying = AudioItemViewModel.StatePlay.Playing;
 						ItemPlaying = ItemSelected;
 					}
-					_isPaysed = false;
+					else if (ItemPlaying != null)
+					{
+						if (ItemPlaying.StatePlaying == AudioItemViewModel.StatePlay.Playing ||
+						    ItemPlaying.StatePlaying == AudioItemViewModel.StatePlay.None)
+						{
+							ItemPlaying.StatePlaying = AudioItemViewModel.StatePlay.None;
+							ItemSelected.StatePlaying = AudioItemViewModel.StatePlay.Playing;
+							ItemPlaying = ItemSelected;
+						}
+						if (ItemPlaying.StatePlaying == AudioItemViewModel.StatePlay.Paused)
+						{
+							ItemPlaying.StatePlaying = AudioItemViewModel.StatePlay.Playing;
+						}
+					}
 				}
-			//});
+			}
+			catch (Exception ex)
+			{
+				DialogService.ShowMessage("Предупреждение", ex.Message);
+			}
 		}
 
 		#endregion;
@@ -182,7 +195,7 @@ namespace VK.ViewModel.Audios
 		private void PauseAudio()
 		{
 			_audioPlayer.Pause();
-			_isPaysed = true;
+			ItemPlaying.StatePlaying = AudioItemViewModel.StatePlay.Paused;
 		}
 		#endregion;
 
@@ -190,6 +203,7 @@ namespace VK.ViewModel.Audios
 		private void StopAudio()
 		{
 			_audioPlayer.Stop();
+			ItemPlaying.StatePlaying = AudioItemViewModel.StatePlay.None;
 		}
 		#endregion;
 
@@ -199,14 +213,14 @@ namespace VK.ViewModel.Audios
 		{
 			for (int i = 0; i < AudioItemsViewModel.Count; i++)
 			{
-				if (AudioItemsViewModel[i].IsPlay == true)
+				if (AudioItemsViewModel[i].StatePlaying == AudioItemViewModel.StatePlay.Playing)
 				{
-					AudioItemsViewModel[i].IsPlay = false;
-					
+					AudioItemsViewModel[i].StatePlaying = AudioItemViewModel.StatePlay.None;
+
 					//проверяем не достигли ли конца списка
 					if (i + 1 < AudioItemsViewModel.Count)
 					{
-						AudioItemsViewModel[i + 1].IsPlay = true;
+						AudioItemsViewModel[i + 1].StatePlaying = AudioItemViewModel.StatePlay.Playing;
 						_audioPlayer.Play(AudioItemsViewModel[i + 1].Url);
 						ItemPlaying = AudioItemsViewModel[i + 1];
 						break;
@@ -214,12 +228,12 @@ namespace VK.ViewModel.Audios
 					else
 					{
 						i = -1;
-						AudioItemsViewModel[i + 1].IsPlay = true;
+						AudioItemsViewModel[i + 1].StatePlaying = AudioItemViewModel.StatePlay.Playing;
 						_audioPlayer.Play(AudioItemsViewModel[i + 1].Url);
 						ItemPlaying = AudioItemsViewModel[i + 1];
 						break;
 					}
-				  
+
 				}
 			}
 		}

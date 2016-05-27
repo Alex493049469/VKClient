@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace VK.ViewModel.Audios
 {
@@ -7,7 +8,7 @@ namespace VK.ViewModel.Audios
 		float VolimePosition { get; set; }
 		double AudioPosition { get; set; }
 
-		void Play(string path);
+		Task Play(string path);
 		void Pause();
 		void Stop();
 
