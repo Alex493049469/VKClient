@@ -72,7 +72,7 @@ namespace VK.DataAccess
 		/// возвращает список диалогов
 		/// </summary>
 		/// <returns></returns>
-		public async void GetDialog()
+		public async Task<ObservableCollection<DialogItemViewModel>> GetDialog()
 		{
 			_dialogModel = await _vkApi.Messages.GetDialogsAsync(_count, _index);
 
@@ -223,6 +223,7 @@ namespace VK.DataAccess
 			}
 			_index += _count;
 
+			return _dialogsViewModel;
 		}
 
 		private void InstanceOnNewMessage(LongPullMessageModel message)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Core.Command;
 using VK.DataAccess;
 using VK.ViewModel.Main;
@@ -47,13 +48,13 @@ namespace VK.ViewModel.Dialogs
 			LoadDialogs();
 		}
 
-		public void LoadDialogs()
+		public async void LoadDialogs()
 		{
 			if (DialogItemsViewModel != null && DialogItemsViewModel.Count == CountDialog) return;
-			_dialogRepository.GetDialog();
-			DialogItemsViewModel = _dialogRepository.DialogItemsViewModel;
+			ObservableCollection<DialogItemViewModel> pageAudio = await _dialogRepository.GetDialog();
+			DialogItemsViewModel = pageAudio;
 
-			CountDialog = _dialogRepository.CountDialog;
+			//CountDialog = _dialogRepository.CountDialog;
 		}
 
 		public void OpenMessages()
