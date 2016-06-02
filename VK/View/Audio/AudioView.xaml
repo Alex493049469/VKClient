@@ -197,7 +197,7 @@
 
     <Grid x:Name="root" UseLayoutRounding="True">
         <ListBox x:Name="ListAudio"
-                 Margin="10,118,10,31"
+                 Margin="10,78,10,65"
                  ItemTemplate="{StaticResource AudioTemplate}"
                  ItemsSource="{Binding AudioItemsViewModel,
                                        IsAsync=True}"
@@ -214,7 +214,7 @@
 
             <ListBox.Style>
                 <Style TargetType="{x:Type ListBox}">
-                    <Setter Property="BorderThickness" Value="1" />
+                    <Setter Property="BorderThickness" Value="0" />
                     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
                     <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
@@ -233,68 +233,9 @@
             </ListBox.Style>
 
         </ListBox>
-
-        <Slider Name="AudioPosition"
-                Width="336"
-                Height="8"
-                Margin="10,70,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Maximum="10"
-                Style="{DynamicResource FlatSlider}"
-                Value="{Binding AudioPosition,
-                                Mode=TwoWay}" />
-        <Slider x:Name="Volime"
-                Width="60"
-                Height="20"
-                Margin="286,44,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Maximum="1.0"
-                Minimum="0.0"
-                Orientation="Horizontal"
-                Value="{Binding VolimePosition,
-                                Mode=TwoWay}" />
-
-        <Button Name="PlayButton"
-                Width="45"
-                Height="45"
-                Margin="5,27,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding PlayAudioButtonClick}"
-                Style="{DynamicResource MetroCircleButtonStyle}">
-            <controls:PackIconMaterial Width="15"
-                                       Height="15"
-                                       Kind="Play" />
-        </Button>
-        <Button Name="PauseButton"
-                Width="40"
-                Height="40"
-                Margin="45,30,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding PauseAudioButtonClick}"
-                Style="{DynamicResource MetroCircleButtonStyle}">
-            <controls:PackIconMaterial Width="14"
-                                       Height="14"
-                                       Kind="Pause" />
-        </Button>
-        <Button Name="StopButton"
-                Width="40"
-                Height="40"
-                Margin="78,30,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding StopAudioButtonClick}"
-                Style="{DynamicResource MetroCircleButtonStyle}">
-            <controls:PackIconMaterial Width="14"
-                                       Height="14"
-                                       Kind="Stop" />
-        </Button>
         <TextBox Name="TextAudio"
                  Height="25"
-                 Margin="10,87,75,0"
+                 Margin="10,47,75,0"
                  VerticalAlignment="Top"
                  controls:TextBoxHelper.ClearTextButton="True"
                  Text="{Binding SearchString}"
@@ -303,53 +244,110 @@
                 Width="60"
                 Height="25"
                 MinWidth="50"
-                Margin="0,87,10,0"
+                Margin="0,47,10,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Command="{Binding SearchAudioButtonClick}"
                 Content="Поиск" />
-        <Button Name="DownloadButton"
-                Width="40"
-                Height="40"
-                Margin="111,30,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Command="{Binding SaveAudioButtonClick}"
-                Style="{DynamicResource MetroCircleButtonStyle}"
-                ToolTip="Загрузить несколько">
-            <controls:PackIconMaterial Width="14"
-                                       Height="14"
-                                       Kind="Download" />
-        </Button>
         <Button Name="MyAudioButton"
                 Width="117"
                 Height="30"
-                Margin="0,10,10,0"
-                HorizontalAlignment="Right"
+                Margin="10,10,0,0"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Command="{Binding MyAudioButtonClick}"
                 Content="Мои аудиозаписи" />
         <Button Width="117"
                 Height="30"
-                Margin="0,45,10,0"
-                HorizontalAlignment="Right"
+                Margin="132,10,0,0"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Command="{Binding AudioRecommendedButtonClick}"
                 Content="Рекомендации" />
-        <Label Margin="10,0,0,0"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Bottom"
-               Content="Всего:" />
-        <Label Margin="58,479,0,0"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Bottom"
-               Content="{Binding AudioItemsViewModel.Count}" />
-        <Label Width="336"
-               Height="25"
-               Margin="10,0,0,0"
+        <Label Height="26"
+               Margin="467,14,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Content="{Binding ItemPlaying.FullNameAudio}" />
+               Content="Всего:" />
+        <Label Margin="510,16,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="{Binding AudioItemsViewModel.Count}" />
+        <Slider x:Name="AudioPosition"
+                Width="Auto"
+                Height="10"
+                Margin="3,0,0,49"
+                VerticalAlignment="Bottom"
+                Maximum="10"
+                Style="{DynamicResource FlatSlider}"
+                Value="{Binding AudioPosition,
+                                Mode=TwoWay}" />
+
+        <StackPanel Height="44"
+                    Margin="0,-1,0,0"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <Button x:Name="PlayButton"
+                    Width="45"
+                    Height="45"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding PlayAudioButtonClick}"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                <controls:PackIconMaterial Width="15"
+                                           Height="15"
+                                           Kind="Play" />
+            </Button>
+            <Button x:Name="PauseButton"
+                    Width="40"
+                    Height="40"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding PauseAudioButtonClick}"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                <controls:PackIconMaterial Width="14"
+                                           Height="14"
+                                           Kind="Pause" />
+            </Button>
+            <Button x:Name="StopButton"
+                    Width="40"
+                    Height="40"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding StopAudioButtonClick}"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                <controls:PackIconMaterial Width="14"
+                                           Height="14"
+                                           Kind="Stop" />
+            </Button>
+            <Button x:Name="DownloadButton"
+                    Width="40"
+                    Height="40"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Command="{Binding SaveAudioButtonClick}"
+                    Style="{DynamicResource MetroCircleButtonStyle}"
+                    ToolTip="Загрузить несколько">
+                <controls:PackIconMaterial Width="14"
+                                           Height="14"
+                                           Kind="Download" />
+            </Button>
+            <Label Width="235"
+                   Height="25"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Content="{Binding ItemPlaying.FullNameAudio}" />
+            <Slider x:Name="Volime"
+                    Width="60"
+                    Height="20"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Maximum="1.0"
+                    Minimum="0.0"
+                    Orientation="Horizontal"
+                    Value="{Binding VolimePosition,
+                                    Mode=TwoWay}" />
+        </StackPanel>
 
     </Grid>
 </UserControl>

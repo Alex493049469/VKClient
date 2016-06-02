@@ -16,7 +16,7 @@ namespace VKAPI.Handlers
 		private  string _baseUrl = @"https://api.vk.com/method/";
 
 		//версия Api
-		private  string ApiVersion = "v=5.45";
+		private  string ApiVersion = "v=5.52";
 
 		/// <summary>
 		/// Отправка запроса и получение ответа в строку
@@ -49,7 +49,7 @@ namespace VKAPI.Handlers
 			request.ContentType = "application/x-www-form-urlencoded";
 			byte[] sentData = Encoding.GetEncoding(1251).GetBytes(data);
 			request.ContentLength = sentData.Length;
-			System.IO.Stream sendStream = request.GetRequestStream();
+			Stream sendStream = request.GetRequestStream();
 			sendStream.Write(sentData, 0, sentData.Length);
 			sendStream.Close();
 

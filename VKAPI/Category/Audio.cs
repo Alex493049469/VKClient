@@ -39,6 +39,7 @@ namespace VKAPI.Category
 				{"album_id=", albumId},
 				{"audio_ids=", audioIds},
 				{"offset=", offset},
+				{"need_user=", 0},
 				{"count=", count}
 			};
 

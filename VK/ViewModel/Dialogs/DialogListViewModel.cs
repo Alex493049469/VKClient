@@ -53,8 +53,6 @@ namespace VK.ViewModel.Dialogs
 			if (DialogItemsViewModel != null && DialogItemsViewModel.Count == CountDialog) return;
 			ObservableCollection<DialogItemViewModel> pageAudio = await _dialogRepository.GetDialog();
 			DialogItemsViewModel = pageAudio;
-
-			//CountDialog = _dialogRepository.CountDialog;
 		}
 
 		public void OpenMessages()

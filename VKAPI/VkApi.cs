@@ -1,4 +1,5 @@
-﻿using VKAPI.Category;
+﻿using System.Security.Cryptography.X509Certificates;
+using VKAPI.Category;
 using VKAPI.Handlers;
 
 namespace VKAPI
@@ -20,11 +21,12 @@ namespace VKAPI
 			Account = new Account(_vkRequest);
 		}
 
-		public Account Account { get; set; }
+		public Account Account { get; private set; }
 		public Audio Audio { get; private set; }
 		public Friends Friends{ get; private set; }
 		public Messages Messages{ get; private set; }
 		public Users Users{ get; private set; }
 
 	}
+
 }
