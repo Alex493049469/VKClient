@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Dock\PanesTemplateSelector.cs" />
     <Compile Include="Model\Dialogs.cs" />
+    <Compile Include="Providers\MessageProvider.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\EventsService.cs" />
     <Compile Include="Utils\TrayPos.cs" />

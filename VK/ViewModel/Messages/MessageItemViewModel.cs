@@ -8,7 +8,7 @@ using VKAPI.Model.MessagesModel;
 
 namespace VK.ViewModel.Messages
 {
-	class MessageItemViewModel : BaseViewModel
+	public class MessageItemViewModel : BaseViewModel
 	{
 		public int Id { get; set; }
 		public string Body { get; set; }

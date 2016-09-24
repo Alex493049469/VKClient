@@ -171,13 +171,17 @@ namespace VK.DataAccess
 
 				if (item.ChatActive == null || item.UserCount == null)
 				{
-					var userTemp = users.response.Find(i => i.id == item.UserId);
-					item.UserOnePhoto = userTemp.photo_100;
-					item.Title = userTemp.first_name + " " + userTemp.last_name;
-					if (item.Out == 1)
+					try
 					{
-						item.UserIdPhoto = thisUser.response[0].photo_100;
+						var userTemp = users.response.Find(i => i.id == item.UserId);
+						item.UserOnePhoto = userTemp.photo_100;
+						item.Title = userTemp.first_name + " " + userTemp.last_name;
+						if (item.Out == 1)
+						{
+							item.UserIdPhoto = thisUser.response[0].photo_100;
+						}
 					}
+					catch { }
 
 					continue;
 				}

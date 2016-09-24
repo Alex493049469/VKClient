@@ -8,6 +8,7 @@
              xmlns:dataTemplateSelectors="clr-namespace:VK.DataTemplateSelectors"
              xmlns:listBoxBehavior="clr-namespace:Core.BaseControl.ListBoxBehavior;assembly=Core"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              MinWidth="450"
              MinHeight="500"
              Background="White"
@@ -166,35 +167,23 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="26*" />
         </Grid.RowDefinitions>
-        <baseControl:LazyLoadListBox Name="ListMessages"
+        <ListBox Name="ListMessages"
                                      Grid.Row="0"
                                      Margin="0,0,0,5"
                                      VerticalAlignment="Stretch"
-                                     listBoxBehavior:ListBoxBehavior.AutoScroll="True"
-                                     IsLazyLoad="{Binding IsLazyLoad}"
-                                     IsLoadingUp="True"
+                                  
                                      ItemTemplateSelector="{StaticResource MessageDataTemplateSelector}"
                                      ItemsSource="{Binding MessageItemsViewModel,
                                                            IsAsync=True}"
-                                     LoadCommand="{Binding LoadCommand}"
                                      SelectedItem="{Binding ItemSelected}">
-            <baseControl:LazyLoadListBox.Style>
-                <Style TargetType="{x:Type baseControl:LazyLoadListBox}">
+            <ListBox.Style>
+                <Style TargetType="{x:Type ListBox}">
 
                     <Setter Property="BorderThickness" Value="1" />
-                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-                    <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
-                    <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+
                     <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
-                    <Setter Property="ScrollViewer.PanningMode" Value="Both" />
-                    <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="VirtualizingPanel.IsContainerVirtualizable" Value="True" />
-                    <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="False" />
-                    <Setter Property="VirtualizingPanel.CacheLengthUnit" Value="Page" />
-                    <Setter Property="VirtualizingPanel.CacheLength" Value="2.2" />
-                    <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel" />
+                    <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
+                    <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ListBox}">
@@ -218,8 +207,8 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-            </baseControl:LazyLoadListBox.Style>
-        </baseControl:LazyLoadListBox>
+            </ListBox.Style>
+        </ListBox>
 
         <GridSplitter x:Name="gridSplitter"
                       Grid.Row="1"

@@ -44,6 +44,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\Auth.cs" />
     <Compile Include="Category\Account.cs" />
     <Compile Include="Handlers\ErrorHandlerRequest.cs" />
     <Compile Include="Handlers\IVkRequest.cs" />

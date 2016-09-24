@@ -54,6 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Authorization\TestsAuthorization.cs" />
     <Compile Include="RequestTest.cs" />
     <Compile Include="AudioTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,6 +68,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

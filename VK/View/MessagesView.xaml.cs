@@ -23,6 +23,8 @@ namespace VK.View
 		public MessagesView()
 		{
 			InitializeComponent();
+
+			//var scrollViewer = ListMessages.GetFirstDescendantOfType<ScrollViewer>();
 		}
 	}
 }

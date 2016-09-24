@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 
 namespace VKAPI.Handlers
 {
@@ -26,7 +27,7 @@ namespace VKAPI.Handlers
 		{
 			string url = GenerateRequest(method, ClearEmptyParameters(parameters));
 			//чтоб не превычать максимальную частоту запросов к VK api (3 раза в секунду)
-			//Thread.Sleep(200);
+			Thread.Sleep(300);
 			var webRequest = WebRequest.Create(url);
 			var response = webRequest.GetResponse();
 			var stream = response.GetResponseStream();
