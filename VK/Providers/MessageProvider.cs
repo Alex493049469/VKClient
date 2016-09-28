@@ -78,11 +78,16 @@ namespace VK.Providers
 						{
 							itemMessage.StickerPhoto_128 = item.attachments[0].sticker.photo_128;
 						}
-						if (item.attachments[0].type == "Photo")
+						if (item.attachments[0].type.ToLower() == "photo")
 						{
 							itemMessage.Photo = item.attachments[0].photo.photo_604;
 							itemMessage.PhotoHeight = Convert.ToInt32(item.attachments[0].photo.height * 0.7);
 							itemMessage.PhotoWidth = Convert.ToInt32(item.attachments[0].photo.width * 0.7);
+						}
+						if (item.attachments[0].type == "video")
+						{
+							itemMessage.Photo = item.attachments[0].video.photo_130;
+;
 						}
 					}
 
