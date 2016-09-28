@@ -9,6 +9,7 @@
              xmlns:listBoxBehavior="clr-namespace:Core.BaseControl.ListBoxBehavior;assembly=Core"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:core="clr-namespace:Core;assembly=Core"
              MinWidth="450"
              MinHeight="500"
              Background="White"
@@ -171,16 +172,20 @@
                                      Grid.Row="0"
                                      Margin="0,0,0,5"
                                      VerticalAlignment="Stretch"
-                                  
                                      ItemTemplateSelector="{StaticResource MessageDataTemplateSelector}"
                                      ItemsSource="{Binding MessageItemsViewModel,
                                                            IsAsync=True}"
-                                     SelectedItem="{Binding ItemSelected}">
+                                     SelectedItem="{Binding ItemSelected}"
+                 HorizontalContentAlignment="Stretch">
+
+
+            <i:Interaction.Behaviors>
+                <core:ScrollOnNewItem/>
+            </i:Interaction.Behaviors>
             <ListBox.Style>
                 <Style TargetType="{x:Type ListBox}">
 
                     <Setter Property="BorderThickness" Value="1" />
-
                     <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
                     <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
                     <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />

@@ -348,7 +348,8 @@
                                      ItemsSource="{Binding DialogItemsViewModel,
                                                            IsAsync=True}"
                                      LoadCommand="{Binding LoadCommand}"
-                                     SelectedItem="{Binding ItemSelected}">
+                                     SelectedItem="{Binding ItemSelected}"
+                                      HorizontalContentAlignment="Stretch">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding OpenMessagesCommand}" />

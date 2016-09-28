@@ -14,12 +14,7 @@ namespace VKAPI.Category
 	/// </summary>
 	public class Account
 	{
-		private readonly IVkRequest _vkRequest;
 
-		public Account(IVkRequest vkRequest)
-		{
-			_vkRequest = vkRequest;
-		}
 
 		/// <summary>
 		/// Помечает текущего пользователя как online на 15 минут.
@@ -27,7 +22,7 @@ namespace VKAPI.Category
 		/// <returns></returns>
 		public bool SetOnline()
 		{
-			string str = _vkRequest.GetData("account.setOnline");
+			string str = VkRequest.GetData("account.setOnline");
 			return true;
 		}
 
@@ -37,7 +32,7 @@ namespace VKAPI.Category
 		/// <returns></returns>
 		public bool SetOffline()
 		{
-			string str = _vkRequest.GetData("account.setOffline");
+			string str = VkRequest.GetData("account.setOffline");
 			return true;
 		}
 

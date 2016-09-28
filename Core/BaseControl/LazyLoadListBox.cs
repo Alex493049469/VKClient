@@ -75,12 +75,18 @@ namespace Core.BaseControl
 			if (IsLoadingUp != true && scrollViewer.ScrollableHeight != 0 && scrollViewer.ScrollableHeight == scrollViewer.VerticalOffset)
 			{
 				LoadCommand.Execute(null);
+				//this.UpdateLayout();
+				//foreach (var VARIABLE in ItemsSource)
+				//{
+					
+				//}
+				//this.ScrollIntoView(item);
 			}
 			if (IsLoadingUp && scrollViewer.VerticalOffset == 0)
 			{
 				LoadCommand.Execute(null);
 			}
-
+			
 		}
 
 		#endregion

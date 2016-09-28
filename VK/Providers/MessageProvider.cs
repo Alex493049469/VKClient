@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Core;
 using VK.ViewModel.Messages;
 using VKAPI;
@@ -32,10 +33,12 @@ namespace VK.Providers
 			return _count;
 		}
 
+		private UsersModel users;
 		public Task<List<MessageItemViewModel>> FetchRange(int startIndex, int count)
 		{
-			return Task.Run(() =>
+			return Task.Run( () =>
 			{
+				
 				MessagesModel _messageModel;
 				if (_isChat)
 				{
@@ -86,28 +89,29 @@ namespace VK.Providers
 					itemsMessages.Add(itemMessage);
 				}
 
-
-				//если несколько пользователей то берем их из ChatActive если 1 то userId
-				//собираем все их id 
-				HashSet<int> userIdList = new HashSet<int>();
-
-				foreach (var item in itemsMessages)
+				if (users == null)
 				{
-					if (item.UserId == item.FromId)
+					//если несколько пользователей то берем их из ChatActive если 1 то userId
+					//собираем все их id 
+					HashSet<int> userIdList = new HashSet<int>();
+
+					foreach (var item in itemsMessages)
 					{
-						userIdList.Add(item.UserId);
+						if (item.UserId == item.FromId)
+						{
+							userIdList.Add(item.UserId);
+						}
+						else
+						{
+							userIdList.Add(item.FromId);
+						}
 					}
-					else
-					{
-						userIdList.Add(item.FromId);
-					}
+
+					string UserIds = String.Join(",", userIdList);
+
+					//получаем всю необходимую информацию о пользовалелях кто в диалогах 
+					users = _vkApi.Users.GetPhoto(UserIds);
 				}
-
-				string UserIds = String.Join(",", userIdList);
-
-				//получаем всю необходимую информацию о пользовалелях кто в диалогах 
-				UsersModel users = _vkApi.Users.GetPhoto(UserIds);
-
 				foreach (var item in itemsMessages)
 				{
 					if (item.UserId == item.FromId)
@@ -125,8 +129,8 @@ namespace VK.Providers
 						item.LastMessageUserName = userTemp.first_name + " отправил подарок ";
 					}
 				}
-
-
+				if (_isChat)
+					users = null;
 				return itemsMessages;
 
 			});

@@ -11,13 +11,6 @@ namespace VKAPI.Category
 {
 	public class Messages 
 	{
-		private readonly IVkRequest _vkRequest;
-
-		public Messages(IVkRequest vkRequest)
-		{
-			_vkRequest = vkRequest;
-		}
-
 		/// <summary>
 		/// Возвращает список диалогов текущего пользователя.
 		/// </summary>
@@ -30,7 +23,7 @@ namespace VKAPI.Category
 				{"offset=", offset}
 			};
 
-			string data = _vkRequest.GetData("messages.getDialogs", parameters);
+			string data = VkRequest.GetData("messages.getDialogs", parameters);
 
 			var dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(data);
 
@@ -59,7 +52,7 @@ namespace VKAPI.Category
 				{"fields=", fields}
 			};
 
-			string str = _vkRequest.GetData("messages.getChat", parameters);
+			string str = VkRequest.GetData("messages.getChat", parameters);
 			//десериализуем
 			//DialogsModel dialogsModel = JsonConvert.DeserializeObject<DialogsModel>(str);
 
@@ -77,10 +70,14 @@ namespace VKAPI.Category
 			};
 
 			//получаем данные в json
-			string str = _vkRequest.GetData("messages.getHistory", parameters);
+			string str = VkRequest.GetData("messages.getHistory", parameters);
 			//десериализуем
 			MessagesModel messagesModel = JsonConvert.DeserializeObject<MessagesModel>(str);
 
+			if (messagesModel.response == null)
+			{
+
+			}
 			return messagesModel;
 		}
 
@@ -103,10 +100,13 @@ namespace VKAPI.Category
 				{"offset=", offset}
 			};
 			//получаем данные в json
-			string str = _vkRequest.GetData("messages.getHistory", parameters);
+			string str = VkRequest.GetData("messages.getHistory", parameters);
 			//десериализуем
 			MessagesModel messagesModel = JsonConvert.DeserializeObject<MessagesModel>(str);
-
+			if (messagesModel.response == null)
+			{
+				
+			}
 			return messagesModel;
 		}
 
@@ -127,7 +127,7 @@ namespace VKAPI.Category
 				{"need_pts=", needPts}
 			};
 
-			string str = _vkRequest.GetData("messages.getLongPollServer", parameters);
+			string str = VkRequest.GetData("messages.getLongPollServer", parameters);
 			LongPullModel longPullModel = JsonConvert.DeserializeObject<LongPullModel>(str);
 			return longPullModel;
 		}
@@ -152,7 +152,7 @@ namespace VKAPI.Category
 				{"onlines=", onlines}
 			};
 
-			string str = _vkRequest.GetData("messages.getLongPollHistory", parameters);
+			string str = VkRequest.GetData("messages.getLongPollHistory", parameters);
 			//заменить на нужную модель данных
 			LongPullMessageModel longPullModel = JsonConvert.DeserializeObject<LongPullMessageModel>(str);
 			return longPullModel;

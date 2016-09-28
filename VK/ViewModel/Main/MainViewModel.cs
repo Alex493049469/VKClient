@@ -17,7 +17,7 @@ namespace VK.ViewModel.Main
 	public class MainViewModel : BaseViewModel
 	{
 		//для доступа к данным диалогов
-		private readonly VkApi _vkApi = new VkApi(new VkRequest());
+		private readonly VkApi _vkApi = new VkApi();
 
 		//Коллекция ViewModel
 		private readonly ObservableCollection<PaneViewModel> _viewModels = new ObservableCollection<PaneViewModel>();

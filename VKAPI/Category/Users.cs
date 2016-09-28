@@ -8,12 +8,6 @@ namespace VKAPI.Category
 {
 	public class Users 
 	{
-		private readonly IVkRequest _vkRequest;
-
-		public Users(IVkRequest vkRequest)
-		{
-			_vkRequest = vkRequest;
-		}
 
 		//падеж для склонения имени и фамилии пользователя. 
 		//Возможные значения: именительный – nom, родительный – gen, дательный – dat, винительный – acc, творительный – ins, предложный – abl. По умолчанию nom. 
@@ -46,7 +40,7 @@ namespace VKAPI.Category
 			   {"name_case=", nameCase.ToString()}
 		   };
 
-		   string str = _vkRequest.GetData("users.get", parameters);
+		   string str = VkRequest.GetData("users.get", parameters);
 		   //десериализуем
 		   UsersModel usersModel = JsonConvert.DeserializeObject<UsersModel>(str);
 		   return usersModel;
@@ -72,9 +66,13 @@ namespace VKAPI.Category
 			   {"fields=", fieldsPhoto},
 		   };
 
-		   string str = _vkRequest.GetData("users.get", parameters);
+		   string str = VkRequest.GetData("users.get", parameters);
 		   //десериализуем
 		   UsersModel usersModel = JsonConvert.DeserializeObject<UsersModel>(str);
+		   if (usersModel.response == null)
+		   {
+				str = VkRequest.GetData("users.get", parameters);
+			}
 		   return usersModel;
 	   }
 

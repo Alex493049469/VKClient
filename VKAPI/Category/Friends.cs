@@ -11,12 +11,6 @@ namespace VKAPI.Category
 	/// </summary>
 	public class Friends
 	{
-		private readonly IVkRequest _vkRequest;
-
-		public Friends(IVkRequest vkRequest)
-		{
-			_vkRequest = vkRequest;
-		}
 
 		//список всех полей
 		private string FieldsAll = "nickname, domain, sex, bdate, city, country, timezone, photo_50, photo_100, photo_200_orig, has_mobile, contacts, education, online, relation, last_seen, status, can_write_private_message, can_see_all_posts, can_post, universities ";
@@ -30,7 +24,7 @@ namespace VKAPI.Category
 				{"order=", "hints"},
 			};
 
-			string str = _vkRequest.GetData("friends.get", parameters);
+			string str = VkRequest.GetData("friends.get", parameters);
 			FriendsModel friendsModel = JsonConvert.DeserializeObject<FriendsModel>(str);
 			return friendsModel;
 		}

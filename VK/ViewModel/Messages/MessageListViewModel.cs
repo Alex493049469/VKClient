@@ -19,7 +19,7 @@ namespace VK.ViewModel.Messages
 		//индекс начала
 		private int _index;
 		//размер страницы
-		private int _count = 25;
+		private int _count = 50;
 
 		public RelayCommand LoadCommand { get; set; }
 

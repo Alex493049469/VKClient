@@ -58,6 +58,7 @@
     <Compile Include="IItemsProvider.cs" />
     <Compile Include="PageCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScrollOnNewItem.cs" />
     <Compile Include="Singleton.cs" />
   </ItemGroup>
   <ItemGroup>

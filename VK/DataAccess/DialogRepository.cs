@@ -68,6 +68,8 @@ namespace VK.DataAccess
 		public delegate void MethodContainer();
 		public event MethodContainer ChangeDialog;
 
+		UsersModel users;
+		UsersModel thisUser;
 		/// <summary>
 		/// возвращает список диалогов
 		/// </summary>
@@ -101,35 +103,38 @@ namespace VK.DataAccess
 			}
 			CountDialog = _dialogModel.response.count;
 
-			//если несколько пользователей то берем их из ChatActive если 1 то userId
-			//собираем все их id 
-			HashSet<int> userIdList = new HashSet<int>();
-			foreach (var item in itemsDialog)
+			if (users == null || thisUser == null)
 			{
-				if (item.UserCount == 1 || item.UserCount == null)
+				//если несколько пользователей то берем их из ChatActive если 1 то userId
+				//собираем все их id 
+				HashSet<int> userIdList = new HashSet<int>();
+				foreach (var item in itemsDialog)
 				{
-					if (!userIdList.Contains(item.UserId))
+					if (item.UserCount == 1 || item.UserCount == null)
 					{
-						userIdList.Add(item.UserId);
-					}
-				}
-				if (item.UserCount > 1)
-				{
-					foreach (var id in item.ChatActive)
-					{
-						if (!userIdList.Contains(id))
+						if (!userIdList.Contains(item.UserId))
 						{
-							userIdList.Add(id);
+							userIdList.Add(item.UserId);
+						}
+					}
+					if (item.UserCount > 1)
+					{
+						foreach (var id in item.ChatActive)
+						{
+							if (!userIdList.Contains(id))
+							{
+								userIdList.Add(id);
+							}
 						}
 					}
 				}
+
+				string userIds = String.Join(",", userIdList);
+
+				//получаем всю необходимую информацию о пользовалелях кто в диалогах 
+				users = await _vkApi.Users.GetPhotoAsync(userIds);
+				thisUser = await _vkApi.Users.GetAsync();
 			}
-
-			string userIds = String.Join(",", userIdList);
-
-			//получаем всю необходимую информацию о пользовалелях кто в диалогах 
-			UsersModel users = await _vkApi.Users.GetPhotoAsync(userIds);
-			UsersModel thisUser = await _vkApi.Users.GetAsync();
 			//здесь в зависимости от количества собеседников подгружаем фотки
 			foreach (var item in itemsDialog)
 			{
@@ -226,7 +231,8 @@ namespace VK.DataAccess
 				itemsDialog.ToList().ForEach(_dialogsViewModel.Add);
 			}
 			_index += _count;
-
+			users = null;
+			thisUser = null;
 			return _dialogsViewModel;
 		}
 

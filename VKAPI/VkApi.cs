@@ -10,18 +10,14 @@ namespace VKAPI
 	/// </summary>
 	public class VkApi
 	{
-		private readonly IVkRequest _vkRequest;
-
-
 		//здесь необходимо проверять есть ли токен
-		public VkApi(IVkRequest vkRequest)
+		public VkApi()
 		{
-			_vkRequest = vkRequest;
-			Audio = new Audio(_vkRequest);
-			Friends = new Friends(_vkRequest);
-			Messages = new Messages(_vkRequest);
-			Users = new Users(_vkRequest);
-			Account = new Account(_vkRequest);
+			Audio = new Audio();
+			Friends = new Friends();
+			Messages = new Messages();
+			Users = new Users();
+			Account = new Account();
 		}
 
 		public void Authorize(int  clientId)
